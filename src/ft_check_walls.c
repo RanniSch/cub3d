@@ -1,88 +1,120 @@
 
 #include "../inc/cub3d.h"
 
-bool	zero_close_top(t_info *info, int i, int j)
+bool	is_allowed_space_x(t_info *info, int i, int j, int var)
 {
-	if (!correct_char(info, i - 1, j))
-		return (false);
-	if (i == v->map_i || i == v->row - 1 || j == 0)
+	while (info->map[i][j] && info->map[i][j] == 32)
 	{
-		printf("The map should be surrounded by the wall\n");
+		if (var == 1)
+		{
+			i++;
+			if (info->map[i] == NULL)
+				return (true);
+		}
+		else
+			i--;
+		if (is_allowed_char(info->map[i][j]))
+			return (false);
+	}
+	return (true);
+}
+
+bool	is_allowed_space_y(t_info *info, int i, int j, int var)
+{
+	while (info->map[i][j])
+	{
+		if (var == 1)
+			j++;
+		else
+			j--;
+		if (is_allowed_char(info->map[i][j]))
+			return (false);
+	}
+	return (true);
+}
+
+bool	no_zero_top(t_info *info, int i, int j)
+{
+	//if (!correct_char(info, i - 1, j))
+	//	return (false);
+	if (i == info->map_i || i == info->row - 1 || j == 0)
+	{
+		printf("Map should be surrounded by wall (top)\n");
 		return (false);
 	}
 	if (!is_allowed_char(info->map[i - 1][j]))
 	{
-		if (is_allowed_space_x(v, i - 1, j, 0))
+		if (is_allowed_space_x(info, i - 1, j, 0))
 			;
 		else
 		{
-			printf("The map should be surrounded by the wall\n");
+			printf("Map should be surrounded by wall (top)\n");
 			return (false);
 		}
 	}
 	return (true);
 }
 
-bool    zero_close_down(t_info *info, int i, int j)
+bool    no_zero_bottom(t_info *info, int i, int j)
 {
-	if (!correct_char(info, i + 1, j))
-		return (false);
+	//if (!correct_char(info, i + 1, j))
+	//	return (false);
 	if (!is_allowed_char(info->map[i + 1][j]))
 	{
 		if (is_allowed_space_x(info, i + 1, j, 1))
 			;
 		else
 		{
-			printf("The map should be surrounded by the wall\n");
+			printf("Map should be surrounded by wall (bottom)\n");
 			return (false);
 		}
 	}
 	return (true);
 }
 
-bool	zero_close_right(t_info *info, int i, int j)
+bool	no_zero_right(t_info *info, int i, int j)
 {
-	if (!correct_char(info, i, j + 1))
-		return (false);
+	//if (!correct_char(info, i, j + 1))
+	//	return (false);
 	if (info->map[i][j + 1] && !is_allowed_char(info->map[i][j + 1]))
 	{
 		if (is_allowed_space_y(info, i, j + 1, 1))
 			;
 		else
 		{
-			printf("The map should be surrounded by the wall\n");
+			printf("Map should be surrounded by wall (right)\n");
 			return (false);
 		}
 	}
 	return (true);
 }
 
-bool	zero_close_left(t_info *info, int i, int j)
+bool	no_zero_left(t_info *info, int i, int j)
 {
-	if (!correct_char(info, i, j - 1))
-		return (false);
+	//if (!correct_char(info, i, j - 1))
+	//	return (false);
 	if (!is_allowed_char(info->map[i][j - 1]))
 	{
 		if (is_allowed_space_y(info, i, j - 1, 0))
 			;
 		else
 		{
-			printf("The map should be surrounded by the wall\n");
+			printf("Map should be surrounded by wall (left)\n");
 			return (false);
 		}
 	}
 	return (true);
 }
 
-bool    is_zero_close(t_info *info, int i, int j)
+bool    zero_middle(t_info *info, int i, int j)
 {
-	if (is_zero_close_to_top(v, i, j, validator) == 1)
+	if (!no_zero_top(info, i, j))
 		return (false);
-	if (is_zero_close_down(v, i, j, validator) == 1)
+	if (!no_zero_bottom(info, i, j))
 		return (false);
-	if (is_zero_close_right(v, i, j, validator) == 1)
+	if (!no_zero_right(info, i, j))
 		return (false);
-	if (is_zero_close_left(v, i, j, validator) == 1)
+	if (!no_zero_left(info, i, j))
 		return (false);
 	return (true);
 }

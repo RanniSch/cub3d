@@ -26,10 +26,16 @@ bool	valid_map_extension(t_info *info)
 	return (true);
 }
 
+void	skip_empty_line(t_info *info)
+{
+	while (info->map[info->map_i] && info->map[info->map_i][0] == '\n')
+		info->map_i++;
+}
+
 /*
 * Including skip empty line and skip spaces!
 */
-int loop_compass(t_info *info)
+/*int loop_compass(t_info *info)
 {
 	int i;
     int j;
@@ -49,21 +55,21 @@ int loop_compass(t_info *info)
             if (info->map[i][j] == 'N' || info->map[i][j] == 'S' || \
 		        info->map[i][j] == 'W' || info->map[i][j] == 'E')
                 player++;
-            /*if (info->map[i][j] != '0' && info->map[i][j] != '1' && info->map[i][j] != 'N' && \
-                info->map[i][j] != 'S' && info->map[i][j] != 'W' && info->map[i][j] != 'E')
-                return (-1);*/
+            //if (info->map[i][j] != '0' && info->map[i][j] != '1' && info->map[i][j] != 'N' && \
+            //    info->map[i][j] != 'S' && info->map[i][j] != 'W' && info->map[i][j] != 'E')
+            //    return (-1);
             //printf("j %d\n", j);
             j++;
         }
         i++;
     }
     return (player);
-}
+}*/
 
 /*
 * Where to check if other letters are in map?
 */
-bool	check_orientation(t_info *info)
+/*bool	check_orientation(t_info *info)
 {
 	printf("result %d\n", loop_compass(info));
     if (loop_compass(info) != 1)
@@ -72,14 +78,13 @@ bool	check_orientation(t_info *info)
         return (false);
     }
     return (true);
-}
+}*/
 
-bool    is_allowed_char(t_info *info, char c, int i, int j)
+bool    is_allowed_char(char c)
 {
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E' || c == '1' || c == '0')
 		return (true);
-    else if (info->map[i][j] != 32 && info->map[i][j] != '\n')
-	    return (false);
+    return (false);
 }
 
 bool    filled_line(t_info *info, int i)
@@ -94,11 +99,11 @@ bool    filled_line(t_info *info, int i)
 
 bool    correct_char(t_info *info, int i, int j)
 {
-	if (info->map[i] != NULL && info->map[i][j] != '\0')
+	if (info->map[i][j] != '\0') // if (info->map[i] != NULL && info->map[i][j] != '\0')
 	{
 		if (info->map[i][j] != 32 && info->map[i][j] != '\n')
 		{
-			if (!is_allowed_char(info->map[i][j], i, j))
+			if (!is_allowed_char(info->map[i][j]))
 			{
 				printf("Invalid character in map\n");;
 				return (false);
@@ -122,7 +127,7 @@ bool    check_valid_map(t_info *info)
 	int	i;
 	int	j;
 
-	i = 0;
+	i = info->map_i;
 	j = 0;
 	while (i < info->row && info->map[i] != NULL)
 	{
@@ -133,7 +138,7 @@ bool    check_valid_map(t_info *info)
 				return (false);
 			if (info->map[i][j] == '0' || init_player_pos(info->map[i][j]))
 			{
-				if (!is_zero_close(info, i, j))
+				if (!zero_middle(info, i, j))
 					return (false);
 			}
 			j++;
@@ -143,14 +148,16 @@ bool    check_valid_map(t_info *info)
 	return (true);
 }
 
-void	parsing(t_info *info)
+bool	parsing(t_info *info)
 {
 
 	if (!valid_map_extension(info))
-		return ;
-	if (!check_orientation(info))
-		return ;
+		return (false);
+    skip_empty_line(info);
+	//if (!check_orientation(info))
+	//	return ;
 	if (!check_valid_map(info))
-		return ;
-	valid_init_position(is_pos, validator);
+		return (false);
+	//valid_init_position(is_pos, validator);
+    return (true);
 }
