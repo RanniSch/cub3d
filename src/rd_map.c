@@ -20,7 +20,7 @@ int	count_nb_row(char *map_path)
 	if (line)
 		free(line);
 	close(fd);
-	printf("nb row %d\n", nb_row);
+	//printf("nb row %d\n", nb_row);
 	return (nb_row);
 }
 

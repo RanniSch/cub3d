@@ -13,8 +13,11 @@ MLX			= ./minilibx-linux/libmlx.a
 
 SRCS		= main.c \
 			  ./src/rd_map.c \
-			  ./src/ft_parser.c \
-			  ./src/ft_check_walls.c
+			  ./src/ft_check_walls_2.c \
+			  ./src/ft_check_walls.c \
+			  ./src/ft_check_valid_map.c \
+			  ./src/ft_parser.c
+			  
 			  
 
 OBJS		= ${SRCS:.c=.o}

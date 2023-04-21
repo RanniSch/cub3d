@@ -34,10 +34,5 @@ int	main(int argc, char **argv)
     {
         printf("great\n");
     }
-	//if (check_if_continue(v, validator) == 1)
-	//	return (0);
-	//skipe_empty_line(v);
-	//copy_cub_file(v);
-	//update_prog(v);
 	return (0);
 }
