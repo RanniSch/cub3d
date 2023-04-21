@@ -4,7 +4,7 @@
 void	init_game(t_info *info)
 {
 	info->row = count_nb_row(info->map_path);
-    printf("num rows: %d\n", info->row);
+    //printf("num rows: %d\n", info->row);
 	info->map = save_map(info);
 	info->map_i = 0;
 }

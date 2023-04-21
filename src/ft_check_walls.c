@@ -1,7 +1,7 @@
 
 #include "../inc/cub3d.h"
 
-bool	is_allowed_space_x(t_info *info, int i, int j, int var)
+/*bool	is_allowed_space_x(t_info *info, int i, int j, int var)
 {
 	while (info->map[i][j] && info->map[i][j] == 32)
 	{
@@ -17,9 +17,23 @@ bool	is_allowed_space_x(t_info *info, int i, int j, int var)
 			return (false);
 	}
 	return (true);
+}*/
+
+bool	allowed_space_y(t_info *info, int i, int j, int var)
+{
+	while (info->map[i] != NULL)
+	{
+		if (var == 1)
+			i++;
+		else
+			i--;
+		if (info->map[i][j] == '1')
+			return (true);
+	}
+	return (false);
 }
 
-bool	is_allowed_space_y(t_info *info, int i, int j, int var)
+/*bool	is_allowed_space_y(t_info *info, int i, int j, int var)
 {
 	while (info->map[i][j])
 	{
@@ -27,10 +41,24 @@ bool	is_allowed_space_y(t_info *info, int i, int j, int var)
 			j++;
 		else
 			j--;
-		if (is_allowed_char(info->map[i][j]))
+		if (!is_allowed_char(info->map[i][j]))
 			return (false);
 	}
 	return (true);
+}*/
+
+bool	allowed_space_x(t_info *info, int i, int j, int var)
+{
+	while (info->map[i][j])
+	{
+		if (var == 1)
+			j++;
+		else
+			j--;
+		if (info->map[i][j] == '1')
+			return (true);
+	}
+	return (false);
 }
 
 bool	no_zero_top(t_info *info, int i, int j)
@@ -42,10 +70,12 @@ bool	no_zero_top(t_info *info, int i, int j)
 		printf("Map should be surrounded by wall (top)\n");
 		return (false);
 	}
-	if (!is_allowed_char(info->map[i - 1][j]))
+	if (info->map[i - 1][j] && !is_allowed_char(info->map[i - 1][j]))
 	{
-		if (is_allowed_space_x(info, i - 1, j, 0))
+		if (allowed_space_y(info, i - 1, j, 0))
 			;
+		//if (is_allowed_space_x(info, i - 1, j, 0))
+		//	;
 		else
 		{
 			printf("Map should be surrounded by wall (top)\n");
@@ -59,10 +89,12 @@ bool    no_zero_bottom(t_info *info, int i, int j)
 {
 	//if (!correct_char(info, i + 1, j))
 	//	return (false);
-	if (!is_allowed_char(info->map[i + 1][j]))
+	if (info->map[i + 1][j] && !is_allowed_char(info->map[i + 1][j]))
 	{
-		if (is_allowed_space_x(info, i + 1, j, 1))
+		if (allowed_space_y(info, i + 1, j, 1))
 			;
+		//if (is_allowed_space_x(info, i + 1, j, 1))
+		//	;
 		else
 		{
 			printf("Map should be surrounded by wall (bottom)\n");
@@ -78,8 +110,10 @@ bool	no_zero_right(t_info *info, int i, int j)
 	//	return (false);
 	if (info->map[i][j + 1] && !is_allowed_char(info->map[i][j + 1]))
 	{
-		if (is_allowed_space_y(info, i, j + 1, 1))
+		if (allowed_space_x(info, i , j + 1, 1))
 			;
+		//if (is_allowed_space_y(info, i, j + 1, 1))
+		//	;
 		else
 		{
 			printf("Map should be surrounded by wall (right)\n");
@@ -91,12 +125,13 @@ bool	no_zero_right(t_info *info, int i, int j)
 
 bool	no_zero_left(t_info *info, int i, int j)
 {
-	//if (!correct_char(info, i, j - 1))
-	//	return (false);
-	if (!is_allowed_char(info->map[i][j - 1]))
+	//printf("i %d j %d\n", i, j);
+	if (info->map[i][j - 1] && !is_allowed_char(info->map[i][j - 1]))
 	{
-		if (is_allowed_space_y(info, i, j - 1, 0))
+		if (allowed_space_x(info, i , j - 1, 0))
 			;
+		//if (is_allowed_space_y(info, i, j - 1, 0))
+		//	;
 		else
 		{
 			printf("Map should be surrounded by wall (left)\n");
@@ -116,5 +151,6 @@ bool    zero_middle(t_info *info, int i, int j)
 		return (false);
 	if (!no_zero_left(info, i, j))
 		return (false);
+	//printf("Only zeros in middle\n");
 	return (true);
 }

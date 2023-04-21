@@ -23,13 +23,23 @@ bool	valid_map_extension(t_info *info)
 		printf("Invalid map: Use .cub file extension\n");
 		return (false);
 	}
+	//printf("Could open file\n");
 	return (true);
 }
 
-void	skip_empty_line(t_info *info)
+int	skip_empty_line(t_info *info)
 {
+	int	loop_i;
+
+	loop_i = 0;
+	//printf("map_i0: %d\n", info->map_i);
 	while (info->map[info->map_i] && info->map[info->map_i][0] == '\n')
+	{
 		info->map_i++;
+		loop_i++;
+	}
+	//printf("map_i1: %d\n", info->map_i);
+	return (loop_i);
 }
 
 /*
@@ -99,7 +109,7 @@ bool    filled_line(t_info *info, int i)
 
 bool    correct_char(t_info *info, int i, int j)
 {
-	if (info->map[i][j] != '\0') // if (info->map[i] != NULL && info->map[i][j] != '\0')
+	if (info->map[i] != NULL && info->map[i][j] != '\0') // if (info->map[i][j] != '\0')
 	{
 		if (info->map[i][j] != 32 && info->map[i][j] != '\n')
 		{
@@ -109,10 +119,10 @@ bool    correct_char(t_info *info, int i, int j)
 				return (false);
 			}
 		}
-		if (!filled_line(info, i))
+		if (!filled_line(info, i))	// brauchen wir das wirklich???
 			return (false);
 	}
-	return (0);
+	return (true);
 }
 
 bool	init_player_pos(char c)
@@ -131,6 +141,11 @@ bool    check_valid_map(t_info *info)
 	j = 0;
 	while (i < info->row && info->map[i] != NULL)
 	{
+		if (info->map[i][0] == '\n') // falls wir keine leeren Zeilen in der Map akzeptieren
+		{
+			printf("Empty line in map!\n");
+			return (false);
+		}
 		j = 0;
 		while (info->map[i][j])
 		{
