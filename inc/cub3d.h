@@ -14,6 +14,10 @@ typedef struct s_info
     int			row;
     char		**map;
     int			map_i;
+    int         player_amount;
+    int         player_x;
+    int         player_y;
+    char        player_orientation;
 }				t_info;
 
 /* ########################################################################## */
@@ -26,19 +30,19 @@ char	**save_map(t_info *info);
 /* ft_parser.c */
 
 bool	valid_map_extension(t_info *info);
-int 	skip_empty_line(t_info *info);
+void 	skip_empty_lines(t_info *info);
 //int     loop_compass(t_info *info);
 //bool	check_orientation(t_info *info);
-bool    is_allowed_char(char c);
+bool    is_allowed_char(t_info *info, char c);
 bool    filled_line(t_info *info, int i);
 bool    correct_char(t_info *info, int i, int j);
-bool	init_player_pos(char c);
+bool	init_player_pos(t_info *info, char c, int i, int j);
 bool    check_valid_map(t_info *info);
 bool	parsing(t_info *info);
 
 /* ft_check_walls.c */
 
-bool	allowed_space_x(t_info *info, int i, int j, int var);
+bool	horizontal_correct(t_info *info, int i, int j, int var);
 bool	allowed_space_y(t_info *info, int i, int j, int var);
 //bool	is_allowed_space_x(t_info *info, int i, int j, int var);
 //bool	is_allowed_space_y(t_info *info, int i, int j, int var);

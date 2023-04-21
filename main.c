@@ -7,6 +7,10 @@ void	init_game(t_info *info)
     //printf("num rows: %d\n", info->row);
 	info->map = save_map(info);
 	info->map_i = 0;
+	info->player_amount = 0;
+	info->player_x = -1;
+	info->player_y = -1;
+	info->player_orientation = '0';
 }
 
 int	main(int argc, char **argv)

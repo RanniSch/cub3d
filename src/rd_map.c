@@ -20,6 +20,7 @@ int	count_nb_row(char *map_path)
 	if (line)
 		free(line);
 	close(fd);
+	printf("nb row %d\n", nb_row);
 	return (nb_row);
 }
 
@@ -41,6 +42,7 @@ char	**save_map(t_info *info)
 		i++;
 	}
 	tmp_map[i] = NULL;
+	//printf("%s", tmp_map[i]);
 	close(fd);
 	return (tmp_map);
 }

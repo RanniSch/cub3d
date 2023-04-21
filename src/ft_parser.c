@@ -27,19 +27,15 @@ bool	valid_map_extension(t_info *info)
 	return (true);
 }
 
-int	skip_empty_line(t_info *info)
+/*
+* Empty line which is followed by something. It cannot be the last line!
+*/
+void	skip_empty_lines(t_info *info)
 {
-	int	loop_i;
-
-	loop_i = 0;
 	//printf("map_i0: %d\n", info->map_i);
 	while (info->map[info->map_i] && info->map[info->map_i][0] == '\n')
-	{
 		info->map_i++;
-		loop_i++;
-	}
 	//printf("map_i1: %d\n", info->map_i);
-	return (loop_i);
 }
 
 /*
@@ -90,13 +86,26 @@ int	skip_empty_line(t_info *info)
     return (true);
 }*/
 
-bool    is_allowed_char(char c)
+bool    is_allowed_char(t_info *info, char c)
 {
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E' || c == '1' || c == '0')
+	{
+		if (c == 'N')
+			info->player_amount++;
+		if (c == 'S')
+			info->player_amount++;
+		if (c == 'W')
+			info->player_amount++;
+		if (c == 'E')
+			info->player_amount++;
 		return (true);
+	}
     return (false);
 }
 
+/*
+* An empty line where nothing comes after!
+*/
 bool    filled_line(t_info *info, int i)
 {
 	if (info->map[i][0] == '\0')
@@ -113,22 +122,60 @@ bool    correct_char(t_info *info, int i, int j)
 	{
 		if (info->map[i][j] != 32 && info->map[i][j] != '\n')
 		{
-			if (!is_allowed_char(info->map[i][j]))
+			if (!is_allowed_char(info, info->map[i][j]))
 			{
-				printf("Invalid character in map\n");;
+				printf("Invalid character in map!\n");
 				return (false);
 			}
 		}
-		if (!filled_line(info, i))	// brauchen wir das wirklich???
+		if (!filled_line(info, i))	// brauchen wir das wirklich an der Stelle??? Wird dies nicht schon durch das erste if statement ausgeschlossen
 			return (false);
 	}
 	return (true);
 }
 
-bool	init_player_pos(char c)
+bool    valid_lines(t_info *info, int i)
+{
+	if (info->map[i][0] == '\n')
+	{
+		printf("Found empty line in map!\n");  // just for debugging purpose!!!
+		return (false);
+	}
+	/*if (info->map[i][j] == 32)
+	{
+
+	}
+	if (info->map[i][j] == '0')
+	{
+
+	}*/
+	return (true);
+}
+
+bool	amount_player(int	amount_player)
+{
+	if (amount_player > 1)
+	{
+		printf("Too many players! Only one player is allowed in map!\n");
+		return (false);
+	}
+	else if (amount_player < 1)
+	{
+		printf("There is no player in map!\n");
+		return (false);
+	}
+	return (true);
+}
+
+bool	init_player_pos(t_info *info, char c, int i, int j)
 {
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
+	{
+		info->player_x = i;
+		info->player_y = j;
+		info->player_orientation = c;
 		return (true);
+	}
 	return (false);
 }
 
@@ -138,28 +185,25 @@ bool    check_valid_map(t_info *info)
 	int	j;
 
 	i = info->map_i;
-	j = 0;
 	while (i < info->row && info->map[i] != NULL)
 	{
-		if (info->map[i][0] == '\n') // falls wir keine leeren Zeilen in der Map akzeptieren
-		{
-			printf("Empty line in map!\n");
+		if (!valid_lines(info, i))
 			return (false);
-		}
-		j = 0;
-		while (info->map[i][j])
+		j = -1;
+		while (info->map[i][++j])
 		{
 			if (!correct_char(info, i, j))
 				return (false);
-			if (info->map[i][j] == '0' || init_player_pos(info->map[i][j]))
+			if (info->map[i][j] == '0' || init_player_pos(info, info->map[i][j], i , j))
 			{
 				if (!zero_middle(info, i, j))
 					return (false);
 			}
-			j++;
 		}
 		i++;
 	}
+	if (!amount_player(info->player_amount))
+		return (false);
 	return (true);
 }
 
@@ -168,7 +212,7 @@ bool	parsing(t_info *info)
 
 	if (!valid_map_extension(info))
 		return (false);
-    skip_empty_line(info);
+    skip_empty_lines(info);
 	//if (!check_orientation(info))
 	//	return ;
 	if (!check_valid_map(info))
