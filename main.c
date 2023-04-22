@@ -103,15 +103,15 @@ int	next_tile_on_display_x(int act_tile_display_x, t_info *info)
 void	draw_wall_textures(t_info *info)
 {
 	int	width_pixel;
-	int	start_end[4];
+	//int	start_end[4];
 
-	start_end[0] = 0;
+	//start_end[0] = 0;
 	width_pixel = -1;
 	print_dist_arr_info(info);
 	while (width_pixel < DISPLAY_WIDTH)
 	{
 		width_pixel = next_tile_on_display_x(width_pixel, info);
-		start_end[1] = width_pixel - 1;
+		//start_end[1] = width_pixel - 1;
 		// calc_wall_hight();
 
 	}

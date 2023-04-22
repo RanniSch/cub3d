@@ -1,5 +1,7 @@
 #include "../inc/cub3d.h"
 
+double cos(double __x);
+
 /**
  * @brief calculates the length of the vector
  * and returns as double

@@ -45,13 +45,6 @@ GNL			= ./get_next_line/gnl.a
 .PHONY:		all clean fclean re
 
 all:		${NAME}
-# ifeq (a, a)
-# all:
-#     echo 'true' 
-# else
-# all:
-#     echo 'false' 
-# endif
 
 
 %.o: %.c	$(LIBFT) $(GNL)
@@ -63,19 +56,20 @@ $(LIBFT):
 $(GNL):
 			make all -C $(GNL_DIR)
 # Ranja
-# $(MLX):
-# 			make -C $(MLX_DIR)
-
 $(MLX):
-			make -C $(MLX_DIR_MAC)
+			make -C $(MLX_DIR)
 
 # Max
-$(NAME):	$(MLX) Makefile $(GNL)
-			$(CC) $(CFLAGS) $(LIBFT) $(GNL) $(SRCS) $(MLX_MAC)  -framework OpenGL -framework AppKit -lz -o $(NAME)
+# $(MLX):
+#			make -C $(MLX_DIR_MAC)
+
+# Max
+# $(NAME):	$(MLX) Makefile $(GNL)
+#			$(CC) $(CFLAGS) $(LIBFT) $(GNL) $(SRCS) $(MLX_MAC)  -framework OpenGL -framework AppKit -lz -o $(NAME)
 
 # Ranja
-# $(NAME):	$(LIBFT) $(GNL) $(MLX) $(OBJS)
-# 			$(CC) $(OBJS) $(LIBFT) $(GNL) $(MLX) -L/usr/X11/lib -lXext -lX11 -o $(NAME)
+$(NAME):	$(LIBFT) $(GNL) $(MLX) $(OBJS)
+			$(CC) $(OBJS) $(LIBFT) $(GNL) $(MLX) -L/usr/X11/lib -lXext -lX11 -lm -o $(NAME)
 
 re:			fclean all
 
