@@ -47,34 +47,53 @@ GNL			= ./get_next_line/gnl.a
 all:		${NAME}
 
 
+
+ifeq ($(shell uname), Darwin)
+# Max
+%.o: %.c	$(LIBFT) $(GNL)
+			$(CC) -Wall -Wextra -Werror -c $< -o $@
+else
+# Ranja
 %.o: %.c	$(LIBFT) $(GNL)
 			$(CC) -Wall -Wextra -Werror -I/usr/include -Imlx_linux -c $< -o $@
+endif
+
+
 
 $(LIBFT):
 			make all -C $(LIBFT_DIR)
 
 $(GNL):
 			make all -C $(GNL_DIR)
+
+ifeq ($(shell uname), Darwin)
+# Max
+$(MLX):
+			make -C $(MLX_DIR_MAC)
+else
 # Ranja
 $(MLX):
 			make -C $(MLX_DIR)
+endif
 
 # Max
-# $(MLX):
-#			make -C $(MLX_DIR_MAC)
-
-# Max
-# $(NAME):	$(MLX) Makefile $(GNL)
-#			$(CC) $(CFLAGS) $(LIBFT) $(GNL) $(SRCS) $(MLX_MAC)  -framework OpenGL -framework AppKit -lz -o $(NAME)
-
+ifeq ($(shell uname), Darwin)
+$(NAME):	$(LIBFT) $(MLX) $(GNL) $(OBJS)
+			$(CC) $(CFLAGS) $(LIBFT) $(GNL) $(SRCS) $(MLX_MAC)  -framework OpenGL -framework AppKit -lz -o $(NAME)
+else
 # Ranja
 $(NAME):	$(LIBFT) $(GNL) $(MLX) $(OBJS)
 			$(CC) $(OBJS) $(LIBFT) $(GNL) $(MLX) -L/usr/X11/lib -lXext -lX11 -lm -o $(NAME)
+endif
 
 re:			fclean all
 
 clean:
 			$(RM) $(OBJS)
+			make clean -C $(LIBFT_DIR)
+			make clean -C $(GNL_DIR)
 
 fclean:		clean
 			$(RM) $(NAME)
+			make fclean -C $(LIBFT_DIR)
+			make fclean -C $(GNL_DIR)
