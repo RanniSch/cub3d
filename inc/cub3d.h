@@ -4,9 +4,59 @@
 
 # include "../get_next_line/get_next_line.h"
 # include "../libft/libft.h"
-# include "../minilibx-linux/mlx.h"
+// # include "../minilibx-linux/mlx.h"
+# include "../minilibx_opengl_20191021/mlx.h"
 # include <stdbool.h>
 # include <stdio.h>
+# include <math.h>
+# include <stdlib.h>
+
+# define PI 3.14159265
+# define X 0
+# define Y 1
+# define M 0
+# define B 1
+# define NORTH 1
+# define EAST 2
+# define SOUTH 3
+# define WEST 4
+# define NORTH_WEST 5
+# define NORTH_EAST 6
+# define SOUTH_EAST 7
+# define SOUTH_WEST 8
+# define W 13
+# define A 0
+# define S 1
+# define D 2
+# define ARROW_LEFT 123
+# define ARROW_RIGHT 124
+# define DISPLAY_WIDTH 600
+# define DISPLAY_HEIGHT 400
+# define LEN_CAM_VEC 1
+# define LEN_LEFT_FOV 1 // mit 1 gestartet
+# define FACTOR_WALL_HEIGHT 0.3
+# define STEPSIZE 0.3
+# define PLAYER_ROTATION_DEG 15
+# define DISTANCE_FROM_WALL 0.3
+
+typedef struct s_player
+{
+	double	pos[2];
+	double	cam_vec[2];
+	double	dpx;
+	double	left_fov[2];
+}	t_player;
+
+typedef struct	s_img
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int		width;
+	int		height;
+}	t_img;
 
 typedef struct s_info
 {
@@ -18,10 +68,26 @@ typedef struct s_info
 	int		player_x;
 	int		player_y;
 	char	player_orientation;
+
+	int			mapsize[2];
+	int			**map_int;
+	double		*dist_arr;
+	int			**dist_info;
+	void		*mlx_ptr;
+	void		*mlx_win;
+	int			ceiling;
+	int			floor;
+	t_img		*north;
+	t_img		*east;
+	t_img		*south;
+	t_img		*west;
+	t_img		*img;
+	t_player	*p;
 }			t_info;
 
-/* ########################################################################## */
-/* FUNCTIONS */
+//*********************************************************//
+//**                FUNCTIONS                           **//
+//*******************************************************//
 
 /* rd_map.c */
 int			count_nb_row(char *map_path);
@@ -55,5 +121,68 @@ bool		zero_middle(t_info *info, int i, int j);
 
 bool		horizontal_correct(t_info *info, int i, int j, int var);
 bool		vertical_correct(t_info *info, int i, int j, int var);
+
+//**** linear_analysis.c ****//
+
+double	slope(double *one, double *two);
+int		func_from_points(double *one, double *two, double *func);
+double	y_from_x(double x, double *func);
+double	x_from_y(double y, double *func);
+double	len_between_two_points(double x1, double y1, double x2, double y2);
+
+
+//**** move_2.c ****//
+
+void	move_backward(t_info *info);
+void	move_left(t_info *info);
+void	move_right(t_info *info);
+void	rotate_left(t_info *info);
+void	rotate_right(t_info *info);
+
+//**** move.c ****//
+
+double	betrag(double value);
+void	move_x(double *move_vec, t_info *info);
+void	move_y(double *move_vec, t_info *info);
+void	move(double *move_vec, t_info *info);
+void	move_forward(t_info *info);
+
+//**** raycast_scan.c ****//
+
+void	field_of_view(double *cam_vec, double *left_fov);
+double	calc_diff_fov(double *left_fov);
+void	calc_left_px_vec(double *left_px_vec, t_player *p);
+void	calc_px_vec(double *px_vec, double *left_px_vec, t_player *p, int i);
+void	raycast_scan_in_fov(t_info *info, t_player *p);
+
+//**** raycast.c ****//
+
+int		next_int_value_in_dir(double pos, double dir);
+void	next_grid_point(double *dest, double *pos, double *dir, double *func);
+int		find_correct_box(double pos, double dir);
+int		hit(double *pos, double *dir, t_info *info, int *hit_coordinates);
+double	raycast(double *position, double *cast_dir, t_info *info, int *hit_coordinates);
+
+//**** test_utils.c ****//
+
+void	print_dist_arr_info(t_info *info);
+void	print_2d_arr(int **array, int row, int col);
+void	draw_wallshadows(double *dist_arr, t_img *img);
+
+//**** vec_ops_2.c ****//
+
+void	pvec(double *vec);
+void	cpy_vec(double *dest, double *src);
+void	subtract_vec(double *dest, double *src);
+
+//**** vec_ops.c ****//
+
+double	len_vec(double *vec);
+void	norm_vec(double *vec);
+void	rot_vec(double *vec, double rot);
+void	mult_vec(double *vec, double factor);
+void	add_vec(double *dest, double *src);
+
+void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
 
 #endif

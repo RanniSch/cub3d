@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rschlott <rschlott@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: mrehberg <maxrehberg@posteo.de>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 20:16:53 by rschlott          #+#    #+#             */
-/*   Updated: 2023/04/07 17:27:30 by rschlott         ###   ########.fr       */
+/*   Updated: 2023/04/22 14:07:50 by mrehberg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ static char	*ft_strjoin_gnl(char *s1, char *s2)
 	i = 0;
 	len1 = ft_strlen_gnl(s1);
 	len = len1 + ft_strlen_gnl(s2)+ 1;
-	dst = ft_calloc(len, sizeof(char));
+	dst = ft_calloc_gnl(len, sizeof(char));
 	while (i < (len1 + 1))
 	{
 		dst[i] = s1[i];
 		i++;
 	}
 	ft_strlcat_gnl(dst, s2, len);
-	ft_bzero(s2, ft_strlen_gnl(s2));
+	ft_bzero_gnl(s2, ft_strlen_gnl(s2));
 	if (s1)
 		free (s1);
 	return (dst);
@@ -55,7 +55,7 @@ static char	*line_to_n(char *return_str, char *buf)
 	int		j;
 
 	i = 0;
-	str = ft_calloc(ft_strlen_gnl(return_str) + 1, sizeof(char));
+	str = ft_calloc_gnl(ft_strlen_gnl(return_str) + 1, sizeof(char));
 	if (return_str[0] == '\n')
 		return (line_after_n(return_str, buf, str));
 	while (return_str[i] != '\n')
@@ -122,7 +122,7 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || fd > 4096 || BUFFER_SIZE <= 0)
 		return (NULL);
-	return_str = ft_calloc(1, sizeof(char));
+	return_str = ft_calloc_gnl(1, sizeof(char));
 	bytes = 1;
 	while (bytes)
 	{
