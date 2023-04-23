@@ -20,13 +20,13 @@ int **map_converter(t_info *info)
         while (info->map[i][j] && info->map[i][j] != '\n')
         {
             tmp_map_int[i][j] = info->map[i][j] - 48;
-            printf("%d", tmp_map_int[i][j]);
+            //printf("%d", tmp_map_int[i][j]);
             j++;
         }
-        printf("\n");
+        //printf("\n");
 	}
 	tmp_map_int[i] = NULL;
-	printf("%ls", tmp_map_int[i]);
+	//printf("%ls", tmp_map_int[i]);
     
     return (tmp_map_int);
 }
