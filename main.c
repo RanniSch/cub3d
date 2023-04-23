@@ -1,8 +1,6 @@
  
 #include "./inc/cub3d.h"
 
-#include "inc/cub3d.h"
-
 /**
  * @brief dist_arr[] holds the distance values of the next wall.
  * dist_info[0][] and 1 hold the col and row values of the (1) Field on the
@@ -337,6 +335,8 @@ int	main(int argc, char **argv)
     else
     {
         printf("great\n");
+		info->map_int = map_converter(info);
     }
+	
 	return (0);
 }

@@ -122,6 +122,10 @@ bool		zero_middle(t_info *info, int i, int j);
 bool		horizontal_correct(t_info *info, int i, int j, int var);
 bool		vertical_correct(t_info *info, int i, int j, int var);
 
+/* ft_map_converter.c */
+
+int **map_converter(t_info *info);
+
 //**** linear_analysis.c ****//
 
 double	slope(double *one, double *two);

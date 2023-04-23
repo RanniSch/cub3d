@@ -21,6 +21,7 @@ SRCS		= main.c \
 			  ./src/ft_check_walls.c \
 			  ./src/ft_check_valid_map.c \
 			  ./src/ft_parser.c \
+			  ./src/ft_map_converter.c \
 			  ./src/ft_linear_analysis.c \
 			  ./src/ft_move_2.c \
 			  ./src/ft_move.c \
