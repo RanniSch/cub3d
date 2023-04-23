@@ -24,14 +24,8 @@
 # define Y4 7
 # define M 0
 # define B 1
-# define NORTH 1
-# define EAST 2
-# define SOUTH 3
-# define WEST 4
-# define NORTH_WEST 5
-# define NORTH_EAST 6
-# define SOUTH_EAST 7
-# define SOUTH_WEST 8
+# define WIDTH_WALL 64
+# define HEIGHT_WALL 64
 # define W 13
 # define A 0
 # define S 1
@@ -62,8 +56,8 @@ typedef struct	s_img
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-	int		width;
-	int		height;
+	int		width; // weg
+	int		height; // weg
 }	t_img;
 
 typedef struct s_info

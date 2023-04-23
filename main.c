@@ -77,18 +77,18 @@ int	next_tile_on_display_x(int act_tile_display_x, t_info *info)
 {
 	int act_tile_map_x;
 	int act_tile_map_y;
-	int i;
+	// int i;
 
 	act_tile_map_x = info->dist_info[X][act_tile_display_x];
 	act_tile_map_y = info->dist_info[Y][act_tile_display_x];
-	i = -1;
-	while (++i < DISPLAY_WIDTH)
+	// i = -1;
+	while (++act_tile_display_x < DISPLAY_WIDTH)
 	{
-		if (info->dist_info[X][i] != act_tile_map_x || \
-			info->dist_info[Y][i] != act_tile_map_y)
-			return (i);
+		if (info->dist_info[X][act_tile_display_x] != act_tile_map_x || \
+			info->dist_info[Y][act_tile_display_x] != act_tile_map_y)
+			return (act_tile_display_x);
 	}
-	return (i);
+	return (act_tile_display_x);
 }
 
 /**
@@ -104,24 +104,30 @@ int	next_tile_on_display_x(int act_tile_display_x, t_info *info)
 void	calc_corners_of_wall(int *corners, int width_pixel, double *dist_arr, t_info *info)
 {
 	double height_on_x_value;
+	double buf;
 
 	height_on_x_value = DISPLAY_HEIGHT * FACTOR_WALL_HEIGHT / dist_arr[width_pixel];
 	corners[X1] = width_pixel;
 	corners[X2] = width_pixel;
-	corners[Y1] = (DISPLAY_HEIGHT - height_on_x_value) / 2;
-	corners[Y2] = corners[Y1] + height_on_x_value;
+	buf = round((DISPLAY_HEIGHT - height_on_x_value) / 2);
+	corners[Y1] = (int)(buf + 0.1);
+	buf = corners[Y1] + height_on_x_value;
+	corners[Y2] = (int)(buf + 0.1);
 	width_pixel = next_tile_on_display_x(width_pixel, info) - 1;
 	height_on_x_value = DISPLAY_HEIGHT * FACTOR_WALL_HEIGHT / dist_arr[width_pixel];
 	corners[X3] = width_pixel;
 	corners[X4] = width_pixel;
-	corners[Y3] = (DISPLAY_HEIGHT - height_on_x_value) / 2;
-	corners[Y4] = corners[Y1] + height_on_x_value;
+	buf = round((DISPLAY_HEIGHT - height_on_x_value) / 2);
+	corners[Y3] = (int)(buf + 0.1);
+	buf = corners[Y3] + height_on_x_value;
+	corners[Y4] = (int)(buf + 0.1);
 }
 
 /**
  * @brief
  * calc corners of Wall
- * calc dWallx_px_per_display_px
+ * calc dx_for_wall -> how many px of the wall do we have to go
+ * for one px of the display ?
  * calc dWally_px_per_display_px
  * draw_vertical_wall_line till the end or till the next comes
  * 
@@ -131,20 +137,22 @@ void	draw_wall_textures(t_info *info)
 {
 	int	width_pixel;
 	int	corners[8];
+	double	dx_for_wall;
 
-	width_pixel = -1;
+	width_pixel = 0;
 	print_dist_arr_info(info);
 	while (width_pixel < DISPLAY_WIDTH)
 	{
-		width_pixel = next_tile_on_display_x(width_pixel, info);
+		
 		calc_corners_of_wall(corners, width_pixel, info->dist_arr, info);
-		my_mlx_pixel_put(info->img, corners[X1], corners[Y1], 0x00FF0000);
-		my_mlx_pixel_put(info->img, corners[X2], corners[Y2], 0x00FF0000);
-		my_mlx_pixel_put(info->img, corners[X3], corners[Y3], 0x00FF0000);
-		my_mlx_pixel_put(info->img, corners[X4], corners[Y4], 0x00FF0000);
-		width_pixel = DISPLAY_WIDTH;
-		// calc_wall_hight();
+		my_mlx_pixel_put(info->img, corners[X1], corners[Y1], 0x00FF0000); // for testing
+		my_mlx_pixel_put(info->img, corners[X2], corners[Y2], 0x00FF0000); // for testing
+		my_mlx_pixel_put(info->img, corners[X3], corners[Y3], 0x00FF0000); // for testing
+		my_mlx_pixel_put(info->img, corners[X4], corners[Y4], 0x00FF0000); // for testing
+		dx_for_wall = WIDTH_WALL / (corners[X3] - corners[X1]);
+		
 
+		width_pixel = next_tile_on_display_x(width_pixel, info);
 	}
 	
 }

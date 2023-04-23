@@ -3,11 +3,23 @@
 void	print_dist_arr_info(t_info *info)
 {
 	int i;
+	// int up_left;
+	// int down_left;
+	// int up_right;
+	// int down_right;
+	// double	height_on_x_value;
+	// double	buf;
 
 	i = -1;
 	printf("\ndistance  col row  card_dir\n\n");
 	while(++i < DISPLAY_WIDTH)
 	{
+
+		// height_on_x_value = DISPLAY_HEIGHT * FACTOR_WALL_HEIGHT / info->dist_arr[i];
+		// buf = round((DISPLAY_HEIGHT - height_on_x_value) / 2);
+		// up_left = (int)(buf + 0.1);
+		// buf = up_left + height_on_x_value;
+		// down_left = (int)(buf + 0.1);
 		printf("%f   %d   %d   ", info->dist_arr[i], info->dist_info[0][i], info->dist_info[1][i]);
 		if(info->dist_info[2][i] == EAST)
 			printf("EAST\n");
