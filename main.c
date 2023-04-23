@@ -110,7 +110,7 @@ void	calc_corners_of_wall(int *corners, int width_pixel, double *dist_arr, t_inf
 	corners[X2] = width_pixel;
 	corners[Y1] = (DISPLAY_HEIGHT - height_on_x_value) / 2;
 	corners[Y2] = corners[Y1] + height_on_x_value;
-	width_pixel = next_tile_on_display_x(width_pixel, info);
+	width_pixel = next_tile_on_display_x(width_pixel, info) - 1;
 	height_on_x_value = DISPLAY_HEIGHT * FACTOR_WALL_HEIGHT / dist_arr[width_pixel];
 	corners[X3] = width_pixel;
 	corners[X4] = width_pixel;
@@ -138,10 +138,10 @@ void	draw_wall_textures(t_info *info)
 	{
 		width_pixel = next_tile_on_display_x(width_pixel, info);
 		calc_corners_of_wall(corners, width_pixel, info->dist_arr, info);
-		my_mlx_pixel_put(info->img, corners[X1], corners[Y1], 0x99FF0000);
-		my_mlx_pixel_put(info->img, corners[X2], corners[Y2], 0x99FF0000);
-		my_mlx_pixel_put(info->img, corners[X3], corners[Y3], 0x99FF0000);
-		my_mlx_pixel_put(info->img, corners[X4], corners[Y4], 0x99FF0000);
+		my_mlx_pixel_put(info->img, corners[X1], corners[Y1], 0x00FF0000);
+		my_mlx_pixel_put(info->img, corners[X2], corners[Y2], 0x00FF0000);
+		my_mlx_pixel_put(info->img, corners[X3], corners[Y3], 0x00FF0000);
+		my_mlx_pixel_put(info->img, corners[X4], corners[Y4], 0x00FF0000);
 		width_pixel = DISPLAY_WIDTH;
 		// calc_wall_hight();
 
