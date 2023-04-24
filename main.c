@@ -73,22 +73,23 @@ void	fill_background(int	ceiling, int floor, t_img *img)
  * @return int number where the next tile starts in dist_info 
  * (same as width pixel on display)
  */
-int	next_tile_on_display_x(int act_tile_display_x, t_info *info)
+int	next_tile_on_display_x(int act_x_on_display, t_info *info)
 {
 	int act_tile_map_x;
 	int act_tile_map_y;
-	// int i;
+	int act_wall_facing_direction;
 
-	act_tile_map_x = info->dist_info[X][act_tile_display_x];
-	act_tile_map_y = info->dist_info[Y][act_tile_display_x];
-	// i = -1;
-	while (++act_tile_display_x < DISPLAY_WIDTH)
+	act_tile_map_x = info->dist_info[X][act_x_on_display];
+	act_tile_map_y = info->dist_info[Y][act_x_on_display];
+	act_wall_facing_direction = info->dist_info[2][act_x_on_display];
+	while (++act_x_on_display < DISPLAY_WIDTH)
 	{
-		if (info->dist_info[X][act_tile_display_x] != act_tile_map_x || \
-			info->dist_info[Y][act_tile_display_x] != act_tile_map_y)
-			return (act_tile_display_x);
+		if (info->dist_info[X][act_x_on_display] != act_tile_map_x || \
+			info->dist_info[Y][act_x_on_display] != act_tile_map_y || \
+			info->dist_info[2][act_x_on_display] != act_wall_facing_direction) 
+			return (act_x_on_display);
 	}
-	return (act_tile_display_x);
+	return (act_x_on_display);
 }
 
 /**
@@ -123,12 +124,77 @@ void	calc_corners_of_wall(int *corners, int width_pixel, double *dist_arr, t_inf
 	corners[Y4] = (int)(buf + 0.1);
 }
 
+int	get_color_from_img(t_img *img, double x, double y)
+{
+	char *addr;
+	int color;
+
+	addr = img->addr + ((int)(y) % HEIGHT_WALL * img->line_length + (int)(x) % WIDTH_WALL * (img->bits_per_pixel / 8));
+	color = *(int *)addr;
+	return (color);
+	// dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
+	// *(unsigned int*)dst = color;
+}
+
+/**
+ * @brief draw one vertical line of a wall into img in respect to corners[]
+ * 
+ * calc act_hight per intercept theorem 
+ * calc dy_for_wall -> how many px in the wall texture do I have to go
+ * 	   for one px on the display?
+ * calc start_y
+ * while
+ * 		get color of texture
+ * 		my_mlx_pixel_put()
+ * 
+ */
+void	draw_one_vertical_line(t_img *dest, t_img *src, int *corners, int act_x, double dx_for_wall)
+{
+	double dy_for_wall;
+	double act_height;
+	double sum_dy;
+	double sum_dx;
+	int	start_y;
+	int	y;
+	int	color;
+
+	y = -1;
+	
+	sum_dy = (corners[Y4] - corners[Y3]) - (corners[Y2] - corners[Y1]);
+	sum_dx = corners[X3] - corners[X1]; // falsche bezeichnung
+	act_height = ((sum_dy / sum_dx) * (double)act_x) + (corners[Y2] - corners[Y1]);
+	start_y = (DISPLAY_HEIGHT - act_height) / 2;
+	dy_for_wall = HEIGHT_WALL / act_height;
+	while (++y < act_height)
+	{
+		color = get_color_from_img(src, (act_x * dx_for_wall), (y * dy_for_wall));
+		my_mlx_pixel_put(dest, (act_x + corners[X1]), (y + start_y), color);
+	}
+}
+
+t_img	*get_wall_ptr(int width_pixel, int **dist_info, t_info *info)
+{
+	int	wall;
+
+	wall = dist_info[2][width_pixel];
+	if (wall == NORTH)
+		return (info->north);
+	if (wall == SOUTH)
+		return (info->south);
+	if (wall == WEST)
+		return (info->west);
+	if (wall == EAST)
+		return (info->east);
+	return (NULL);
+}
+
 /**
  * @brief
  * calc corners of Wall
  * calc dx_for_wall -> how many px of the wall do we have to go
  * for one px of the display ?
- * calc dWally_px_per_display_px
+ * draw_one_vertical_line
+ * 
  * draw_vertical_wall_line till the end or till the next comes
  * 
  * @param info 
@@ -136,20 +202,28 @@ void	calc_corners_of_wall(int *corners, int width_pixel, double *dist_arr, t_inf
 void	draw_wall_textures(t_info *info)
 {
 	int	width_pixel;
+	int	act_x;
 	int	corners[8];
 	double	dx_for_wall;
+	t_img	*wall_ptr;
 
 	width_pixel = 0;
+	
 	print_dist_arr_info(info);
 	while (width_pixel < DISPLAY_WIDTH)
 	{
-		
+		act_x = -1;
 		calc_corners_of_wall(corners, width_pixel, info->dist_arr, info);
+		wall_ptr = get_wall_ptr(width_pixel, info->dist_info, info);
 		my_mlx_pixel_put(info->img, corners[X1], corners[Y1], 0x00FF0000); // for testing
 		my_mlx_pixel_put(info->img, corners[X2], corners[Y2], 0x00FF0000); // for testing
 		my_mlx_pixel_put(info->img, corners[X3], corners[Y3], 0x00FF0000); // for testing
 		my_mlx_pixel_put(info->img, corners[X4], corners[Y4], 0x00FF0000); // for testing
-		dx_for_wall = WIDTH_WALL / (corners[X3] - corners[X1]);
+		dx_for_wall = WIDTH_WALL / (double)(corners[X3] - corners[X1]);
+		while ((++act_x + corners[X1]) <= corners[X3])
+		{
+			draw_one_vertical_line(info->img, wall_ptr, corners, act_x, dx_for_wall); // src nachgucken je nach wand
+		}
 		
 
 		width_pixel = next_tile_on_display_x(width_pixel, info);
@@ -181,28 +255,6 @@ void	key_event(int key, t_info *info)
 	else if (key == ARROW_RIGHT)
 		rotate_right(info);
 	raycast_and_picturework(info);
-
-	
-	
-	// t_img img_3;
-
-	// img_3.img = mlx_new_image(info->mlx_ptr, DISPLAY_WIDTH, DISPLAY_HEIGHT);
-	// img_3.addr = mlx_get_data_addr(img_3.img, &img_3.bits_per_pixel, &img_3.line_length, &img_3.endian);
-	// fill_background(info->ceiling, info->floor, &img_3);
-	// draw_wallshadows(info->dist_arr, &img_3);
-	// mlx_put_image_to_window(info->mlx_ptr, info->mlx_win, img_3.img, 0, 0);
-}
-
-int	get_color_from_img(t_img *img, double x, double y)
-{
-	char *addr;
-	int color;
-
-	addr = img->addr + ((int)(y) % img->height * img->line_length + (int)(x) % img->width * (img->bits_per_pixel / 8));
-	color = *(int *)addr;
-	return (color);
-	// dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
-	// *(unsigned int*)dst = color;
 }
 
 void	get_properties_from_mlx_img(void *img_ptr, t_img *img)
