@@ -1,7 +1,7 @@
 NAME		= cub3D
 
 CC			= gcc
-CFLAGS		= -Wextra -Wall -g #-fsanitize=address #-Werror
+CFLAGS		= -Wextra -Wall -Werror -g #-fsanitize=address
 
 RM			= rm -f
 
