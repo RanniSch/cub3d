@@ -39,7 +39,6 @@ double	calc_angle_vec(double *one, double *two)
 	double	dot_prod;
 	double	len_one;
 	double	len_two;
-	double	buf;
 
 	dot_prod = dot_prod_vec(one, two);
 	len_one = len_vec(one);

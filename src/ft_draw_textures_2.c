@@ -54,7 +54,7 @@ t_img	*get_wall_ptr(int width_pixel, int **dist_info, t_info *info)
  * -> visible wall px / amount of px on display
  * 
  */
-double	calc_dx_for_wall(double *start_end_wall, int *corners, t_info *info)
+double	calc_dx_for_wall(double *start_end_wall, int *corners)
 {
 	double dx;
 	double visible_wall_px;

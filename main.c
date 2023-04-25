@@ -71,11 +71,10 @@ int main(void)
 {
 	t_player p;
 	t_info info;
-	double func[2];
+	// double func[2];
 	// double left_fov[2];
 	double tile[2];
-	double ret;
-	int game[3][3];
+	// int game[3][3];
 
 // 	int worldMap[24][24]=
 // {
@@ -191,8 +190,8 @@ int main(void)
 	void *v_ea;
 	void *v_so;
 	void *v_we;
-	int width = 64;
-	int height = 64;
+	// int width = 64;
+	// int height = 64;
 	char *no = "textures/Wall64x64.xpm";
 	char *ea = "textures/Collect64x64.xpm";
 	char *so = "textures/Exit64x64.xpm";

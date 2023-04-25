@@ -5,8 +5,8 @@
 # include <math.h>
 # include "../get_next_line/get_next_line.h"
 # include "../libft/libft.h"
-# include "../minilibx-linux/mlx.h"
-// # include "../minilibx_opengl_20191021/mlx.h"
+// # include "../minilibx-linux/mlx.h"
+# include "../minilibx_opengl_20191021/mlx.h"
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -141,7 +141,7 @@ int 	**map_converter(t_info *info);
 void	fill_background(int	ceiling, int floor, t_img *img);
 int		get_color_from_img(t_img *img, double x, double y);
 t_img	*get_wall_ptr(int width_pixel, int **dist_info, t_info *info);
-double	calc_dx_for_wall(double *start_end_wall, int *corners, t_info *info);
+double	calc_dx_for_wall(double *start_end_wall, int *corners);
 void	draw_one_vertical_line(t_img *dest, t_img *src, \
 	double *start_end_wall, int *corners, int act_x, double dx_for_wall);
 

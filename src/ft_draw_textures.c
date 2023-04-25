@@ -131,7 +131,7 @@ void	draw_wall_textures(t_info *info, int width_pixel)
 		calc_start_wall(start_end_wall, corners, width_pixel, info);
 		calc_end_wall(start_end_wall, corners, width_pixel, info);
 		wall_ptr = get_wall_ptr(width_pixel, info->dist_info, info);
-		dx_for_wall = calc_dx_for_wall(start_end_wall, corners, info);
+		dx_for_wall = calc_dx_for_wall(start_end_wall, corners);
 		while ((++act_x + corners[X1]) <= corners[X3])
 		{
 			draw_one_vertical_line(info->img, wall_ptr, start_end_wall, \
@@ -145,5 +145,4 @@ void	draw_wall_textures(t_info *info, int width_pixel)
 
 		width_pixel = next_tile_on_display_x(width_pixel, info);
 	}
-	
 }
