@@ -30,6 +30,9 @@ SRCS		= main.c \
 			  ./src/ft_test_utils.c \
 			  ./src/ft_vec_ops.c \
 			  ./src/ft_vec_ops_2.c \
+			  ./src/ft_draw_textures_2.c \
+			  ./src/ft_draw_textures_3.c \
+			  ./src/ft_draw_textures.c \
 			  
 			  
 

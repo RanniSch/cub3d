@@ -145,8 +145,31 @@ int hit(double *pos, double *dir, t_info *info, int *hit_coordinates)
 }
 
 /**
- * @brief calculates length to next wall with the act position
- * the direction and the map
+ * @brief I need the exact coordinates where the tile is hit
+ * but easily there is only this int array, so muliply it with 1000
+ * and later divide again by 1000
+ * 
+ * @param hit_coordinates 
+ * @param dest 
+ */
+void	write_next_grid_pt_to_hit_coordinates(int *hit_coordinates, double *dest)
+{
+	hit_coordinates[EXACT_X] = (int)(dest[X] * 1000);
+	hit_coordinates[EXACT_Y] = (int)(dest[Y] * 1000);
+}
+
+double	calc_len(double *dest, double *position)
+{
+	double	len;
+
+	subtract_vec(dest, position);
+	len = len_vec(dest);
+	return (len);
+}
+
+/**
+ * @brief calculates length to next wall from position
+ * in direction cast_dir (needs the map)
  * For that it makes a linear function (y=mx+b) out of 
  * two points: the position and the direction. 
  * Then calculates the cutting points on that function 
@@ -165,32 +188,22 @@ double	raycast(double *position, double *cast_dir, t_info *info, int *hit_coordi
 	double func[2];
 	double dest[2];
 	double pos[2];
-	// double start_pos[2];
-	double len;
 
-
-	// cpy_vec(start_pos, position);
 	cpy_vec(pos, position);
-	// cpy_vec(dest, cast_dir);
-	// add_vec(dest, pos);
 	if (cast_dir[X] == 0)
 		cast_dir[X] += 0.0000001;
 	cpy_vec(dest, cast_dir);
 	add_vec(dest, pos);
 	func_from_points(pos, dest, func);
-	// wenn genau an kannte dann alle drei checken
 	while(1)
 	{
 		next_grid_point(dest, pos, cast_dir, func);
-		if (hit(dest, cast_dir, info, NULL) == -1)
-			return (-1);
+		if (hit(dest, cast_dir, info, NULL) == -1) // I don't use it, erase
+			return (-1);							// I don't use it, erase
+		if (hit_coordinates)
+			write_next_grid_pt_to_hit_coordinates(hit_coordinates, dest);
 		if (hit(dest, cast_dir, info, hit_coordinates))
-		{
-			// printf("hit\n");
-			subtract_vec(dest, position);
-			len = len_vec(dest);
-			return (len);
-		}
+			return (calc_len(dest, position));
 		cpy_vec(pos, dest);
 	}
 	return (0);

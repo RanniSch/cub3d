@@ -22,13 +22,14 @@ void	print_dist_arr_info(t_info *info)
 		// down_left = (int)(buf + 0.1);
 		printf("%f   %d   %d   ", info->dist_arr[i], info->dist_info[0][i], info->dist_info[1][i]);
 		if(info->dist_info[2][i] == EAST)
-			printf("EAST\n");
+			printf("EAST ");
 		else if(info->dist_info[2][i] == WEST)
-			printf("WEST\n");
+			printf("WEST ");
 		else if(info->dist_info[2][i] == NORTH)
-			printf("NORTH\n");
+			printf("NORTH ");
 		else if(info->dist_info[2][i] == SOUTH)
-			printf("SOUTH\n");
+			printf("SOUTH ");
+		printf("%d   %d\n", info->dist_info[3][i], info->dist_info[4][i]);
 		if ((i+1)%10 == 0)
 			printf("-----------------------------  %d\n", (i+1));
 	}

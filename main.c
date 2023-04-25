@@ -1,4 +1,3 @@
- 
 #include "./inc/cub3d.h"
 
 /**
@@ -18,10 +17,10 @@ int	**init_dist_arr(t_info *info)
 	info->dist_arr = malloc(sizeof(double) * DISPLAY_WIDTH);
 	if (!info->dist_arr)
 		return (NULL);
-	info->dist_info = malloc(sizeof(int*) * 3);
+	info->dist_info = malloc(sizeof(int*) * 5);
 	if (!info->dist_info)
 		return (NULL);
-	while (++i < 3)
+	while (++i < 5)
 	{
 		info->dist_info[i] = malloc(sizeof(int) * DISPLAY_WIDTH);
 		if (!info->dist_info[i])
@@ -30,213 +29,13 @@ int	**init_dist_arr(t_info *info)
 	return (info->dist_info);
 }
 
-void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
-}
-
-int	argb(int alpha, int red, int green, int blue)
-{
-	return (alpha << 24 | red << 16 | green << 8 | blue);
-}
-
-void	fill_background(int	ceiling, int floor, t_img *img)
-{
-	int x;
-	int y;
-
-	y = -1;
-	while (++y < DISPLAY_HEIGHT / 2)
-	{
-		x = -1;
-		while (++x < DISPLAY_WIDTH)
-			my_mlx_pixel_put(img, x, y, ceiling);
-	}
-	--y;
-	while (++y < DISPLAY_HEIGHT)
-	{
-		x = -1;
-		while (++x < DISPLAY_WIDTH)
-			my_mlx_pixel_put(img, x, y, floor);
-	}
-}
-
-/**
- * @brief goes through the raycast_scan (dist_info) and looks for
- * the next tile
- * 
- * @param act_tile_display_y 
- * @param info 
- * @return int number where the next tile starts in dist_info 
- * (same as width pixel on display)
- */
-int	next_tile_on_display_x(int act_x_on_display, t_info *info)
-{
-	int act_tile_map_x;
-	int act_tile_map_y;
-	int act_wall_facing_direction;
-
-	act_tile_map_x = info->dist_info[X][act_x_on_display];
-	act_tile_map_y = info->dist_info[Y][act_x_on_display];
-	act_wall_facing_direction = info->dist_info[2][act_x_on_display];
-	while (++act_x_on_display < DISPLAY_WIDTH)
-	{
-		if (info->dist_info[X][act_x_on_display] != act_tile_map_x || \
-			info->dist_info[Y][act_x_on_display] != act_tile_map_y || \
-			info->dist_info[2][act_x_on_display] != act_wall_facing_direction) 
-			return (act_x_on_display);
-	}
-	return (act_x_on_display);
-}
-
-/**
- * @brief top left corner is 1 -> X1, Y1
- * bottom left corner is 2, top right is 3 bottom right is 4
- * 
- * Display grid starts in the top left corner. x goes to the right,
- * y goes to the bottom.
- * @param corners 
- * @param width_pixel 
- * @param dist_arr 
- */
-void	calc_corners_of_wall(int *corners, int width_pixel, double *dist_arr, t_info *info)
-{
-	double height_on_x_value;
-	double buf;
-
-	height_on_x_value = DISPLAY_HEIGHT * FACTOR_WALL_HEIGHT / dist_arr[width_pixel];
-	corners[X1] = width_pixel;
-	corners[X2] = width_pixel;
-	buf = round((DISPLAY_HEIGHT - height_on_x_value) / 2);
-	corners[Y1] = (int)(buf + 0.1);
-	buf = corners[Y1] + height_on_x_value;
-	corners[Y2] = (int)(buf + 0.1);
-	width_pixel = next_tile_on_display_x(width_pixel, info) - 1;
-	height_on_x_value = DISPLAY_HEIGHT * FACTOR_WALL_HEIGHT / dist_arr[width_pixel];
-	corners[X3] = width_pixel;
-	corners[X4] = width_pixel;
-	buf = round((DISPLAY_HEIGHT - height_on_x_value) / 2);
-	corners[Y3] = (int)(buf + 0.1);
-	buf = corners[Y3] + height_on_x_value;
-	corners[Y4] = (int)(buf + 0.1);
-}
-
-int	get_color_from_img(t_img *img, double x, double y)
-{
-	char *addr;
-	int color;
-
-	addr = img->addr + ((int)(y) % HEIGHT_WALL * img->line_length + (int)(x) % WIDTH_WALL * (img->bits_per_pixel / 8));
-	color = *(int *)addr;
-	return (color);
-	// dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
-	// *(unsigned int*)dst = color;
-}
-
-/**
- * @brief draw one vertical line of a wall into img in respect to corners[]
- * 
- * calc act_hight per intercept theorem 
- * calc dy_for_wall -> how many px in the wall texture do I have to go
- * 	   for one px on the display?
- * calc start_y
- * while
- * 		get color of texture
- * 		my_mlx_pixel_put()
- * 
- */
-void	draw_one_vertical_line(t_img *dest, t_img *src, int *corners, int act_x, double dx_for_wall)
-{
-	double dy_for_wall;
-	double act_height;
-	double sum_dy;
-	double sum_dx;
-	int	start_y;
-	int	y;
-	int	color;
-
-	y = -1;
-	
-	sum_dy = (corners[Y4] - corners[Y3]) - (corners[Y2] - corners[Y1]);
-	sum_dx = corners[X3] - corners[X1]; // falsche bezeichnung
-	act_height = ((sum_dy / sum_dx) * (double)act_x) + (corners[Y2] - corners[Y1]);
-	start_y = (DISPLAY_HEIGHT - act_height) / 2;
-	dy_for_wall = HEIGHT_WALL / act_height;
-	while (++y < act_height)
-	{
-		color = get_color_from_img(src, (act_x * dx_for_wall), (y * dy_for_wall));
-		my_mlx_pixel_put(dest, (act_x + corners[X1]), (y + start_y), color);
-	}
-}
-
-t_img	*get_wall_ptr(int width_pixel, int **dist_info, t_info *info)
-{
-	int	wall;
-
-	wall = dist_info[2][width_pixel];
-	if (wall == NORTH)
-		return (info->north);
-	if (wall == SOUTH)
-		return (info->south);
-	if (wall == WEST)
-		return (info->west);
-	if (wall == EAST)
-		return (info->east);
-	return (NULL);
-}
-
-/**
- * @brief
- * calc corners of Wall
- * calc dx_for_wall -> how many px of the wall do we have to go
- * for one px of the display ?
- * draw_one_vertical_line
- * 
- * draw_vertical_wall_line till the end or till the next comes
- * 
- * @param info 
- */
-void	draw_wall_textures(t_info *info)
-{
-	int	width_pixel;
-	int	act_x;
-	int	corners[8];
-	double	dx_for_wall;
-	t_img	*wall_ptr;
-
-	width_pixel = 0;
-	
-	print_dist_arr_info(info);
-	while (width_pixel < DISPLAY_WIDTH)
-	{
-		act_x = -1;
-		calc_corners_of_wall(corners, width_pixel, info->dist_arr, info);
-		wall_ptr = get_wall_ptr(width_pixel, info->dist_info, info);
-		my_mlx_pixel_put(info->img, corners[X1], corners[Y1], 0x00FF0000); // for testing
-		my_mlx_pixel_put(info->img, corners[X2], corners[Y2], 0x00FF0000); // for testing
-		my_mlx_pixel_put(info->img, corners[X3], corners[Y3], 0x00FF0000); // for testing
-		my_mlx_pixel_put(info->img, corners[X4], corners[Y4], 0x00FF0000); // for testing
-		dx_for_wall = WIDTH_WALL / (double)(corners[X3] - corners[X1]);
-		while ((++act_x + corners[X1]) <= corners[X3])
-		{
-			draw_one_vertical_line(info->img, wall_ptr, corners, act_x, dx_for_wall); // src nachgucken je nach wand
-		}
-		
-
-		width_pixel = next_tile_on_display_x(width_pixel, info);
-	}
-	
-}
-
 void	raycast_and_picturework(t_info *info)
 {
 	raycast_scan_in_fov(info, info->p);
 	fill_background(info->ceiling, info->floor, info->img);
-	draw_wallshadows(info->dist_arr, info->img);
-	draw_wall_textures(info);
+	
+	draw_wall_textures(info, 0);
+	// draw_wallshadows(info->dist_arr, info->img);
 	mlx_put_image_to_window(info->mlx_ptr, info->mlx_win, info->img->img, 0, 0);
 }
 
@@ -261,8 +60,7 @@ void	get_properties_from_mlx_img(void *img_ptr, t_img *img)
 {
 	img->addr = mlx_get_data_addr(img_ptr, &img->bits_per_pixel, \
 		&img->line_length, &img->endian);
-} 
-
+}
 
 /**
  * @brief color code is ARGB Alpha, red, green, blue
@@ -278,40 +76,73 @@ int main(void)
 	double tile[2];
 	double ret;
 	int game[3][3];
-	
-	info.mapsize[X] = 5;
-	info.mapsize[Y] = 5;
 
-	info.map_int = malloc(sizeof(int *) * 5);
+// 	int worldMap[24][24]=
+// {
+//   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,1,0,1,0,1,0,0,0,1},
+//   {1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1},
+//   {1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,1,1,0,1,1,0,0,0,0,1,0,1,0,1,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,1,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+//   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+// };
+
+// 	printf("%d\n", worldMap[0][0]);
+	
+	info.mapsize[X] = 7;
+	info.mapsize[Y] = 7;
+
+	info.map_int = malloc(sizeof(int *) * 7);
 	int j = -1;
-	while (++j < 5)
+	while (++j < 7)
 	{
-		info.map_int[j] = calloc(5, sizeof(int));
-		if (j == 4 || j == 0)
+		info.map_int[j] = calloc(7, sizeof(int));
+		if (j == 6 || j == 0)
 		{
 			info.map_int[j][1] = 1;
 			info.map_int[j][2] = 1;
 			info.map_int[j][3] = 1;
+			info.map_int[j][4] = 1;
+			info.map_int[j][5] = 1;
+			info.map_int[j][6] = 1;
 		}
 		info.map_int[j][0] = 1;
-		info.map_int[j][4] = 1;
+		info.map_int[j][6] = 1;
 	}
 
 	p.pos[X] = 2.5;
-	p.pos[Y] = 2;
+	p.pos[Y] = 2.5;
 	p.cam_vec[X] = 0;
-	p.cam_vec[Y] = 1;
+	p.cam_vec[Y] = -1;
 	info.p = &p;
 
-	info.map_int[3][2] = 1;
-	
+	info.map_int[3][5] = 1;
+	info.map_int[3][1] = 1;
 
-	print_2d_arr(info.map_int, 5, 5);
-	if(!init_dist_arr(&info))
+	print_2d_arr(info.map_int, 7, 7);
+	if(!init_dist_arr(&info)) // wichtig
 		return (1); // malloc not possible
 
 	// double dpx; //difference pixel vector
-	field_of_view(p.cam_vec, p.left_fov);
+	field_of_view(p.cam_vec, p.left_fov); //wichtig
 
 	p.dpx = calc_diff_fov(p.left_fov);
 	raycast_scan_in_fov(&info, &p);
