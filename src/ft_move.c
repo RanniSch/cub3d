@@ -80,12 +80,12 @@ void	move(double *move_vec, t_info *info)
 	move_y(move_vec, info);
 	add_vec(info->p->pos, move_vec);
 	//----------------- testing
-	printf("pos:\n");
-	pvec(info->p->pos);
-	printf("move_vec:\n");
-	pvec(move_vec);
-	printf("cam_vec:\n");
-	pvec(info->p->cam_vec);
+	// printf("pos:\n");
+	// pvec(info->p->pos);
+	// printf("move_vec:\n");
+	// pvec(move_vec);
+	// printf("cam_vec:\n");
+	// pvec(info->p->cam_vec);
 }
 
 void	move_forward(t_info *info)

@@ -2,11 +2,17 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# ifdef __APPLE__
+# include "../minilibx_opengl_20191021/mlx.h"
+# else
+	# include "../minilibx-linux/mlx.h"
+# endif
+
 # include <math.h>
 # include "../get_next_line/get_next_line.h"
 # include "../libft/libft.h"
 // # include "../minilibx-linux/mlx.h"
-# include "../minilibx_opengl_20191021/mlx.h"
+// # include "../minilibx_opengl_20191021/mlx.h"
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -36,6 +42,7 @@
 # define A 0
 # define S 1
 # define D 2
+# define ESC 53
 # define ARROW_LEFT 123
 # define ARROW_RIGHT 124
 # define DISPLAY_WIDTH 1000
@@ -160,6 +167,14 @@ void	calc_start_wall(double *start_end_wall, int *corners, \
 void	calc_corners_of_wall(int *corners, int width_pixel, \
 	double *dist_arr, t_info *info);
 void	draw_wall_textures(t_info *info, int width_pixel);
+
+//**** ft_init.c ****//
+
+int		**init_dist_arr(t_info *info);
+void	init_mlx_window_first_screen(t_info *info);
+t_info	*init_info_player_images();
+void	get_properties_from_mlx_img(void *img_ptr, t_img *img);
+void	init_textures(t_info *info);
 
 //**** linear_analysis.c ****//
 

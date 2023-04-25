@@ -1,7 +1,14 @@
 NAME		= cub3D
 
 CC			= gcc
-CFLAGS		= -Wextra -Wall -Werror -g #-fsanitize=address
+ifeq ($(shell uname), Darwin)
+# Max
+CFLAGS		= -Wextra -Wall -g #-Werror #-fsanitize=address
+else
+# Ranja
+CFLAGS		= -Wextra -Wall -Werror -g -fsanitize=address
+endif
+# CFLAGS		= -Wextra -Wall -Werror -g #-fsanitize=address
 
 RM			= rm -f
 
@@ -33,6 +40,7 @@ SRCS		= main.c \
 			  ./src/ft_draw_textures_2.c \
 			  ./src/ft_draw_textures_3.c \
 			  ./src/ft_draw_textures.c \
+			  ./src/ft_init.c \
 			  
 			  
 
