@@ -67,10 +67,24 @@ void	calc_left_px_vec(double *left_px_vec, t_player *p)
  */
 void	calc_px_vec(double *px_vec, double *left_px_vec, t_player *p, int i)
 {
+	// printf("pos\n");
+	// pvec(p->pos);
+	// printf("cam_vec\n");
+	// pvec(p->cam_vec);
+	// printf("left_fov\n");
+	// pvec(p->left_fov);
+	
+	
+	
 	cpy_vec(px_vec, p->left_fov);
 	mult_vec(px_vec, -1);
 	mult_vec(px_vec, (p->dpx * i));
 	add_vec(px_vec, left_px_vec);
+
+
+	// printf("px_vec\n");
+	// pvec(px_vec);
+
 }
 
 /**
@@ -79,23 +93,34 @@ void	calc_px_vec(double *px_vec, double *left_px_vec, t_player *p, int i)
  * 
  * 1) calculate the vector that points to the most left pixel (left_px_vec)
  * 2) calc in a loop the next px_vec to the right
- * 3) raycast that vector
- * 4) save hit coordinates and cardinal_direction
+ * 3) calc vector between px_vec and cam_vec
+ * 4) raycast px_vec
+ * 5) calc * cos(angle) -> avioding fisheye view
+ * 6) save hit coordinates and cardinal_direction and exact hitting points
  */
 void	raycast_scan_in_fov(t_info *info, t_player *p)
 {
 	double left_px_vec[2];
 	double px_vec[2];
-	int  hit_coordinates[3];
+	int  hit_coordinates[5];
 	int k = -1;
+	double angle;
+
+	field_of_view(p->cam_vec, p->left_fov);
+	p->dpx = calc_diff_fov(p->left_fov);
+
 
 	calc_left_px_vec(left_px_vec, p);
 	while(++k < DISPLAY_WIDTH)
 	{
 		calc_px_vec(px_vec, left_px_vec, p, k);
+		angle = calc_angle_vec(px_vec, p->cam_vec);
 		info->dist_arr[k] = raycast(p->pos, px_vec, info, hit_coordinates);
+		info->dist_arr[k] *= cos(angle);
 		info->dist_info[0][k] = hit_coordinates[X];
 		info->dist_info[1][k] = hit_coordinates[Y];
 		info->dist_info[2][k] = hit_coordinates[2];
+		info->dist_info[EXACT_X][k] = hit_coordinates[EXACT_X];
+		info->dist_info[EXACT_Y][k] = hit_coordinates[EXACT_Y];
 	}
 }

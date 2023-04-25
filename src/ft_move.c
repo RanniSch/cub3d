@@ -19,14 +19,13 @@ double	betrag(double value)
 void	move_x(double *move_vec, t_info *info)
 {
 	double dist;
-	int	hit_coordinates[3];
+	int	hit_coordinates[5];
 	double move_x[2];
 
 	move_x[X] = move_vec[X];
 	move_x[Y] = 0;
 	if (move_x[X] == 0)
 		return;
-
 	dist = raycast(info->p->pos, move_x, info, hit_coordinates);
 	if (dist >= betrag(move_vec[X]) + DISTANCE_FROM_WALL)
 		return;
@@ -50,7 +49,7 @@ void	move_x(double *move_vec, t_info *info)
 void	move_y(double *move_vec, t_info *info)
 {
 	double dist;
-	int	hit_coordinates[3];
+	int	hit_coordinates[5];
 	double move_y[2];
 	double temp_pos[2];
 

@@ -1,7 +1,7 @@
 NAME		= cub3D
 
 CC			= gcc
-CFLAGS		= -Werror -Wextra -Wall -g -fsanitize=address
+CFLAGS		= -Wextra -Wall -g #-fsanitize=address #-Werror
 
 RM			= rm -f
 
@@ -30,6 +30,9 @@ SRCS		= main.c \
 			  ./src/ft_test_utils.c \
 			  ./src/ft_vec_ops.c \
 			  ./src/ft_vec_ops_2.c \
+			  ./src/ft_draw_textures_2.c \
+			  ./src/ft_draw_textures_3.c \
+			  ./src/ft_draw_textures.c \
 			  
 			  
 
@@ -52,7 +55,8 @@ all:		${NAME}
 ifeq ($(shell uname), Darwin)
 # Max
 %.o: %.c	$(LIBFT) $(GNL)
-			$(CC) -Wall -Wextra -Werror -c $< -o $@
+			$(CC) -Wall -Wextra -c $< -o $@ 
+#-Werror
 else
 # Ranja
 %.o: %.c	$(LIBFT) $(GNL)
@@ -86,6 +90,9 @@ else
 $(NAME):	$(LIBFT) $(GNL) $(MLX) $(OBJS)
 			$(CC) $(OBJS) $(LIBFT) $(GNL) $(MLX) -L/usr/X11/lib -lXext -lX11 -lm -o $(NAME)
 endif
+
+e:	all
+			./$(NAME)
 
 re:			fclean all
 

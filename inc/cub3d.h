@@ -5,8 +5,8 @@
 # include <math.h>
 # include "../get_next_line/get_next_line.h"
 # include "../libft/libft.h"
-# include "../minilibx-linux/mlx.h"
-//# include "../minilibx_opengl_20191021/mlx.h"
+// # include "../minilibx-linux/mlx.h"
+# include "../minilibx_opengl_20191021/mlx.h"
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -14,30 +14,40 @@
 # define PI 3.14159265
 # define X 0
 # define Y 1
+# define EXACT_X 3
+# define EXACT_Y 4
+# define X1 0
+# define Y1 1
+# define X2 2
+# define Y2 3
+# define X3 4
+# define Y3 5
+# define X4 6
+# define Y4 7
+# define NORTH 1
+# define SOUTH 2
+# define EAST 3
+# define WEST 4
 # define M 0
 # define B 1
-# define NORTH 1
-# define EAST 2
-# define SOUTH 3
-# define WEST 4
-# define NORTH_WEST 5
-# define NORTH_EAST 6
-# define SOUTH_EAST 7
-# define SOUTH_WEST 8
+# define WIDTH_WALL 64
+# define HEIGHT_WALL 64
 # define W 13
 # define A 0
 # define S 1
 # define D 2
 # define ARROW_LEFT 123
 # define ARROW_RIGHT 124
-# define DISPLAY_WIDTH 600
-# define DISPLAY_HEIGHT 400
+# define DISPLAY_WIDTH 1000
+# define DISPLAY_HEIGHT 600
 # define LEN_CAM_VEC 1
-# define LEN_LEFT_FOV 1 // mit 1 gestartet
-# define FACTOR_WALL_HEIGHT 0.3
+# define LEN_LEFT_FOV 0.65 // 0,65 und 1 sind 33° -> fov von zusammen 66° gut für first person
+# define FACTOR_WALL_HEIGHT 1.3
 # define STEPSIZE 0.3
 # define PLAYER_ROTATION_DEG 15
 # define DISTANCE_FROM_WALL 0.3
+# define START_X_WALL 0
+# define END_X_WALL 1
 
 typedef struct s_player
 {
@@ -54,8 +64,8 @@ typedef struct	s_img
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-	int		width;
-	int		height;
+	int		width; // weg
+	int		height; // weg
 }	t_img;
 
 typedef struct s_info
@@ -124,7 +134,32 @@ bool		vertical_correct(t_info *info, int i, int j, int var);
 
 /* ft_map_converter.c */
 
-int **map_converter(t_info *info);
+int 	**map_converter(t_info *info);
+
+//**** ft_draw_textures_2.c ****//
+
+void	fill_background(int	ceiling, int floor, t_img *img);
+int		get_color_from_img(t_img *img, double x, double y);
+t_img	*get_wall_ptr(int width_pixel, int **dist_info, t_info *info);
+double	calc_dx_for_wall(double *start_end_wall, int *corners, t_info *info);
+void	draw_one_vertical_line(t_img *dest, t_img *src, \
+	double *start_end_wall, int *corners, int act_x, double dx_for_wall);
+
+//**** ft_draw_textures_3.c ****//
+
+void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
+int		argb(int alpha, int red, int green, int blue);
+
+//**** ft_draw_textures.c ****//
+
+int		next_tile_on_display_x(int act_x_on_display, t_info *info);
+void	calc_end_wall(double *start_end_wall, int *corners, \
+	int width_pixel, t_info *info);
+void	calc_start_wall(double *start_end_wall, int *corners, \
+	int width_pixel, t_info *info);
+void	calc_corners_of_wall(int *corners, int width_pixel, \
+	double *dist_arr, t_info *info);
+void	draw_wall_textures(t_info *info, int width_pixel);
 
 //**** linear_analysis.c ****//
 
@@ -178,6 +213,8 @@ void	draw_wallshadows(double *dist_arr, t_img *img);
 void	pvec(double *vec);
 void	cpy_vec(double *dest, double *src);
 void	subtract_vec(double *dest, double *src);
+double	dot_prod_vec(double *one, double *two);
+double	calc_angle_vec(double *one, double *two);
 
 //**** vec_ops.c ****//
 
