@@ -48,7 +48,7 @@ int main(void)
 		printf("Fehler info");   //   ---------  change - clean_up oder so
 	if(!init_dist_arr(info)) // wichtig
 		return (1); // malloc not possible - change - clean_up oder so
-	
+	init_textures(info);
 	// ----------------- ENDE  wichtig MAIN behalten
 	
 
@@ -88,6 +88,7 @@ int main(void)
 	info->p->cam_vec[X] = 0;
 	info->p->cam_vec[Y] = -1;
 
+	// print_2d_arr(info->map_int, 7, 7);
 
 
 

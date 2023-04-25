@@ -41,7 +41,7 @@ void	init_mlx_window_first_screen(t_info *info)
 	info->p->dpx = calc_diff_fov(info->p->left_fov);
 	raycast_scan_in_fov(info, info->p);
 	fill_background(info->ceiling, info->floor, info->img);
-	draw_wallshadows(info->dist_arr, info->img);
+	// draw_wallshadows(info->dist_arr, info->img);
 	mlx_put_image_to_window(info->mlx_ptr, info->mlx_win, info->img, 0, 0);
 	// print_dist_arr_info(&info);
 }
