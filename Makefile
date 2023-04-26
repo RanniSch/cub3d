@@ -1,14 +1,8 @@
 NAME		= cub3D
 
 CC			= gcc
-ifeq ($(shell uname), Darwin)
-# Max
-CFLAGS		= -Wextra -Wall -g #-Werror #-fsanitize=address
-else
-# Ranja
-CFLAGS		= -Wextra -Wall -Werror -g -fsanitize=address
-endif
-# CFLAGS		= -Wextra -Wall -Werror -g #-fsanitize=address
+
+# CFLAGS		= -Wextra -Wall -g #-Werror #-fsanitize=address
 
 RM			= rm -f
 
