@@ -123,7 +123,7 @@ void	draw_wall_textures(t_info *info, int width_pixel)
 	double	dx_for_wall;
 	t_img	*wall_ptr;
 	
-	print_dist_arr_info(info);
+	// print_dist_arr_info(info);
 	while (width_pixel < DISPLAY_WIDTH)
 	{
 		act_x = -1;

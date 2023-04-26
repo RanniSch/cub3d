@@ -52,14 +52,14 @@ void	calc_left_px_vec(double *left_px_vec, t_player *p)
 {
 	norm_vec(p->cam_vec);
 	cpy_vec(left_px_vec, p->cam_vec);
-	printf("\ncam_vec:\n");
-	pvec(left_px_vec);
+	// printf("\ncam_vec:\n");
+	// pvec(left_px_vec);
 	// add_vec(left_px_vec, p->pos);
 	// printf("\ncam_vec + pos:\n");
 	// pvec(left_px_vec);
 	add_vec(left_px_vec, p->left_fov);
-	printf("\ncam_vec + left_fov:\n");
-	pvec(left_px_vec);
+	// printf("\ncam_vec + left_fov:\n");
+	// pvec(left_px_vec);
 }
 
 /**
