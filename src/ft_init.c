@@ -31,10 +31,9 @@ int	**init_dist_arr(t_info *info)
 
 void	init_mlx_window_first_screen(t_info *info)
 {
-	info->mlx_ptr = mlx_init();
 	info->mlx_win = mlx_new_window(info->mlx_ptr, DISPLAY_WIDTH, DISPLAY_HEIGHT, "cub3D");
-	info->img = mlx_new_image(info->mlx_ptr, DISPLAY_WIDTH, DISPLAY_HEIGHT);
-	info->img->addr = mlx_get_data_addr(info->img, &info->img->bits_per_pixel, &info->img->line_length, &info->img->endian);
+	info->img->img = mlx_new_image(info->mlx_ptr, DISPLAY_WIDTH, DISPLAY_HEIGHT);
+	info->img->addr = mlx_get_data_addr(info->img->img, &info->img->bits_per_pixel, &info->img->line_length, &info->img->endian);
 		// double dpx; //difference pixel vector
 	field_of_view(info->p->cam_vec, info->p->left_fov); //wichtig
 
@@ -42,7 +41,8 @@ void	init_mlx_window_first_screen(t_info *info)
 	raycast_scan_in_fov(info, info->p);
 	fill_background(info->ceiling, info->floor, info->img);
 	// draw_wallshadows(info->dist_arr, info->img);
-	mlx_put_image_to_window(info->mlx_ptr, info->mlx_win, info->img, 0, 0);
+	draw_wall_textures(info, 0);
+	mlx_put_image_to_window(info->mlx_ptr, info->mlx_win, info->img->img, 0, 0);
 	// print_dist_arr_info(&info);
 }
 
@@ -82,27 +82,28 @@ void	get_properties_from_mlx_img(void *img_ptr, t_img *img)
 
 void	init_textures(t_info *info)
 {
-	char *no = "textures/Wall64x64.xpm";   //------- replace somehow
-	char *ea = "textures/Collect64x64.xpm";
-	char *so = "textures/Exit64x64.xpm";
-	char *we = "textures/Player64x64.xpm";
+	info->mlx_ptr = mlx_init();
+	char *no = "./textures/Wall64x64.xpm";    //------- replace somehow
+	char *ea = "./textures/Collect64x64.xpm";
+	char *so = "./textures/Exit64x64.xpm";
+	char *we = "./textures/Player64x64.xpm";
 	void *v_no;
 	void *v_ea;
 	void *v_so;
 	void *v_we;
 
-	info->north->width = WIDTH_WALL;
-	info->north->height = HEIGHT_WALL;
-	// img_no.height = 64;
+	// info->north->width = WIDTH_WALL;
+	// info->north->height = HEIGHT_WALL;
+	// // img_no.height = 64;
 
-	info->east->width = WIDTH_WALL;
-	info->east->height = HEIGHT_WALL;
+	// info->east->width = WIDTH_WALL;
+	// info->east->height = HEIGHT_WALL;
 
-	info->south->width = WIDTH_WALL;
-	info->south->height = HEIGHT_WALL;
+	// info->south->width = WIDTH_WALL;
+	// info->south->height = HEIGHT_WALL;
 
-	info->west->width = WIDTH_WALL;
-	info->west->height = HEIGHT_WALL;
+	// info->west->width = WIDTH_WALL;
+	// info->west->height = HEIGHT_WALL;
 
 	v_no = mlx_xpm_file_to_image(info->mlx_ptr, no, &info->north->width, &info->north->height);
 	v_ea = mlx_xpm_file_to_image(info->mlx_ptr, ea, &info->east->width, &info->east->height);

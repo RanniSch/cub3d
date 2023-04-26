@@ -48,6 +48,16 @@ int main(void)
 		printf("Fehler info");   //   ---------  change - clean_up oder so
 	if(!init_dist_arr(info)) // wichtig
 		return (1); // malloc not possible - change - clean_up oder so
+	
+	
+	// char *no = "./textures/Wall64x64.xpm";  
+	// void *v_no;
+	// int width = 64;
+	// int height = 64;
+	// info->mlx_ptr = mlx_init();
+	// v_no = mlx_xpm_file_to_image(&info->mlx_ptr, no, &width, &height);
+
+
 	init_textures(info);
 	// ----------------- ENDE  wichtig MAIN behalten
 	
