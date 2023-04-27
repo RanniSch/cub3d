@@ -45,6 +45,7 @@ bool    check_valid_textures(t_info *info)
     {
         // man könnte auch noch hinzunehmen, dass jede Himmelsrichtung nur genau einmal vorkommt!
         // Was genau brauchst du gespeichert? Bezeichnung und Path?
+        // richtige Endung der Texture noch abprüfen!!!
         if (info->map[i][0] == 'N' && info->map[i][1] == 'O')
             info->txt.path_no = ft_strdup(info->map[i]);
         else if (info->map[i][0] == 'E' && info->map[i][1] == 'A')
