@@ -75,12 +75,23 @@ typedef struct	s_img
 	int		height; // weg
 }	t_img;
 
+typedef struct s_textures
+{
+	char		*path_no;
+	char		*path_ea;
+	char		*path_so;
+	char		*path_we;
+	//int			ceiling_color;
+	//int			floor_color;
+}				t_textures;
+
 typedef struct s_info
 {
 	char	*map_path;
 	int		row;
 	char	**map;
 	int		map_i;
+	t_textures	txt;
 	int		player_amount;
 	int		player_x;
 	int		player_y;
@@ -117,6 +128,11 @@ void		skip_empty_lines(t_info *info);
 bool		check_valid_map(t_info *info);
 bool		amount_player(int	amount_player);
 bool		parsing(t_info *info);
+
+/* ft_check_valid_textures.c */
+
+bool    check_valid_fc(t_info *info);
+bool    check_valid_textures(t_info *info);
 
 /* ft_check_valid_map.c */
 

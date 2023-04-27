@@ -97,6 +97,12 @@ bool	parsing(t_info *info)
 	if (!valid_map_extension(info))
 		return (false);
     skip_empty_lines(info);
+	if (!check_valid_textures(info))
+		return (false);
+	skip_empty_lines(info);
+	if (!check_valid_fc(info))
+		return (false);
+	skip_empty_lines(info);
 	if (!check_valid_map(info))
 		return (false);
 	if (!amount_player(info->player_amount))

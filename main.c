@@ -1,6 +1,6 @@
 #include "./inc/cub3d.h"
 
-void	raycast_and_picturework(t_info *info)
+/*void	raycast_and_picturework(t_info *info)
 {
 	raycast_scan_in_fov(info, info->p);
 	fill_background(info->ceiling, info->floor, info->img);
@@ -27,7 +27,7 @@ void	key_event(int key, t_info *info)
 	else if (key == ESC)
 		exit(0);					// ----------------- exit and clean_up !!!
 	raycast_and_picturework(info);
-}
+}*/
 
 
 
@@ -36,7 +36,7 @@ void	key_event(int key, t_info *info)
  * 
  * @return int 
  */
-int main(void)
+/*int main(void)
 {
 	// -----------------  wichtig MAIN behalten
 	t_info *info;
@@ -104,7 +104,7 @@ int main(void)
 	mlx_loop(info->mlx_ptr);
 
 	// ----------------- ENDE  wichtig MAIN behalten
-}
+}*/
 
 void	init_game(t_info *info)
 {
@@ -116,30 +116,36 @@ void	init_game(t_info *info)
 	info->player_x = -1;
 	info->player_y = -1;
 	info->player_orientation = '0';
+
+	info->txt.path_no = NULL;
+	info->txt.path_ea = NULL;
+	info->txt.path_so = NULL;
+	info->txt.path_we = NULL;
 }
 
-// int	main(int argc, char **argv)
-// {
-// 	t_info  *info;
+int	main(int argc, char **argv)
+{
+	t_info  *info;
 
-// 	if (argc != 2)
-// 	{
-// 		printf("Only 1 argument is required for cub3D. Try: ./cub3d [path map]\n");
-// 		exit(0);
-// 	}
-// 	info = malloc(sizeof(t_info) * 1);
-// 	info->map_path = ft_strdup(argv[1]);
-//     //printf("string path %s\n", info->map_path);
-// 	init_game(info);
-// 	if (!parsing(info))
-//     {
-//         printf("parsing false\n");
-//     }
-//     else
-//     {
-//         printf("great\n");
-// 		info->map_int = map_converter(info);
-//     }
+	if (argc != 2)
+ 	{
+ 		printf("Only 1 argument is required for cub3D. Try: ./cub3d [path map]\n");
+		exit(0);
+ 	}
+ 	info = malloc(sizeof(t_info) * 1);
+ 	info->map_path = ft_strdup(argv[1]);
+     //printf("string path %s\n", info->map_path);
+ 	init_game(info);
+ 	if (!parsing(info))
+     {
+         printf("parsing false\n");
+     }
+     else
+     {
+        printf("great\n");
+		info->map_int = map_converter(info);
+     }
 	
-// 	return (0);
-// }
+ 	return (0);
+}
+
