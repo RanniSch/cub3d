@@ -19,6 +19,7 @@ bool    valid_lines(t_info *info, int i)
 */
 bool    is_allowed_char(t_info *info, char c)
 {
+	//printf("%c\n", c);
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E' || c == '1' || c == '0')
 	{
 		if (c == 'N')
@@ -29,6 +30,7 @@ bool    is_allowed_char(t_info *info, char c)
 			info->player_amount++;
 		if (c == 'E')
 			info->player_amount++;
+		//printf("player: %d\n", info->player_amount);
 		return (true);
 	}
     return (false);

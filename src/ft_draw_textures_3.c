@@ -10,5 +10,6 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 
 int	argb(int alpha, int red, int green, int blue)
 {
+	//printf("%d, %d, %d, %d\n", alpha, red, green, blue);
 	return (alpha << 24 | red << 16 | green << 8 | blue);
 }

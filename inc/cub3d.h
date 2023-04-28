@@ -81,6 +81,9 @@ typedef struct s_textures
 	char		*path_ea;
 	char		*path_so;
 	char		*path_we;
+	char		*red;
+	char		*green;
+	char		*blue;
 	//int			ceiling_color;
 	//int			floor_color;
 }				t_textures;
@@ -92,6 +95,8 @@ typedef struct s_info
 	char	**map;
 	int		map_i;
 	t_textures	txt;
+	int		floor; // Max benutzt du das?
+	int		ceiling; // Max benutzt du das?
 	int		player_amount;
 	int		player_x;
 	int		player_y;
@@ -103,8 +108,6 @@ typedef struct s_info
 	int			**dist_info;
 	void		*mlx_ptr;
 	void		*mlx_win;
-	int			ceiling;
-	int			floor;
 	t_img		*north;
 	t_img		*east;
 	t_img		*south;
@@ -131,8 +134,9 @@ bool		parsing(t_info *info);
 
 /* ft_check_valid_textures.c */
 
-bool    check_valid_fc(t_info *info);
 bool    check_valid_textures(t_info *info);
+bool	valid_texture_extension(t_info *info);
+bool    check_valid_fc(t_info *info);
 
 /* ft_check_valid_map.c */
 

@@ -15,15 +15,18 @@ bool	valid_map_extension(t_info *info)
 		//free_struct(data);
 		//error_msg("Couldn't open the file!");
         printf("Couldn't open the file!\n");
+		close(fd);
 		return (false);
 	}
 	p_len = ft_strlen(info->map_path);
 	if (ft_strncmp(&info->map_path[p_len - 4], ".cub", 4))
 	{
 		printf("Invalid map: Use .cub file extension\n");
+		close(fd);
 		return (false);
 	}
 	//printf("Could open file\n");
+	close(fd);
 	return (true);
 }
 
@@ -99,10 +102,13 @@ bool	parsing(t_info *info)
     skip_empty_lines(info);
 	if (!check_valid_textures(info))
 		return (false);
+	if (!valid_texture_extension(info))
+		return (false);
 	skip_empty_lines(info);
 	if (!check_valid_fc(info))
 		return (false);
 	skip_empty_lines(info);
+	//printf("line %d\n", info->map_i);
 	if (!check_valid_map(info))
 		return (false);
 	if (!amount_player(info->player_amount))
