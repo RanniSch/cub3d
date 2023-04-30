@@ -1,6 +1,6 @@
 #include "./inc/cub3d.h"
 
-/*void	raycast_and_picturework(t_info *info)
+void	raycast_and_picturework(t_info *info)
 {
 	raycast_scan_in_fov(info, info->p);
 	fill_background(info->ceiling, info->floor, info->img);
@@ -27,39 +27,66 @@ void	key_event(int key, t_info *info)
 	else if (key == ESC)
 		exit(0);					// ----------------- exit and clean_up !!!
 	raycast_and_picturework(info);
-}*/
+}
 
-
-
-/**
- * @brief color code is ARGB Alpha, red, green, blue
- * 
- * @return int 
- */
-/*int main(void)
+void	init_game(t_info *info)
 {
-	// -----------------  wichtig MAIN behalten
-	t_info *info;
+	info->row = count_nb_row(info->map_path);
+    //printf("num rows: %d\n", info->row);
+	info->map = save_map(info);
+	info->map_i = 0;
+	info->player_amount = 0;
+	info->player_x = -1;
+	info->player_y = -1;
+	info->player_orientation = '0';
 
+	info->txt.path_no = NULL;
+	info->txt.path_ea = NULL;
+	info->txt.path_so = NULL;
+	info->txt.path_we = NULL;
+}
+
+int	main(int argc, char **argv)
+{
+	t_info  *info;
+
+	
+	if (argc != 2)
+ 	{
+ 		printf("Only 1 argument is required for cub3D. Try: ./cub3d [path map]\n");
+		exit(0);
+ 	}
 	info = init_info_player_images();
 	if (!info)
 		printf("Fehler info");   //   ---------  change - clean_up oder so
 	if(!init_dist_arr(info)) // wichtig
 		return (1); // malloc not possible - change - clean_up oder so
 	
-	
-	// char *no = "./textures/Wall64x64.xpm";  
-	// void *v_no;
-	// int width = 64;
-	// int height = 64;
-	// info->mlx_ptr = mlx_init();
-	// v_no = mlx_xpm_file_to_image(&info->mlx_ptr, no, &width, &height);
 
 
-	init_textures(info);
-	// ----------------- ENDE  wichtig MAIN behalten
-	
-	double tile[2];
+
+ 	// info = malloc(sizeof(t_info) * 1);
+ 	info->map_path = ft_strdup(argv[1]);
+     //printf("string path %s\n", info->map_path);
+ 	init_game(info);
+ 	if (!parsing(info))
+     {
+         printf("parsing false\n");
+     }
+     else
+     {
+        printf("great\n");
+		info->map_int = map_converter(info);
+     }
+
+
+
+
+
+	convert_player_pos_dir(info);
+	init_mlx_and_textures(info); // nach parsing damit die Pfade zu den Texturen bekannt sind
+
+		double tile[2];
 	
 	// ------  create test map  -- recognize from map file
 
@@ -94,57 +121,13 @@ void	key_event(int key, t_info *info)
 	info->p->cam_vec[X] = 0;
 	info->p->cam_vec[Y] = -1;
 
-
-	info->ceiling = argb(0, 0, 2, 255);  // replace - recognize from map file
-	info->floor = argb(0, 192, 192, 192);
-
 	// -----------------  wichtig MAIN behalten
 	init_mlx_window_first_screen(info);
 	mlx_key_hook(info->mlx_win, key_event, info);
 	mlx_loop(info->mlx_ptr);
 
 	// ----------------- ENDE  wichtig MAIN behalten
-}*/
 
-void	init_game(t_info *info)
-{
-	info->row = count_nb_row(info->map_path);
-    //printf("num rows: %d\n", info->row);
-	info->map = save_map(info);
-	info->map_i = 0;
-	info->player_amount = 0;
-	info->player_x = -1;
-	info->player_y = -1;
-	info->player_orientation = '0';
-
-	info->txt.path_no = NULL;
-	info->txt.path_ea = NULL;
-	info->txt.path_so = NULL;
-	info->txt.path_we = NULL;
-}
-
-int	main(int argc, char **argv)
-{
-	t_info  *info;
-
-	if (argc != 2)
- 	{
- 		printf("Only 1 argument is required for cub3D. Try: ./cub3d [path map]\n");
-		exit(0);
- 	}
- 	info = malloc(sizeof(t_info) * 1);
- 	info->map_path = ft_strdup(argv[1]);
-     //printf("string path %s\n", info->map_path);
- 	init_game(info);
- 	if (!parsing(info))
-     {
-         printf("parsing false\n");
-     }
-     else
-     {
-        printf("great\n");
-		info->map_int = map_converter(info);
-     }
 	
  	return (0);
 }

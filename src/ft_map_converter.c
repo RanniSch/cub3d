@@ -30,3 +30,19 @@ int **map_converter(t_info *info)
     
     return (tmp_map_int);
 }
+
+void	convert_player_pos_dir(t_info *info)
+{
+	info->p->pos[X] = (double)info->player_x - info->map_i + 0.5;
+	info->p->pos[Y] = (double)info->player_y + 0.5;
+	info->p->cam_vec[X] = 0;
+	info->p->cam_vec[Y] = 0;
+	if (info->player_orientation == 'N')
+		info->p->cam_vec[Y] = 1;
+	if (info->player_orientation == 'E')
+		info->p->cam_vec[X] = 1;
+	if (info->player_orientation == 'S')
+		info->p->cam_vec[Y] = -1;
+	if (info->player_orientation == 'W')
+		info->p->cam_vec[X] = -1;
+}

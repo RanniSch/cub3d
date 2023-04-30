@@ -71,8 +71,8 @@ typedef struct	s_img
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-	int		width; // weg
-	int		height; // weg
+	int		width;
+	int		height;
 }	t_img;
 
 typedef struct s_textures
@@ -95,8 +95,8 @@ typedef struct s_info
 	char	**map;
 	int		map_i;
 	t_textures	txt;
-	int		floor; // Max benutzt du das?
-	int		ceiling; // Max benutzt du das?
+	int		floor; // Max benutzt du das? Jo
+	int		ceiling; // Max benutzt du das? Jo
 	int		player_amount;
 	int		player_x;
 	int		player_y;
@@ -162,6 +162,7 @@ bool		vertical_correct(t_info *info, int i, int j, int var);
 /* ft_map_converter.c */
 
 int 	**map_converter(t_info *info);
+void	convert_player_pos_dir(t_info *info);
 
 //**** ft_draw_textures_2.c ****//
 
@@ -194,7 +195,7 @@ int		**init_dist_arr(t_info *info);
 void	init_mlx_window_first_screen(t_info *info);
 t_info	*init_info_player_images();
 void	get_properties_from_mlx_img(void *img_ptr, t_img *img);
-void	init_textures(t_info *info);
+void	init_mlx_and_textures(t_info *info);
 
 //**** linear_analysis.c ****//
 
