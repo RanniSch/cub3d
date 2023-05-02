@@ -37,7 +37,7 @@ void	init_mlx_window_first_screen(t_info *info)
 		// double dpx; //difference pixel vector
 	field_of_view(info->p->cam_vec, info->p->left_fov); //wichtig
 
-	info->p->dpx = calc_diff_fov(info->p->left_fov);
+	// info->p->dpx = calc_diff_fov(info->p->left_fov);
 	raycast_scan_in_fov(info, info->p);
 	fill_background(info->ceiling, info->floor, info->img);
 	// draw_wallshadows(info->dist_arr, info->img);

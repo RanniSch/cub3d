@@ -27,8 +27,11 @@ void	key_event(int key, t_info *info)
 	else if (key == ESC)
 		exit(0);					// ----------------- exit and clean_up !!!
 	raycast_and_picturework(info);
+	printf("pos:\n");
 	pvec(info->p->pos);
+	printf("cam:\n");
 	pvec(info->p->cam_vec);
+	printf("\n");
 }
 
 void	init_game(t_info *info)
