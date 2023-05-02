@@ -1,61 +1,72 @@
 
 #include "../inc/cub3d.h"
 
+void	count_mapsize_x(int i, t_info *info, int act_row_file)
+{
+	while (++i < info->mapsize[Y] && info->map[++act_row_file] != NULL)
+	{
+		if (ft_strlen(info->map[act_row_file]) > info->mapsize[X])
+			info->mapsize[X] = ft_strlen(info->map[act_row_file]) - 1;
+	}
+}
+
+// void	convert(int **tmp_map_int, t_info *info, int act_row_file, int j)
+// {
+// 	if (info->map[act_row_file][j] == '0' || info->map[act_row_file][j] == '1')
+// 		tmp_map_int[i][j] = info->map[act_row_file][j] - 48;
+// 	else if(info->map[act_row_file][j] == 'N' || info->map[act_row_file][j] == 'W' ||\
+// 		info->map[act_row_file][j] == 'S' || info->map[act_row_file][j] == 'E' ||\
+// 		info->map[act_row_file][j] == ' ')
+// 	{
+// 		tmp_map_int[i][j] = 0;
+// 	}
+// }
+
+dir_emp_zero(char c)
+{
+	if (c == 'N' || c == 'E' || c == 'S' || c == 'W' \
+		|| c == ' ' || c == '0')
+		return (1);
+}
+
+void	map_converter_init(int *i, int *act_row_file, t_info *info)
+{
+	*i = -1;
+	*act_row_file = *i + info->map_i;
+	info->mapsize[Y] = info->row - info->map_i;
+	info->mapsize[X] = 0;
+	// count_mapsize_x(*i, info, *act_row_file);
+}
+
 int **map_converter(t_info *info)
 {
 	int		i;
     int     j;
     int     str_len;
 	int 	**tmp_map_int;
+	int		act_row_file;
 
+	// map_converter_init(&i, &act_row_file, &info);
 	i = -1;
+	act_row_file = i + info->map_i;
 	info->mapsize[Y] = info->row - info->map_i;
 	info->mapsize[X] = 0;
 	tmp_map_int = (int **)malloc(sizeof(int *) * (info->mapsize[Y]));
 	if (!tmp_map_int)
-		return (0);
-	while (++i < info->mapsize[Y] && info->map[i + info->map_i] != NULL)
-	{
-		if (ft_strlen(info->map[i + info->map_i]) > info->mapsize[X])
-			info->mapsize[X] = ft_strlen(info->map[i + info->map_i]) - 1;
-	}
-	i = -1;
-	while (++i < info->mapsize[Y] && info->map[i + info->map_i] != NULL)
+		return (NULL);
+	count_mapsize_x(i, info, act_row_file);
+	while (++i < info->mapsize[Y] && info->map[++act_row_file] != NULL)
 	{
 		tmp_map_int[i] = (int*)malloc(sizeof(int) * info->mapsize[X]);//malloc sichern
 		j = -1;
-		while (info->map[i + info->map_i][++j] && info->map[i + info->map_i][j] != '\n')
+		while (info->map[act_row_file][++j] && info->map[act_row_file][j] != '\n')
 		{
-			if (info->map[i + info->map_i][j] == '0' || info->map[i + info->map_i][j] == '1')
-				tmp_map_int[i][j] = info->map[i + info->map_i][j] - 48;
-			else if(info->map[i + info->map_i][j] == 'N' || info->map[i + info->map_i][j] == 'W' ||\
-				info->map[i + info->map_i][j] == 'S' || info->map[i + info->map_i][j] == 'E' ||\
-				info->map[i + info->map_i][j] == ' ')
-			{
+			if (info->map[act_row_file][j] == '1')
+				tmp_map_int[i][j] = 1;
+			else if(dir_emp_zero(info->map[act_row_file][j]))
 				tmp_map_int[i][j] = 0;
-			}
 		}
 	}
-
-       
-        
-        //     tmp_map_int[i][j] = info->map[i][j] - 48;
-        //     //printf("%d", tmp_map_int[i][j]);
-        //     j++;
-		// // str_len = ft_strlen(info->map[i + info->map_i]);
-        // // tmp_map_int[i] = (int*)malloc(sizeof(int) * str_len);
-        // // j = 0;
-        // // while (info->map[i][j] && info->map[i][j] != '\n')
-        // // {
-        // //     tmp_map_int[i][j] = info->map[i][j] - 48;
-        //     //printf("%d", tmp_map_int[i][j]);
-        //     j++;
-        
-        //printf("\n");
-	
-	// tmp_map_int[i] = NULL;
-	//printf("%ls", tmp_map_int[i]);
-    
     return (tmp_map_int);
 }
 
