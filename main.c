@@ -1,6 +1,6 @@
 #include "./inc/cub3d.h"
 
-/*void	raycast_and_picturework(t_info *info)
+void	raycast_and_picturework(t_info *info)
 {
 	raycast_scan_in_fov(info, info->p);
 	fill_background(info->ceiling, info->floor, info->img);
@@ -27,84 +27,9 @@ void	key_event(int key, t_info *info)
 	else if (key == ESC)
 		exit(0);					// ----------------- exit and clean_up !!!
 	raycast_and_picturework(info);
-}*/
-
-
-
-/**
- * @brief color code is ARGB Alpha, red, green, blue
- * 
- * @return int 
- */
-/*int main(void)
-{
-	// -----------------  wichtig MAIN behalten
-	t_info *info;
-
-	info = init_info_player_images();
-	if (!info)
-		printf("Fehler info");   //   ---------  change - clean_up oder so
-	if(!init_dist_arr(info)) // wichtig
-		return (1); // malloc not possible - change - clean_up oder so
-	
-	
-	// char *no = "./textures/Wall64x64.xpm";  
-	// void *v_no;
-	// int width = 64;
-	// int height = 64;
-	// info->mlx_ptr = mlx_init();
-	// v_no = mlx_xpm_file_to_image(&info->mlx_ptr, no, &width, &height);
-
-
-	init_textures(info);
-	// ----------------- ENDE  wichtig MAIN behalten
-	
-	double tile[2];
-	
-	// ------  create test map  -- recognize from map file
-
-	info->mapsize[X] = 7;
-	info->mapsize[Y] = 7;
-
-	info->map_int = malloc(sizeof(int *) * 7);
-	int j = -1;
-	while (++j < 7)
-	{
-		info->map_int[j] = calloc(7, sizeof(int));
-		if (j == 6 || j == 0)
-		{
-			info->map_int[j][1] = 1;
-			info->map_int[j][2] = 1;
-			info->map_int[j][3] = 1;
-			info->map_int[j][4] = 1;
-			info->map_int[j][5] = 1;
-			info->map_int[j][6] = 1;
-		}
-		info->map_int[j][0] = 1;
-		info->map_int[j][6] = 1;
-	}
-
-	info->map_int[3][5] = 1;
-	info->map_int[3][1] = 1;
-
-	// ------  player position and direction
-
-	info->p->pos[X] = 2.5;			// replace - recognize from map file
-	info->p->pos[Y] = 2.5;
-	info->p->cam_vec[X] = 0;
-	info->p->cam_vec[Y] = -1;
-
-
-	info->ceiling = argb(0, 0, 2, 255);  // replace - recognize from map file
-	info->floor = argb(0, 192, 192, 192);
-
-	// -----------------  wichtig MAIN behalten
-	init_mlx_window_first_screen(info);
-	mlx_key_hook(info->mlx_win, key_event, info);
-	mlx_loop(info->mlx_ptr);
-
-	// ----------------- ENDE  wichtig MAIN behalten
-}*/
+	pvec(info->p->pos);
+	pvec(info->p->cam_vec);
+}
 
 void	init_game(t_info *info)
 {
@@ -127,12 +52,22 @@ int	main(int argc, char **argv)
 {
 	t_info  *info;
 
+	
 	if (argc != 2)
  	{
  		printf("Only 1 argument is required for cub3D. Try: ./cub3d [path map]\n");
 		exit(0);
  	}
- 	info = malloc(sizeof(t_info) * 1);
+	info = init_info_player_images();
+	if (!info)
+		printf("Fehler info");   //   ---------  change - clean_up oder so
+	if(!init_dist_arr(info)) // wichtig
+		return (1); // malloc not possible - change - clean_up oder so
+	
+
+
+
+ 	// info = malloc(sizeof(t_info) * 1);
  	info->map_path = ft_strdup(argv[1]);
      //printf("string path %s\n", info->map_path);
  	init_game(info);
@@ -145,6 +80,56 @@ int	main(int argc, char **argv)
         printf("great\n");
 		info->map_int = map_converter(info);
      }
+	print_2d_arr(info->map_int, info->mapsize[Y], info->mapsize[X]);
+
+
+
+
+	convert_player_pos_dir(info);
+	init_mlx_and_textures(info); // nach parsing damit die Pfade zu den Texturen bekannt sind
+
+		double tile[2];
+	
+	// ------  create test map  -- recognize from map file
+
+	// info->mapsize[X] = 7;
+	// info->mapsize[Y] = 7;
+
+	// info->map_int = malloc(sizeof(int *) * 7);
+	// int j = -1;
+	// while (++j < 7)
+	// {
+	// 	info->map_int[j] = calloc(7, sizeof(int));
+	// 	if (j == 6 || j == 0)
+	// 	{
+	// 		info->map_int[j][1] = 1;
+	// 		info->map_int[j][2] = 1;
+	// 		info->map_int[j][3] = 1;
+	// 		info->map_int[j][4] = 1;
+	// 		info->map_int[j][5] = 1;
+	// 		info->map_int[j][6] = 1;
+	// 	}
+	// 	info->map_int[j][0] = 1;
+	// 	info->map_int[j][6] = 1;
+	// }
+
+	// info->map_int[3][5] = 1;
+	// info->map_int[3][1] = 1;
+
+	// ------  player position and direction
+
+	// info->p->pos[X] = 2.5;			// replace - recognize from map file
+	// info->p->pos[Y] = 2.5;
+	// info->p->cam_vec[X] = 0;
+	// info->p->cam_vec[Y] = -1;
+
+	// -----------------  wichtig MAIN behalten
+	init_mlx_window_first_screen(info);
+	mlx_key_hook(info->mlx_win, key_event, info);
+	mlx_loop(info->mlx_ptr);
+
+	// ----------------- ENDE  wichtig MAIN behalten
+
 	
  	return (0);
 }

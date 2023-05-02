@@ -79,7 +79,9 @@ bool	init_player_pos(t_info *info, char c, int i, int j)
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 	{
 		info->player_x = i;
+		info->p->pos[X] = (double)i - info->map_i + 0.5;
 		info->player_y = j;
+		info->p->pos[Y] = (double)j + 0.5;
 		info->player_orientation = c;
 		return (true);
 	}

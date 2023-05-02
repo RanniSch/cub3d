@@ -5,9 +5,9 @@
  * dist_info[0][] and 1 hold the col and row values of the (1) Field on the
  * map that the next wall in that direction belongs to.
  * dist_arr[2][] holds the facing direction of the wall (NORTH, EAST, SOUTH, WEST)
- * 
- * @param info 
- * @return int** 
+ *
+ * @param info
+ * @return int**
  */
 int	**init_dist_arr(t_info *info)
 {
@@ -80,35 +80,21 @@ void	get_properties_from_mlx_img(void *img_ptr, t_img *img)
 		&img->line_length, &img->endian);
 }
 
-void	init_textures(t_info *info)
+void	init_mlx_and_textures(t_info *info)
 {
 	info->mlx_ptr = mlx_init();
-	char *no = "./textures/Wall64x64.xpm";    //------- replace somehow
-	char *ea = "./textures/Collect64x64.xpm";
-	char *so = "./textures/Exit64x64.xpm";
-	char *we = "./textures/Player64x64.xpm";
 	void *v_no;
 	void *v_ea;
 	void *v_so;
 	void *v_we;
-
-	// info->north->width = WIDTH_WALL;
-	// info->north->height = HEIGHT_WALL;
-	// // img_no.height = 64;
-
-	// info->east->width = WIDTH_WALL;
-	// info->east->height = HEIGHT_WALL;
-
-	// info->south->width = WIDTH_WALL;
-	// info->south->height = HEIGHT_WALL;
-
-	// info->west->width = WIDTH_WALL;
-	// info->west->height = HEIGHT_WALL;
-
-	v_no = mlx_xpm_file_to_image(info->mlx_ptr, no, &info->north->width, &info->north->height);
-	v_ea = mlx_xpm_file_to_image(info->mlx_ptr, ea, &info->east->width, &info->east->height);
-	v_so = mlx_xpm_file_to_image(info->mlx_ptr, so, &info->south->width, &info->south->height);
-	v_we = mlx_xpm_file_to_image(info->mlx_ptr, we, &info->west->width, &info->west->height);
+	v_no = mlx_xpm_file_to_image(info->mlx_ptr, info->txt.path_no, \
+		&info->north->width, &info->north->height);
+	v_ea = mlx_xpm_file_to_image(info->mlx_ptr, info->txt.path_ea, \
+		&info->east->width, &info->east->height);
+	v_so = mlx_xpm_file_to_image(info->mlx_ptr, info->txt.path_so, \
+		&info->south->width, &info->south->height);
+	v_we = mlx_xpm_file_to_image(info->mlx_ptr, info->txt.path_we, \
+		&info->west->width, &info->west->height);
 	get_properties_from_mlx_img(v_no, info->north);
 	get_properties_from_mlx_img(v_ea, info->east);
 	get_properties_from_mlx_img(v_so, info->south);

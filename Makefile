@@ -2,7 +2,7 @@ NAME		= cub3D
 
 CC			= gcc
 
-# CFLAGS		= -Wextra -Wall -g #-Werror #-fsanitize=address
+CFLAGS		= -Wextra -Wall -g #-Werror #-fsanitize=address
 
 RM			= rm -f
 
@@ -58,7 +58,7 @@ all:		${NAME}
 ifeq ($(shell uname), Darwin)
 # Max
 %.o: %.c	$(LIBFT) $(GNL)
-			$(CC) -Wall -Wextra -c $< -o $@ 
+			$(CC) -Wall -Wextra -g -c $< -o $@ 
 #-Werror
 else
 # Ranja
@@ -95,7 +95,7 @@ $(NAME):	$(LIBFT) $(GNL) $(MLX) $(OBJS)
 endif
 
 e:	all
-			./$(NAME)
+			./$(NAME) "maps/test00_valid.cub"
 
 re:			fclean all
 

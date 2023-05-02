@@ -204,7 +204,7 @@ bool    check_valid_fc(t_info *info)
                 if (ft_atoi(info->txt.green) >= 0 && ft_atoi(info->txt.green) <= 255)
                 {
                     if (ft_atoi(info->txt.blue) >= 0 && ft_atoi(info->txt.blue) <= 255)
-                        argb(0, ft_atoi(info->txt.red), ft_atoi(info->txt.green), ft_atoi(info->txt.blue));
+                        info->floor = argb(0, ft_atoi(info->txt.red), ft_atoi(info->txt.green), ft_atoi(info->txt.blue));
                     else
                     {
                         printf("Error: Invalid value for blue!\n");
@@ -248,7 +248,7 @@ bool    check_valid_fc(t_info *info)
                 if (ft_atoi(info->txt.green) >= 0 && ft_atoi(info->txt.green) <= 255)
                 {
                     if (ft_atoi(info->txt.blue) >= 0 && ft_atoi(info->txt.blue) <= 255)
-                        argb(0, ft_atoi(info->txt.red), ft_atoi(info->txt.green), ft_atoi(info->txt.blue));
+                        info->ceiling = argb(0, ft_atoi(info->txt.red), ft_atoi(info->txt.green), ft_atoi(info->txt.blue));
                     else
                     {
                         printf("Error: Invalid value for blue!\n");
