@@ -27,6 +27,8 @@ void	key_event(int key, t_info *info)
 	else if (key == ESC)
 		exit(0);					// ----------------- exit and clean_up !!!
 	raycast_and_picturework(info);
+	pvec(info->p->pos);
+	pvec(info->p->cam_vec);
 }
 
 void	init_game(t_info *info)
@@ -78,7 +80,7 @@ int	main(int argc, char **argv)
         printf("great\n");
 		info->map_int = map_converter(info);
      }
-
+	print_2d_arr(info->map_int, info->mapsize[Y], info->mapsize[X]);
 
 
 
@@ -90,36 +92,36 @@ int	main(int argc, char **argv)
 	
 	// ------  create test map  -- recognize from map file
 
-	info->mapsize[X] = 7;
-	info->mapsize[Y] = 7;
+	// info->mapsize[X] = 7;
+	// info->mapsize[Y] = 7;
 
-	info->map_int = malloc(sizeof(int *) * 7);
-	int j = -1;
-	while (++j < 7)
-	{
-		info->map_int[j] = calloc(7, sizeof(int));
-		if (j == 6 || j == 0)
-		{
-			info->map_int[j][1] = 1;
-			info->map_int[j][2] = 1;
-			info->map_int[j][3] = 1;
-			info->map_int[j][4] = 1;
-			info->map_int[j][5] = 1;
-			info->map_int[j][6] = 1;
-		}
-		info->map_int[j][0] = 1;
-		info->map_int[j][6] = 1;
-	}
+	// info->map_int = malloc(sizeof(int *) * 7);
+	// int j = -1;
+	// while (++j < 7)
+	// {
+	// 	info->map_int[j] = calloc(7, sizeof(int));
+	// 	if (j == 6 || j == 0)
+	// 	{
+	// 		info->map_int[j][1] = 1;
+	// 		info->map_int[j][2] = 1;
+	// 		info->map_int[j][3] = 1;
+	// 		info->map_int[j][4] = 1;
+	// 		info->map_int[j][5] = 1;
+	// 		info->map_int[j][6] = 1;
+	// 	}
+	// 	info->map_int[j][0] = 1;
+	// 	info->map_int[j][6] = 1;
+	// }
 
-	info->map_int[3][5] = 1;
-	info->map_int[3][1] = 1;
+	// info->map_int[3][5] = 1;
+	// info->map_int[3][1] = 1;
 
 	// ------  player position and direction
 
-	info->p->pos[X] = 2.5;			// replace - recognize from map file
-	info->p->pos[Y] = 2.5;
-	info->p->cam_vec[X] = 0;
-	info->p->cam_vec[Y] = -1;
+	// info->p->pos[X] = 2.5;			// replace - recognize from map file
+	// info->p->pos[Y] = 2.5;
+	// info->p->cam_vec[X] = 0;
+	// info->p->cam_vec[Y] = -1;
 
 	// -----------------  wichtig MAIN behalten
 	init_mlx_window_first_screen(info);

@@ -100,6 +100,10 @@ void	draw_one_vertical_line(t_img *dest, t_img *src, \
 	while (++y < act_height)
 	{
 		color = get_color_from_img(src, (((double)act_x * dx_for_wall) + start_end_wall[START_X_WALL]), (y * dy_for_wall));
-		my_mlx_pixel_put(dest, (act_x + corners[X1]), (y + start_y), color);
+		// if ((act_x + corners[X1]) > DISPLAY_WIDTH)
+		// 	printf("exception_x");
+		if ((y + start_y) >= 0 && (y + start_y) < DISPLAY_HEIGHT)
+			my_mlx_pixel_put(dest, (act_x + corners[X1]), (y + start_y), color);
+		
 	}
 }
