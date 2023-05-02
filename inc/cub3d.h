@@ -49,7 +49,7 @@
 # define DISPLAY_HEIGHT 600
 # define LEN_CAM_VEC 1
 # define LEN_LEFT_FOV 0.65 // 0,65 und 1 sind 33° -> fov von zusammen 66° gut für first person
-# define FACTOR_WALL_HEIGHT 1.3
+# define FACTOR_WALL_HEIGHT 1
 # define STEPSIZE 0.3
 # define PLAYER_ROTATION_DEG 15
 # define DISTANCE_FROM_WALL 0.3

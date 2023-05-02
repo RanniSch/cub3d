@@ -51,7 +51,9 @@ double	calc_diff_fov(double *left_fov)
 void	calc_left_px_vec(double *left_px_vec, t_player *p)
 {
 	norm_vec(p->cam_vec);
+	
 	cpy_vec(left_px_vec, p->cam_vec);
+	mult_vec(left_px_vec, LEN_CAM_VEC);
 	// printf("\ncam_vec:\n");
 	// pvec(left_px_vec);
 	// add_vec(left_px_vec, p->pos);
@@ -67,24 +69,11 @@ void	calc_left_px_vec(double *left_px_vec, t_player *p)
  */
 void	calc_px_vec(double *px_vec, double *left_px_vec, t_player *p, int i)
 {
-	// printf("pos\n");
-	// pvec(p->pos);
-	// printf("cam_vec\n");
-	// pvec(p->cam_vec);
-	// printf("left_fov\n");
-	// pvec(p->left_fov);
-	
-	
-	
 	cpy_vec(px_vec, p->left_fov);
 	mult_vec(px_vec, -1);
+	norm_vec(px_vec);
 	mult_vec(px_vec, (p->dpx * i));
 	add_vec(px_vec, left_px_vec);
-
-
-	// printf("px_vec\n");
-	// pvec(px_vec);
-
 }
 
 /**
@@ -108,8 +97,6 @@ void	raycast_scan_in_fov(t_info *info, t_player *p)
 
 	field_of_view(p->cam_vec, p->left_fov);
 	p->dpx = calc_diff_fov(p->left_fov);
-
-
 	calc_left_px_vec(left_px_vec, p);
 	while(++k < DISPLAY_WIDTH)
 	{
