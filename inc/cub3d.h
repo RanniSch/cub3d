@@ -178,6 +178,10 @@ void	draw_one_vertical_line(t_img *dest, t_img *src, \
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
 int		argb(int alpha, int red, int green, int blue);
 
+//**** ft_clean_up.c ****//
+
+void	clean_up_map_int(t_info *info);
+
 //**** ft_draw_textures.c ****//
 
 int		next_tile_on_display_x(int act_x_on_display, t_info *info);

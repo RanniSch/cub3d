@@ -23,7 +23,10 @@ void	key_event(int key, t_info *info)
 	else if (key == ARROW_RIGHT)
 		rotate_right(info);
 	else if (key == ESC)
+	{
+		clean_up_map_int(info);
 		exit(0);					// ----------------- exit and clean_up !!!
+	}
 	raycast_and_picturework(info);
 	// printf("pos:\n");
 	// pvec(info->p->pos);
