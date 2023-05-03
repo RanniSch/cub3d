@@ -76,7 +76,8 @@ double	calc_dx_for_wall(double *start_end_wall, int *corners)
  * while
  * 		get color of texture
  * 		my_mlx_pixel_put()
- * @sum_dy: diff in height from left to right (right display height - left display height)
+ * @sum_dy: diff in height from left to right 
+ * 			(right display height - left display height)
  * @sum_dx: width on display (right side minus left side) + 1
  * 			because when you have a far away wall with width of 1
  * 			it would be f.e. X3:532 - X1:532. But it should be 1

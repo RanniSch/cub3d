@@ -36,6 +36,7 @@ SRCS		= main.c \
 			  ./src/ft_draw_textures_3.c \
 			  ./src/ft_draw_textures.c \
 			  ./src/ft_init.c \
+			  ./src/ft_clean_up.c \
 			  
 			  
 
@@ -96,6 +97,9 @@ endif
 
 e:	all
 			./$(NAME) "maps/test13_valid_small_map.cub"
+
+l:	all
+			leaks --atExit -- ./$(NAME) "maps/test13_valid_small_map.cub"
 
 re:			fclean all
 

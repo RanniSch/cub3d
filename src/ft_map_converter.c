@@ -49,14 +49,16 @@ int **map_converter(t_info *info)
 	int		act_row_file;
 
 	map_converter_init(&i, &act_row_file, info);
-	tmp_map_int = (int **)malloc(sizeof(int *) * (info->mapsize[Y]));
+	tmp_map_int = (int **)malloc(sizeof(int *) * (info->mapsize[Y] + 1));
 	if (!tmp_map_int)
 		return (NULL);
 	
 	// while (++i < info->mapsize[Y] && info->map[++act_row_file] != NULL)
 	while (++i < info->mapsize[Y] && --act_row_file >= 0)
 	{
-		tmp_map_int[i] = (int*)malloc(sizeof(int) * info->mapsize[X]);//malloc sichern
+		tmp_map_int[i] = (int*)malloc(sizeof(int) * info->mapsize[X]);
+		if (!tmp_map_int[i])
+			return (NULL);
 		j = -1;
 		while (info->map[act_row_file][++j] && \
 			info->map[act_row_file][j] != '\n')
@@ -66,7 +68,9 @@ int **map_converter(t_info *info)
 			else if(dir_emp_zero(info->map[act_row_file][j]))
 				tmp_map_int[i][j] = 0;
 		}
+		
 	}
+	tmp_map_int[i] = NULL;
     return (tmp_map_int);
 }
 
