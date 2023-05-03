@@ -96,4 +96,5 @@ void	raycast_scan_in_fov(t_info *info, t_player *p)
 		info->dist_info[EXACT_X][k] = hit_coordinates[EXACT_X];
 		info->dist_info[EXACT_Y][k] = hit_coordinates[EXACT_Y];
 	}
+	print_dist_arr_info(info);
 }

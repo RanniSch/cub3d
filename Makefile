@@ -95,7 +95,7 @@ $(NAME):	$(LIBFT) $(GNL) $(MLX) $(OBJS)
 endif
 
 e:	all
-			./$(NAME) "maps/test00_valid.cub"
+			./$(NAME) "maps/test13_valid_small_map.cub"
 
 re:			fclean all
 
