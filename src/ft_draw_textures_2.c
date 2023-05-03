@@ -77,7 +77,14 @@ double	calc_dx_for_wall(double *start_end_wall, int *corners)
  * 		get color of texture
  * 		my_mlx_pixel_put()
  * @sum_dy: diff in height from left to right (right display height - left display height)
- * @sum_dx: width on display (right side minus left side)
+ * @sum_dx: width on display (right side minus left side) + 1
+ * 			because when you have a far away wall with width of 1
+ * 			it would be f.e. X3:532 - X1:532. But it should be 1
+ * @act_height: tells how high the wall at this x value has to be
+ * 				the first part is the intercept theorem -> when the wall 
+ * 				is getting bigger to the right how much do I have to add
+ * 				to the height at this x value. Y2 - Y1 is the basic height
+ * 				from the most left part of the wall.
  */
 void	draw_one_vertical_line(t_img *dest, t_img *src, \
 	double *start_end_wall, int *corners, int act_x, double dx_for_wall)
@@ -93,15 +100,13 @@ void	draw_one_vertical_line(t_img *dest, t_img *src, \
 	y = -1;
 	
 	sum_dy = (corners[Y4] - corners[Y3]) - (corners[Y2] - corners[Y1]);
-	sum_dx = corners[X3] - corners[X1]; // unlogische bezeichnung
+	sum_dx = corners[X3] - corners[X1] + 1; // unlogische bezeichnung
 	act_height = ((sum_dy / sum_dx) * (double)act_x) + (corners[Y2] - corners[Y1]);
 	start_y = (DISPLAY_HEIGHT - act_height) / 2;
 	dy_for_wall = HEIGHT_WALL / act_height;
 	while (++y < act_height)
 	{
 		color = get_color_from_img(src, (((double)act_x * dx_for_wall) + start_end_wall[START_X_WALL]), (y * dy_for_wall));
-		// if ((act_x + corners[X1]) > DISPLAY_WIDTH)
-		// 	printf("exception_x");
 		if ((y + start_y) >= 0 && (y + start_y) < DISPLAY_HEIGHT)
 			my_mlx_pixel_put(dest, (act_x + corners[X1]), (y + start_y), color);
 		
