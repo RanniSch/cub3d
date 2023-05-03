@@ -12,17 +12,11 @@
  */
 void	field_of_view(double *cam_vec, double *left_fov)
 {
-	// double dir[2];
-
-	// cpy_vec(dir, cam_vec);
 	norm_vec(cam_vec);
 	mult_vec(cam_vec, LEN_CAM_VEC);
 	cpy_vec(left_fov, cam_vec);
-	// cpy_vec(right_fov, dir);
 	rot_vec(left_fov, 90);
-	// rot_vec(right_fov, -90);
 	mult_vec(left_fov, LEN_LEFT_FOV);
-	// mult_vec(right_fov, LEN_CAMERA_PLANE_VEC);
 }
 
 /**
@@ -51,17 +45,9 @@ double	calc_diff_fov(double *left_fov)
 void	calc_left_px_vec(double *left_px_vec, t_player *p)
 {
 	norm_vec(p->cam_vec);
-	
 	cpy_vec(left_px_vec, p->cam_vec);
 	mult_vec(left_px_vec, LEN_CAM_VEC);
-	// printf("\ncam_vec:\n");
-	// pvec(left_px_vec);
-	// add_vec(left_px_vec, p->pos);
-	// printf("\ncam_vec + pos:\n");
-	// pvec(left_px_vec);
 	add_vec(left_px_vec, p->left_fov);
-	// printf("\ncam_vec + left_fov:\n");
-	// pvec(left_px_vec);
 }
 
 /**
