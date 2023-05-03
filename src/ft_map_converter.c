@@ -36,6 +36,8 @@ void	map_converter_init(int *i, int *act_row_file, t_info *info)
 	info->mapsize[Y] = info->row - info->map_i;
 	info->mapsize[X] = 0;
 	count_mapsize_x(*i, info, *act_row_file);
+	// *i = info->mapsize[Y];
+	// *act_row_file = *i + info->map_i;
 }
 
 int **map_converter(t_info *info)
@@ -50,6 +52,7 @@ int **map_converter(t_info *info)
 	tmp_map_int = (int **)malloc(sizeof(int *) * (info->mapsize[Y]));
 	if (!tmp_map_int)
 		return (NULL);
+	// while (--i >= 0 && --act_row_file >= 0)
 	while (++i < info->mapsize[Y] && info->map[++act_row_file] != NULL)
 	{
 		tmp_map_int[i] = (int*)malloc(sizeof(int) * info->mapsize[X]);//malloc sichern
@@ -76,7 +79,8 @@ int **map_converter(t_info *info)
  */
 void	convert_player_pos_dir(t_info *info)
 {
-	info->p->pos[Y] = (double)info->player_x - info->map_i + 0.5;
+	// info->p->pos[Y] = (double)info->player_x - info->map_i + 0.5;
+	info->p->pos[Y] = (double)info->mapsize[Y] - ((double)info->player_x - info->map_i + 0.5);
 	info->p->pos[X] = (double)info->player_y + 0.5;
 	info->p->cam_vec[X] = 0;
 	info->p->cam_vec[Y] = 0;
