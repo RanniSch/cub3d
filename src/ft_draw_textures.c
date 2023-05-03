@@ -132,6 +132,8 @@ void	draw_wall_textures(t_info *info, int width_pixel)
 		calc_end_wall(start_end_wall, corners, width_pixel, info);
 		wall_ptr = get_wall_ptr(width_pixel, info->dist_info, info);
 		dx_for_wall = calc_dx_for_wall(start_end_wall, corners);
+		if(width_pixel == 532)
+				printf("start");
 		while ((++act_x + corners[X1]) <= corners[X3])
 		{
 			draw_one_vertical_line(info->img, wall_ptr, start_end_wall, \
