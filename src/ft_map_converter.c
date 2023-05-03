@@ -37,7 +37,7 @@ void	map_converter_init(int *i, int *act_row_file, t_info *info)
 	info->mapsize[X] = 0;
 	count_mapsize_x(*i, info, *act_row_file);
 	// *i = info->mapsize[Y];
-	// *act_row_file = *i + info->map_i;
+	*act_row_file = info->mapsize[Y] + info->map_i;
 }
 
 int **map_converter(t_info *info)
@@ -52,8 +52,9 @@ int **map_converter(t_info *info)
 	tmp_map_int = (int **)malloc(sizeof(int *) * (info->mapsize[Y]));
 	if (!tmp_map_int)
 		return (NULL);
-	// while (--i >= 0 && --act_row_file >= 0)
-	while (++i < info->mapsize[Y] && info->map[++act_row_file] != NULL)
+	
+	// while (++i < info->mapsize[Y] && info->map[++act_row_file] != NULL)
+	while (++i < info->mapsize[Y] && --act_row_file >= 0)
 	{
 		tmp_map_int[i] = (int*)malloc(sizeof(int) * info->mapsize[X]);//malloc sichern
 		j = -1;
