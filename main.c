@@ -4,9 +4,7 @@ void	raycast_and_picturework(t_info *info)
 {
 	raycast_scan_in_fov(info, info->p);
 	fill_background(info->ceiling, info->floor, info->img);
-	
 	draw_wall_textures(info, 0);
-	// draw_wallshadows(info->dist_arr, info->img);
 	mlx_put_image_to_window(info->mlx_ptr, info->mlx_win, info->img->img, 0, 0);
 }
 
@@ -27,11 +25,11 @@ void	key_event(int key, t_info *info)
 	else if (key == ESC)
 		exit(0);					// ----------------- exit and clean_up !!!
 	raycast_and_picturework(info);
-	printf("pos:\n");
-	pvec(info->p->pos);
-	printf("cam:\n");
-	pvec(info->p->cam_vec);
-	printf("\n");
+	// printf("pos:\n");
+	// pvec(info->p->pos);
+	// printf("cam:\n");
+	// pvec(info->p->cam_vec);
+	// printf("\n");
 }
 
 void	init_game(t_info *info)
@@ -83,57 +81,12 @@ int	main(int argc, char **argv)
         printf("great\n");
 		info->map_int = map_converter(info);
      }
-	print_2d_arr(info->map_int, info->mapsize[Y], info->mapsize[X]);
-
-
-
-
+	// print_2d_arr(info->map_int, info->mapsize[Y], info->mapsize[X]);
 	convert_player_pos_dir(info);
 	init_mlx_and_textures(info); // nach parsing damit die Pfade zu den Texturen bekannt sind
-
-		double tile[2];
-	
-	// ------  create test map  -- recognize from map file
-
-	// info->mapsize[X] = 7;
-	// info->mapsize[Y] = 7;
-
-	// info->map_int = malloc(sizeof(int *) * 7);
-	// int j = -1;
-	// while (++j < 7)
-	// {
-	// 	info->map_int[j] = calloc(7, sizeof(int));
-	// 	if (j == 6 || j == 0)
-	// 	{
-	// 		info->map_int[j][1] = 1;
-	// 		info->map_int[j][2] = 1;
-	// 		info->map_int[j][3] = 1;
-	// 		info->map_int[j][4] = 1;
-	// 		info->map_int[j][5] = 1;
-	// 		info->map_int[j][6] = 1;
-	// 	}
-	// 	info->map_int[j][0] = 1;
-	// 	info->map_int[j][6] = 1;
-	// }
-
-	// info->map_int[3][5] = 1;
-	// info->map_int[3][1] = 1;
-
-	// ------  player position and direction
-
-	// info->p->pos[X] = 2.5;			// replace - recognize from map file
-	// info->p->pos[Y] = 2.5;
-	// info->p->cam_vec[X] = 0;
-	// info->p->cam_vec[Y] = -1;
-
-	// -----------------  wichtig MAIN behalten
 	init_mlx_window_first_screen(info);
 	mlx_key_hook(info->mlx_win, key_event, info);
 	mlx_loop(info->mlx_ptr);
-
-	// ----------------- ENDE  wichtig MAIN behalten
-
-	
  	return (0);
 }
 

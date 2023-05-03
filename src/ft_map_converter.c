@@ -35,7 +35,7 @@ void	map_converter_init(int *i, int *act_row_file, t_info *info)
 	*act_row_file = *i + info->map_i;
 	info->mapsize[Y] = info->row - info->map_i;
 	info->mapsize[X] = 0;
-	// count_mapsize_x(*i, info, *act_row_file);
+	count_mapsize_x(*i, info, *act_row_file);
 }
 
 int **map_converter(t_info *info)
@@ -46,20 +46,16 @@ int **map_converter(t_info *info)
 	int 	**tmp_map_int;
 	int		act_row_file;
 
-	// map_converter_init(&i, &act_row_file, &info);
-	i = -1;
-	act_row_file = i + info->map_i;
-	info->mapsize[Y] = info->row - info->map_i;
-	info->mapsize[X] = 0;
+	map_converter_init(&i, &act_row_file, info);
 	tmp_map_int = (int **)malloc(sizeof(int *) * (info->mapsize[Y]));
 	if (!tmp_map_int)
 		return (NULL);
-	count_mapsize_x(i, info, act_row_file);
 	while (++i < info->mapsize[Y] && info->map[++act_row_file] != NULL)
 	{
 		tmp_map_int[i] = (int*)malloc(sizeof(int) * info->mapsize[X]);//malloc sichern
 		j = -1;
-		while (info->map[act_row_file][++j] && info->map[act_row_file][j] != '\n')
+		while (info->map[act_row_file][++j] && \
+			info->map[act_row_file][j] != '\n')
 		{
 			if (info->map[act_row_file][j] == '1')
 				tmp_map_int[i][j] = 1;
@@ -72,11 +68,11 @@ int **map_converter(t_info *info)
 
 /**
  * @brief player_y means the column
- * and player_x is the row (in the whole file), 
+ * and player_x is the row (in the whole file),
  * so don't forget to substract the beginning of the
  * map in the file (info->map_i)
- * 
- * @param info 
+ *
+ * @param info
  */
 void	convert_player_pos_dir(t_info *info)
 {
