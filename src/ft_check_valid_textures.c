@@ -165,40 +165,45 @@ bool	valid_texture_extension(t_info *info)
 	return (true);
 }
 
+void    ft_letter_to_rgb(t_info *info, char *map)
+{
+    int j;
+    int len;
+
+    j = 1;
+    len = 0;
+    while (map[j] == ' ') // Muster wiederholt sich, subfunktion????
+        j++;
+    while (map[++j] != ',')
+        len++;
+    info->txt.red = ft_substr(map, j - len - 1, len + 1);
+    j++;
+    while (map[j] == ' ')
+        j++;
+    while (map[++j] != ',')
+        len++;
+    info->txt.green = ft_substr(map, j - len, len + 1);
+    j++;
+    while (map[j] == ' ')
+        j++;
+    while (map[++j] != ',')
+        len++;
+    info->txt.blue = ft_substr(map, j - len, len + 1);
+}
+
 bool    check_valid_fc(t_info *info)
 {
     int i;
-    int j;
     int fc;
-    int len;
 
     fc = 0;
     i = info->map_i;
     while (info->map[i][0] != '\n')
     {
-        j = 0;
-        len = 0;
         // man könnte auch noch hinzunehmen, dass jede Farbe nur genau einmal vorkommt!
-        if (info->map[i][j] == 'F') // Werte von 0 - 255;
+        if (info->map[i][0] == 'F') // Werte von 0 - 255;
         {
-            j++;
-            while (info->map[i][j] == ' ') // Muster wiederholt sich, subfunktion????
-                j++;
-            while (info->map[i][++j] != ',')
-                len++;
-            info->txt.red = ft_substr(info->map[i], j - len - 1, len + 1);
-            j++;
-            while (info->map[i][j] == ' ')
-                j++;
-            while (info->map[i][++j] != ',')
-                len++;
-            info->txt.green = ft_substr(info->map[i], j - len, len + 1);
-            j++;
-            while (info->map[i][j] == ' ')
-                j++;
-            while (info->map[i][++j] != ',')
-                len++;
-            info->txt.blue = ft_substr(info->map[i], j - len, len + 1);
+            ft_letter_to_rgb(info, info->map[i]);
             if (ft_atoi(info->txt.red) >= 0 && ft_atoi(info->txt.red) <= 255)
             {
                 if (ft_atoi(info->txt.green) >= 0 && ft_atoi(info->txt.green) <= 255)
@@ -226,24 +231,7 @@ bool    check_valid_fc(t_info *info)
         }
         else if (info->map[i][0] == 'C')
         {
-            j++;
-            while (info->map[i][j] == ' ')
-                j++;
-            while (info->map[i][++j] != ',')
-                len++;
-            info->txt.red = ft_substr(info->map[i], j - len - 1, len + 1);
-            j++;
-            while (info->map[i][j] == ' ')
-                j++;
-            while (info->map[i][++j] != ',')
-                len++;
-            info->txt.green = ft_substr(info->map[i], j - len, len + 1);
-            j++;
-            while (info->map[i][j] == ' ')
-                j++;
-            while (info->map[i][++j] != ',')
-                len++;
-            info->txt.blue = ft_substr(info->map[i], j - len, len + 1);
+            ft_letter_to_rgb(info, info->map[i]);
             if (ft_atoi(info->txt.red) >= 0 && ft_atoi(info->txt.red) <= 255)
             {
                 if (ft_atoi(info->txt.green) >= 0 && ft_atoi(info->txt.green) <= 255)

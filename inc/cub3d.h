@@ -160,6 +160,7 @@ bool		parsing(t_info *info);
 
 bool    check_valid_textures(t_info *info);
 bool	valid_texture_extension(t_info *info);
+void    ft_letter_to_rgb(t_info *info, char *map);
 bool    check_valid_fc(t_info *info);
 
 /* ft_check_valid_map.c */
