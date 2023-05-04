@@ -87,6 +87,7 @@ void	init_mlx_and_textures(t_info *info)
 	void *v_ea;
 	void *v_so;
 	void *v_we;
+	// info->v_no usw als return
 	v_no = mlx_xpm_file_to_image(info->mlx_ptr, info->txt.path_no, \
 		&info->north->width, &info->north->height);
 	v_ea = mlx_xpm_file_to_image(info->mlx_ptr, info->txt.path_ea, \

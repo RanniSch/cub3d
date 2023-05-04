@@ -10,23 +10,24 @@ void	count_mapsize_x(int i, t_info *info, int act_row_file)
 	}
 }
 
-// void	convert(int **tmp_map_int, t_info *info, int act_row_file, int j)
-// {
-// 	if (info->map[act_row_file][j] == '0' || info->map[act_row_file][j] == '1')
-// 		tmp_map_int[i][j] = info->map[act_row_file][j] - 48;
-// 	else if(info->map[act_row_file][j] == 'N' || info->map[act_row_file][j] == 'W' ||\
-// 		info->map[act_row_file][j] == 'S' || info->map[act_row_file][j] == 'E' ||\
-// 		info->map[act_row_file][j] == ' ')
-// 	{
-// 		tmp_map_int[i][j] = 0;
-// 	}
-// }
+/*void	convert(int **tmp_map_int, t_info *info, int act_row_file, int j)
+{
+	if (info->map[act_row_file][j] == '0' || info->map[act_row_file][j] == '1')
+ 		tmp_map_int[i][j] = info->map[act_row_file][j] - 48;
+ 	else if(info->map[act_row_file][j] == 'N' || info->map[act_row_file][j] == 'W' ||\
+ 		info->map[act_row_file][j] == 'S' || info->map[act_row_file][j] == 'E' ||\
+		info->map[act_row_file][j] == ' ')
+ 	{
+ 		tmp_map_int[i][j] = 0;
+ 	}
+}*/
 
-dir_emp_zero(char c)
+int	dir_emp_zero(char c)
 {
 	if (c == 'N' || c == 'E' || c == 'S' || c == 'W' \
 		|| c == ' ' || c == '0')
 		return (1);
+	return (0);
 }
 
 void	map_converter_init(int *i, int *act_row_file, t_info *info)
@@ -44,7 +45,7 @@ int **map_converter(t_info *info)
 {
 	int		i;
     int     j;
-    int     str_len;
+    //int     str_len;
 	int 	**tmp_map_int;
 	int		act_row_file;
 

@@ -8,7 +8,7 @@ void	raycast_and_picturework(t_info *info)
 	mlx_put_image_to_window(info->mlx_ptr, info->mlx_win, info->img->img, 0, 0);
 }
 
-void	key_event(int key, t_info *info)
+int	key_event(int key, t_info *info)
 {
 	if (key == W)
 		move_forward(info);
@@ -34,6 +34,7 @@ void	key_event(int key, t_info *info)
 	// printf("cam:\n");
 	// pvec(info->p->cam_vec);
 	// printf("\n");
+	return (0);
 }
 
 void	init_game(t_info *info)
@@ -51,7 +52,52 @@ void	init_game(t_info *info)
 	info->txt.path_ea = NULL;
 	info->txt.path_so = NULL;
 	info->txt.path_we = NULL;
+
+	//info->v_no = NULL;
+	//info->v_ea = NULL;
+	//info->v_so = NULL;
+	//info->v_we = NULL;
 }
+
+/* frees each entry of the map if it exists */
+/*void	ft_free_struct(t_info *info)
+{
+	int	i;
+
+	i = map_i - 1;
+	if (info->map_int)
+	{
+		while (++i < info->row)
+		{
+			free(info->map_i[i])
+		}
+		free(info->map_int)
+	}
+	i = -1
+	if (info->map)
+	{
+		while (++i < info->row)
+		{
+			free(info->map[i]);
+		}
+		free(info->map);
+	}
+	free(info);
+}
+
+int	ft_free_destroy(t_info *info)
+{
+	mlx_destroy_image(info->mlx_ptr, info->v_no);
+	mlx_destroy_image(info->mlx_ptr, info->v_ea);
+	mlx_destroy_image(info->mlx_ptr, info->v_so);
+	mlx_destroy_image(info->mlx_ptr, info->v_we);
+	mlx_loop_end(info->mlx_ptr);
+	mlx_destroy_window(info->mlx_ptr, info->mlx_win);
+	mlx_destroy_display(info->mlx_ptr);
+	free(info->mlx_ptr);
+	ft_free_struct(info);
+	exit(EXIT_FAILURE);
+}*/
 
 int	main(int argc, char **argv)
 {
@@ -90,7 +136,7 @@ int	main(int argc, char **argv)
 	init_mlx_and_textures(info); // nach parsing damit die Pfade zu den Texturen bekannt sind
 	init_mlx_window_first_screen(info);
 	mlx_key_hook(info->mlx_win, key_event, info);
+	//mlx_hook(info->mlx_win, 17, 1L << 2, ft_free_destroy, info);
 	mlx_loop(info->mlx_ptr);
  	return (0);
 }
-

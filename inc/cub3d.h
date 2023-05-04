@@ -38,6 +38,8 @@
 # define B 1
 # define WIDTH_WALL 64
 # define HEIGHT_WALL 64
+
+# ifdef __APPLE__
 # define W 13
 # define A 0
 # define S 1
@@ -45,6 +47,16 @@
 # define ESC 53
 # define ARROW_LEFT 123
 # define ARROW_RIGHT 124
+# else
+	# define W 119
+	# define A 97
+	# define S 115
+	# define D 100
+	# define ESC 65307
+	# define ARROW_LEFT 65361
+	# define ARROW_RIGHT 65363
+# endif
+
 # define DISPLAY_WIDTH 1000
 # define DISPLAY_HEIGHT 600
 # define LEN_CAM_VEC 1
@@ -108,6 +120,10 @@ typedef struct s_info
 	int			**dist_info;
 	void		*mlx_ptr;
 	void		*mlx_win;
+	//void		*v_no;
+	//void		*v_ea;
+	//void		*v_so;
+	//void		*v_we;
 	t_img		*north;
 	t_img		*east;
 	t_img		*south;
