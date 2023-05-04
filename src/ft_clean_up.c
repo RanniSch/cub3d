@@ -77,7 +77,7 @@ t_img	*clean_up_one_texture(t_img *img, t_info *info)
 		return (img);
 	if (img->img)
 	{
-		mlx_destroy_image(info->mlx_ptr, img->img); // korrekt?
+		mlx_destroy_image(info->mlx_ptr, img->img); // korrekt? evtl ohne abfrage 2 zeilen drüber??
 		// free (img->img); // muss das hier hin?
 		img->img = NULL;
 	}
