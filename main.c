@@ -53,13 +53,16 @@ void	init_game(t_info *info)
 	info->txt.path_so = NULL;
 	info->txt.path_we = NULL;
 
-	//info->v_no = NULL;
+	// Correct pointers?
+	//info->v_no = NULL; 
 	//info->v_ea = NULL;
 	//info->v_so = NULL;
 	//info->v_we = NULL;
 }
 
-/* frees each entry of the map if it exists */
+/* 
+* Frees each entry of the map and map_int if it exists.
+*/
 /*void	ft_free_struct(t_info *info)
 {
 	int	i;
@@ -85,7 +88,11 @@ void	init_game(t_info *info)
 	free(info);
 }
 
-int	ft_free_destroy(t_info *info)
+/*
+* Destroyes all textures, the window and the display.
+* Frees the pointer and the allocations.
+*/
+/*int	ft_free_destroy(t_info *info)
 {
 	mlx_destroy_image(info->mlx_ptr, info->v_no);
 	mlx_destroy_image(info->mlx_ptr, info->v_ea);
