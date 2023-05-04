@@ -24,8 +24,7 @@ int	key_event(int key, t_info *info)
 		rotate_right(info);
 	else if (key == ESC)
 	{
-		clean_up_map_int(info);
-		clean_up_dist_info(info);
+		ft_free_destroy(info);
 		exit(0);					// ----------------- exit and clean_up !!!
 	}
 	raycast_and_picturework(info);
