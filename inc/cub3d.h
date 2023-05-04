@@ -47,6 +47,13 @@
 # define ESC 53
 # define ARROW_LEFT 123
 # define ARROW_RIGHT 124
+# define LINUX 0
+// int	mlx_loop_end(void *ptr)
+// {
+// 	if (ptr)
+// 		return 0;
+// 	return 0;
+// }
 # else
 	# define W 119
 	# define A 97
@@ -55,6 +62,7 @@
 	# define ESC 65307
 	# define ARROW_LEFT 65361
 	# define ARROW_RIGHT 65363
+	# define LINUX 1
 # endif
 
 # define DISPLAY_WIDTH 1000
@@ -198,6 +206,9 @@ int		argb(int alpha, int red, int green, int blue);
 
 void	clean_up_map_int(t_info *info);
 void	clean_up_dist_info(t_info *info);
+void	clean_up_char_map(t_info *info);
+void	ft_free_destroy(t_info *info);
+void	clean_up_textures(t_info *info);
 
 //**** ft_draw_textures.c ****//
 
