@@ -87,7 +87,7 @@ bool	valid_texture_extension(t_info *info)
 	int p_len;
     int fd;
 
-    fd = open(info->txt.path_no, O_RDONLY);
+    fd = open(info->txt.path_no, O_RDONLY); // Muster wiederholt sich, kann ich eine Unterfunktion
     if (fd == -1)
 	{
 		//free_struct(data);
@@ -182,7 +182,7 @@ bool    check_valid_fc(t_info *info)
         if (info->map[i][j] == 'F') // Werte von 0 - 255;
         {
             j++;
-            while (info->map[i][j] == ' ')
+            while (info->map[i][j] == ' ') // Muster wiederholt sich, subfunktion????
                 j++;
             while (info->map[i][++j] != ',')
                 len++;
@@ -222,6 +222,7 @@ bool    check_valid_fc(t_info *info)
                 printf("Error: Invalid value for red!\n");
                 return (false);
             }
+			clean_up_txt_colors(info);
         }
         else if (info->map[i][0] == 'C')
         {
@@ -266,6 +267,7 @@ bool    check_valid_fc(t_info *info)
                 printf("Error: Invalid value for red!\n");
                 return (false);
             }
+			clean_up_txt_colors(info);
         }
         else
         { 

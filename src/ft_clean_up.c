@@ -130,6 +130,12 @@ char	*clean_up_one_txt_path(char *ptr)
 	return (ptr);
 }
 
+void	clean_up_txt_colors(t_info *info)
+{
+	info->txt.red = clean_up_one_txt_path(info->txt.red);
+	info->txt.green = clean_up_one_txt_path(info->txt.green);
+	info->txt.blue = clean_up_one_txt_path(info->txt.blue);
+}
 
 void	clean_up_txt_paths(t_info *info)
 {
@@ -138,9 +144,7 @@ void	clean_up_txt_paths(t_info *info)
 	info->txt.path_ea = clean_up_one_txt_path(info->txt.path_ea);
 	info->txt.path_so = clean_up_one_txt_path(info->txt.path_so);
 	info->txt.path_we = clean_up_one_txt_path(info->txt.path_we);
-	info->txt.red = clean_up_one_txt_path(info->txt.red);
-	info->txt.green = clean_up_one_txt_path(info->txt.green);
-	info->txt.blue = clean_up_one_txt_path(info->txt.blue);
+	clean_up_txt_colors(info);
 }
 
 
