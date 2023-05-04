@@ -72,6 +72,7 @@ int **map_converter(t_info *info)
 		
 	}
 	tmp_map_int[i] = NULL;
+	clean_up_char_map(info);
     return (tmp_map_int);
 }
 
