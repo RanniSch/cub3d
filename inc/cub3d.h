@@ -115,8 +115,8 @@ typedef struct s_info
 	char	**map;
 	int		map_i;
 	t_textures	txt;
-	int		floor; // Max benutzt du das? Jo
-	int		ceiling; // Max benutzt du das? Jo
+	int		floor;
+	int		ceiling;
 	int		player_amount;
 	int		player_x;
 	int		player_y;

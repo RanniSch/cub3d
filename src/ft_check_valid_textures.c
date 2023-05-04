@@ -165,6 +165,9 @@ bool	valid_texture_extension(t_info *info)
 	return (true);
 }
 
+/*
+* Puts the index to the first number of rgb.
+*/
 void    ft_letter_to_rgb(t_info *info, char *map)
 {
     int j;
@@ -172,7 +175,7 @@ void    ft_letter_to_rgb(t_info *info, char *map)
 
     j = 1;
     len = 0;
-    while (map[j] == ' ') // Muster wiederholt sich, subfunktion????
+    while (map[j] == ' ')
         j++;
     while (map[++j] != ',')
         len++;
