@@ -19,7 +19,6 @@ bool    check_valid_textures(t_info *info)
     while (info->map[info->map_i][0] != '\n')
     {
         // man könnte auch noch hinzunehmen, dass jede Himmelsrichtung nur genau einmal vorkommt!
-        // Was genau brauchst du gespeichert? Bezeichnung und Path?
         j = 0;
         len = 0;
         if (info->map[i][0] == 'N' && info->map[i][1] == 'O')
@@ -165,108 +164,81 @@ bool	valid_texture_extension(t_info *info)
 	return (true);
 }
 
+void    ft_letter_to_rgb(t_info *info, char *map)
+{
+    int j;
+    int len;
+
+    j = 1;
+    len = 0;
+    while (map[j] == ' ') // Muster wiederholt sich, subfunktion????
+        j++;
+    while (map[++j] != ',')
+        len++;
+    info->txt.red = ft_substr(map, j - len - 1, len + 1);
+    j++;
+    while (map[j] == ' ')
+        j++;
+    while (map[++j] != ',')
+        len++;
+    info->txt.green = ft_substr(map, j - len, len + 1);
+    j++;
+    while (map[j] == ' ')
+        j++;
+    while (map[++j] != ',')
+        len++;
+    info->txt.blue = ft_substr(map, j - len, len + 1);
+}
+
+bool    ft_rgb_int_converter(t_info *info)
+{
+    info->txt.red_int = ft_atoi(info->txt.red);
+    info->txt.green_int = ft_atoi(info->txt.green);
+    info->txt.blue_int = ft_atoi(info->txt.blue);
+    //printf("F %d, %d, %d\n", info->txt.red_int, info->txt.green_int, info->txt.blue_int);
+    if (info->txt.red_int < 0 || info->txt.red_int > 255)
+    {
+        printf("Error: Invalid value for red!\n");
+        return (false);
+    }
+    if (info->txt.green_int < 0 || info->txt.green_int > 255)
+    {
+        printf("Error: Invalid value for green!\n");
+        return (false);
+    }
+    if (info->txt.blue_int < 0 || info->txt.blue_int > 255)
+    {
+        printf("Error: Invalid value for blue!\n");
+        return (false);
+    }
+    return (true);
+}
+
 bool    check_valid_fc(t_info *info)
 {
     int i;
-    int j;
     int fc;
-    int len;
 
     fc = 0;
     i = info->map_i;
     while (info->map[i][0] != '\n')
     {
-        j = 0;
-        len = 0;
         // man könnte auch noch hinzunehmen, dass jede Farbe nur genau einmal vorkommt!
-        if (info->map[i][j] == 'F') // Werte von 0 - 255;
+        if (info->map[i][0] == 'F') // Werte von 0 - 255;
         {
-            j++;
-            while (info->map[i][j] == ' ') // Muster wiederholt sich, subfunktion????
-                j++;
-            while (info->map[i][++j] != ',')
-                len++;
-            info->txt.red = ft_substr(info->map[i], j - len - 1, len + 1);
-            j++;
-            while (info->map[i][j] == ' ')
-                j++;
-            while (info->map[i][++j] != ',')
-                len++;
-            info->txt.green = ft_substr(info->map[i], j - len, len + 1);
-            j++;
-            while (info->map[i][j] == ' ')
-                j++;
-            while (info->map[i][++j] != ',')
-                len++;
-            info->txt.blue = ft_substr(info->map[i], j - len, len + 1);
-            if (ft_atoi(info->txt.red) >= 0 && ft_atoi(info->txt.red) <= 255)
-            {
-                if (ft_atoi(info->txt.green) >= 0 && ft_atoi(info->txt.green) <= 255)
-                {
-                    if (ft_atoi(info->txt.blue) >= 0 && ft_atoi(info->txt.blue) <= 255)
-                        info->floor = argb(0, ft_atoi(info->txt.red), ft_atoi(info->txt.green), ft_atoi(info->txt.blue));
-                    else
-                    {
-                        printf("Error: Invalid value for blue!\n");
-                        return (false);
-                    }
-                }
-                else
-                {
-                    printf("Error: Invalid value for green!\n");
-                    return (false);
-                }
-            }
-            else
-            {
-                printf("Error: Invalid value for red!\n");
+            ft_letter_to_rgb(info, info->map[i]);
+            if (!ft_rgb_int_converter(info))
                 return (false);
-            }
-			clean_up_txt_colors(info);
+            info->floor = argb(0, info->txt.red_int, info->txt.green_int, info->txt.blue_int);
+            printf("floor %d\n", info->floor);
+            clean_up_txt_colors(info);
         }
         else if (info->map[i][0] == 'C')
         {
-            j++;
-            while (info->map[i][j] == ' ')
-                j++;
-            while (info->map[i][++j] != ',')
-                len++;
-            info->txt.red = ft_substr(info->map[i], j - len - 1, len + 1);
-            j++;
-            while (info->map[i][j] == ' ')
-                j++;
-            while (info->map[i][++j] != ',')
-                len++;
-            info->txt.green = ft_substr(info->map[i], j - len, len + 1);
-            j++;
-            while (info->map[i][j] == ' ')
-                j++;
-            while (info->map[i][++j] != ',')
-                len++;
-            info->txt.blue = ft_substr(info->map[i], j - len, len + 1);
-            if (ft_atoi(info->txt.red) >= 0 && ft_atoi(info->txt.red) <= 255)
-            {
-                if (ft_atoi(info->txt.green) >= 0 && ft_atoi(info->txt.green) <= 255)
-                {
-                    if (ft_atoi(info->txt.blue) >= 0 && ft_atoi(info->txt.blue) <= 255)
-                        info->ceiling = argb(0, ft_atoi(info->txt.red), ft_atoi(info->txt.green), ft_atoi(info->txt.blue));
-                    else
-                    {
-                        printf("Error: Invalid value for blue!\n");
-                        return (false);
-                    }
-                }
-                else
-                {
-                    printf("Error: Invalid value for green!\n");
-                    return (false);
-                }
-            }
-            else
-            {
-                printf("Error: Invalid value for red!\n");
+            ft_letter_to_rgb(info, info->map[i]);
+            if (!ft_rgb_int_converter(info))
                 return (false);
-            }
+            info->ceiling = argb(0, info->txt.red_int, info->txt.green_int, info->txt.blue_int);
 			clean_up_txt_colors(info);
         }
         else
@@ -280,7 +252,7 @@ bool    check_valid_fc(t_info *info)
     }
     if (fc != 2)
     {
-        printf("Invalid map: There needs to be an ceiling and a floor!\n");
+        printf("Invalid map: There needs to be a ceiling and a floor!\n");
         return (false);
     }
     return (true);
