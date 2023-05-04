@@ -207,8 +207,9 @@ int		argb(int alpha, int red, int green, int blue);
 void	clean_up_map_int(t_info *info);
 void	clean_up_dist_info(t_info *info);
 void	clean_up_char_map(t_info *info);
-void	ft_free_destroy(t_info *info);
 void	clean_up_textures(t_info *info);
+void	clean_up_txt_colors(t_info *info);
+void	ft_free_destroy(t_info *info);
 
 //**** ft_draw_textures.c ****//
 
