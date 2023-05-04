@@ -71,31 +71,32 @@ void	clean_up_map_path(t_info *info)
 	info->map_path = NULL;
 }
 
-void	clean_up_one_texture(t_img *img, t_info *info)
+t_img	*clean_up_one_texture(t_img *img, t_info *info)
 {
 	if (!img)
-		return;
-	if (!img->img)
-		return;
-	mlx_destroy_image(info->mlx_ptr, img->img); // korrekt?
-	free (img->img);
-	if (!img->addr)
-		return;
-	free (img->addr);
+		return (img);
+	if (img->img)
+	{
+		mlx_destroy_image(info->mlx_ptr, img->img); // korrekt?
+		// free (img->img); // muss das hier hin?
+		img->img = NULL;
+	}
+	if (img->addr)
+	{
+		free (img->addr);
+		img->addr = NULL;
+	}
 	free (img);
-
+	img = NULL;
+	return (img);
 }
 
 void	clean_up_textures(t_info *info)
 {
-	clean_up_one_texture(info->north, info);
-	info->north = NULL;
-	clean_up_one_texture(info->east, info);
-	info->east = NULL;
-	clean_up_one_texture(info->south, info);
-	info->south = NULL;
-	clean_up_one_texture(info->west, info);
-	info->west = NULL;
+	info->north = clean_up_one_texture(info->north, info);
+	info->east = clean_up_one_texture(info->east, info);
+	info->south = clean_up_one_texture(info->south, info);
+	info->west = clean_up_one_texture(info->west, info);
 	clean_up_one_texture(info->img, info);
 	info->img = NULL;
 }
@@ -105,7 +106,7 @@ void	clean_up_mlx_ptr_win(t_info *info)
 	if (!info->mlx_ptr && !info->mlx_win)
 		return;
 	if (LINUX)
-		// mlx_loop_end(info->mlx_ptr);
+		// mlx_loop_end(info->mlx_ptr);  // wichtig, aber nur für linux!!!!
 	mlx_destroy_window(info->mlx_ptr, info->mlx_win);
 	if (info->mlx_ptr)
 	{
@@ -117,7 +118,6 @@ void	clean_up_mlx_ptr_win(t_info *info)
 		free (info->mlx_win);
 		info->mlx_win = NULL;
 	}
-
 }
 
 char	*clean_up_one_txt_path(char *ptr)
@@ -139,7 +139,6 @@ void	clean_up_txt_colors(t_info *info)
 
 void	clean_up_txt_paths(t_info *info)
 {
-
 	info->txt.path_no = clean_up_one_txt_path(info->txt.path_no);
 	info->txt.path_ea = clean_up_one_txt_path(info->txt.path_ea);
 	info->txt.path_so = clean_up_one_txt_path(info->txt.path_so);
@@ -161,11 +160,11 @@ void	ft_free_destroy(t_info *info)
 	clean_up_map_int(info);
 	clean_up_dist_arr(info);
 	clean_up_dist_info(info);
-	clean_up_textures(info);
+	clean_up_textures(info); //hier sind 4 leaks
 	clean_up_p(info);
 	clean_up_mlx_ptr_win(info);
 	info = clean_up_info(info); // nicht relevant, dass info hier übergeben wird
 	
-	// ft_free_struct(info);
+	// ft_free_struct(info); // schon oben erledigt
 	exit(EXIT_FAILURE);
 }
