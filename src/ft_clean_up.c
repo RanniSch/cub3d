@@ -81,11 +81,11 @@ t_img	*clean_up_one_texture(t_img *img, t_info *info)
 		// free (img->img); // muss das hier hin?
 		img->img = NULL;
 	}
-	if (img->addr)
-	{
-		free (img->addr);
-		img->addr = NULL;
-	}
+	// if (img->addr)
+	// {
+	// 	free (img->addr);
+	// 	img->addr = NULL;
+	// }
 	free (img);
 	img = NULL;
 	return (img);
@@ -153,7 +153,7 @@ void	clean_up_txt_paths(t_info *info)
 * Frees the pointer and the allocations after pressing 
 * ESC or the x in the corner of the window.
 */
-void	ft_free_destroy(t_info *info)
+int	ft_free_destroy(t_info *info)
 {
 	clean_up_map_path(info);
 	clean_up_txt_paths(info);

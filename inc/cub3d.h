@@ -104,6 +104,9 @@ typedef struct s_textures
 	char		*red;
 	char		*green;
 	char		*blue;
+	int			red_int;
+	int			green_int;
+	int			blue_int;
 	//int			ceiling_color;
 	//int			floor_color;
 }				t_textures;
@@ -160,7 +163,6 @@ bool		parsing(t_info *info);
 
 bool    check_valid_textures(t_info *info);
 bool	valid_texture_extension(t_info *info);
-void    ft_letter_to_rgb(t_info *info, char *map);
 bool    check_valid_fc(t_info *info);
 
 /* ft_check_valid_map.c */
@@ -210,7 +212,7 @@ void	clean_up_dist_info(t_info *info);
 void	clean_up_char_map(t_info *info);
 void	clean_up_textures(t_info *info);
 void	clean_up_txt_colors(t_info *info);
-void	ft_free_destroy(t_info *info);
+int		ft_free_destroy(t_info *info);
 
 //**** ft_draw_textures.c ****//
 
