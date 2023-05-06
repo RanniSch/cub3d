@@ -2,7 +2,7 @@ NAME		= cub3D
 
 CC			= gcc
 
-CFLAGS		= -Wextra -Wall -g #-Werror #-fsanitize=address
+CFLAGS		= -Wextra -Wall -g #-fsanitize=address #-Werror #-fsanitize=leak
 
 RM			= rm -f
 
@@ -98,6 +98,7 @@ endif
 
 e:	all
 			./$(NAME) "maps/test13_valid_small_map.cub"
+#ASAN_OPTIONS=detect_leaks=1
 
 l:	all
 			leaks --atExit -- ./$(NAME) "maps/test13_valid_small_map.cub"

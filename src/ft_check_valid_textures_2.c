@@ -26,7 +26,7 @@ void    ft_letter_to_rgb(t_info *info, char *map)
     j++;
     while (map[j] == ' ')
         j++;
-    while (map[++j] != ',')
+    while (map[++j] != ',' && map[j]) // max hat hier (&& map[j]) dazu gefügt, war ein heap buffer overflow, Ranja: ist das ok?
         len++;
     info->txt.blue = ft_substr(map, j - len, len + 1);
 }
