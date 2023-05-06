@@ -101,7 +101,10 @@ bool	parsing(t_info *info)
 		return (false);
     skip_empty_lines(info);
 	if (!check_valid_textures(info))
+	{
+		printf("Invalid map: Only four cardinal directions allowed!\n");
 		return (false);
+	}
 	if (!valid_texture_extension(info))
 		return (false);
 	skip_empty_lines(info);
