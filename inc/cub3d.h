@@ -48,12 +48,6 @@
 # define ARROW_LEFT 123
 # define ARROW_RIGHT 124
 # define LINUX 0
-// int	mlx_loop_end(void *ptr)
-// {
-// 	if (ptr)
-// 		return 0;
-// 	return 0;
-// }
 # else
 	# define W 119
 	# define A 97
@@ -222,6 +216,10 @@ void	clean_up_textures(t_info *info);
 void	clean_up_txt_colors(t_info *info);
 int		ft_free_destroy(t_info *info);
 
+# ifdef __APPLE__
+void	mlx_loop_end(void *mlx_ptr);
+# endif
+
 //**** ft_draw_textures.c ****//
 
 int		next_tile_on_display_x(int act_x_on_display, t_info *info);
@@ -248,7 +246,6 @@ int		func_from_points(double *one, double *two, double *func);
 double	y_from_x(double x, double *func);
 double	x_from_y(double y, double *func);
 double	len_between_two_points(double x1, double y1, double x2, double y2);
-
 
 //**** move_2.c ****//
 

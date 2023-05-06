@@ -106,7 +106,9 @@ void	clean_up_mlx_ptr_win(t_info *info)
 	if (!info->mlx_ptr && !info->mlx_win)
 		return;
 	if (LINUX)
-		// mlx_loop_end(info->mlx_ptr);  // wichtig, aber nur für linux!!!!
+	{
+		mlx_loop_end(info->mlx_ptr);  // wichtig, aber nur für linux!!!!
+	}
 	mlx_destroy_window(info->mlx_ptr, info->mlx_win);
 	if (info->mlx_ptr)
 	{
