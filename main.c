@@ -27,6 +27,7 @@ int	key_event(int key, t_info *info)
 		ft_free_destroy(info);
 		exit(0);					// ----------------- exit and clean_up !!!
 	}
+	print_dist_arr_info(info);
 	raycast_and_picturework(info);
 	// printf("pos:\n");
 	// pvec(info->p->pos);
