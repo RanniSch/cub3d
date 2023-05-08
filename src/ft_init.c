@@ -89,11 +89,7 @@ void	init_mlx_and_textures(t_info *info)
 	void	*v_we;
 
 	info->mlx_ptr = mlx_init();
-<<<<<<< HEAD
-	v_no = mlx_xpm_file_to_image(info->mlx_ptr, info->txt.path_no, \
-=======
 	info->north->img = mlx_xpm_file_to_image(info->mlx_ptr, info->txt.path_no, \
->>>>>>> master
 		&info->north->width, &info->north->height);
 	info->east->img = mlx_xpm_file_to_image(info->mlx_ptr, info->txt.path_ea, \
 		&info->east->width, &info->east->height);
