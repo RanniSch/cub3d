@@ -51,7 +51,7 @@ t_info	*init_info_player_images(void)
 {
 	t_info	*info;
 
-	info = malloc(sizeof(t_info));
+	info = init_info();
 	if (!info)
 		return (NULL);
 	info->p = malloc(sizeof(t_player));
@@ -83,11 +83,6 @@ void	get_properties_from_mlx_img(void *img_ptr, t_img *img)
 
 void	init_mlx_and_textures(t_info *info)
 {
-	void	*v_no;
-	void	*v_ea;
-	void	*v_so;
-	void	*v_we;
-
 	info->mlx_ptr = mlx_init();
 	info->north->img = mlx_xpm_file_to_image(info->mlx_ptr, info->txt.path_no, \
 		&info->north->width, &info->north->height);
