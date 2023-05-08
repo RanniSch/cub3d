@@ -9,9 +9,9 @@
  */
 double	len_vec(double *vec)
 {
-	double x;
-	double y;
-	double sum;
+	double	x;
+	double	y;
+	double	sum;
 
 	x = vec[X] * vec[X];
 	y = vec[Y] * vec[Y];
@@ -26,7 +26,7 @@ double	len_vec(double *vec)
  */
 void	norm_vec(double *vec)
 {
-	double v_len;
+	double	v_len;
 
 	v_len = len_vec(vec);
 	vec[X] = vec[X] / v_len;
@@ -41,11 +41,11 @@ void	norm_vec(double *vec)
  */
 void	rot_vec(double *vec, double rot)
 {
-	double r11;
-	double r12;
-	double r21;
-	double r22;
-	double buf[2];
+	double	r11;
+	double	r12;
+	double	r21;
+	double	r22;
+	double	buf[2];
 
 	buf[X] = vec[X];
 	buf[Y] = vec[Y];

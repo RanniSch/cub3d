@@ -324,13 +324,21 @@ void	calc_left_px_vec(double *left_px_vec, t_player *p);
 void	calc_px_vec(double *px_vec, double *left_px_vec, t_player *p, int i);
 void	raycast_scan_in_fov(t_info *info, t_player *p);
 
+//**** raycast_scan.c ****//
+
+int	cardinal_direction_of_tile(int col, int row, double *pos);
+void	write_next_grid_pt_to_hit_coordinates(int *hit_coordinates, \
+	double *dest);
+double	calc_len(double *dest, double *position);
+
 //**** raycast.c ****//
 
 int		next_int_value_in_dir(double pos, double dir);
 void	next_grid_point(double *dest, double *pos, double *dir, double *func);
 int		find_correct_box(double pos, double dir);
 int		hit(double *pos, double *dir, t_info *info, int *hit_coordinates);
-double	raycast(double *position, double *cast_dir, t_info *info, int *hit_coordinates);
+double	raycast(double *position, double *cast_dir, \
+	t_info *info, int *hit_coordinates);
 
 //**** test_utils.c ****//
 

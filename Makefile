@@ -30,6 +30,7 @@ SRCS		= main.c \
 			  ./src/ft_move.c \
 			  ./src/ft_raycast_scan.c \
 			  ./src/ft_raycast.c \
+			  ./src/ft_raycast_utils.c \
 			  ./src/ft_test_utils.c \
 			  ./src/ft_vec_ops.c \
 			  ./src/ft_vec_ops_2.c \

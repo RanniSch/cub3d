@@ -26,12 +26,12 @@ void	field_of_view(double *cam_vec, double *left_fov)
  */
 double	calc_diff_fov(double *left_fov)
 {
-	double len_fov;
+	double	len_fov;
 
 	len_fov = len_vec(left_fov);
 	len_fov *= 2;
 	len_fov = len_fov / (DISPLAY_WIDTH - 1);
-		return (len_fov);
+	return (len_fov);
 }
 
 /**
@@ -75,16 +75,17 @@ void	calc_px_vec(double *px_vec, double *left_px_vec, t_player *p, int i)
  */
 void	raycast_scan_in_fov(t_info *info, t_player *p)
 {
-	double left_px_vec[2];
-	double px_vec[2];
-	int  hit_coordinates[5];
-	int k = -1;
-	double angle;
+	double	left_px_vec[2];
+	double	px_vec[2];
+	int		hit_coordinates[5];
+	int		k;
+	double	angle;
 
+	k = -1;
 	field_of_view(p->cam_vec, p->left_fov);
 	p->dpx = calc_diff_fov(p->left_fov);
 	calc_left_px_vec(left_px_vec, p);
-	while(++k < DISPLAY_WIDTH)
+	while (++k < DISPLAY_WIDTH)
 	{
 		calc_px_vec(px_vec, left_px_vec, p, k);
 		angle = calc_angle_vec(px_vec, p->cam_vec);
@@ -96,5 +97,4 @@ void	raycast_scan_in_fov(t_info *info, t_player *p)
 		info->dist_info[EXACT_X][k] = hit_coordinates[EXACT_X];
 		info->dist_info[EXACT_Y][k] = hit_coordinates[EXACT_Y];
 	}
-	// print_dist_arr_info(info);
 }

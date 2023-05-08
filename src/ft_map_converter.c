@@ -1,24 +1,24 @@
 #include "../inc/cub3d.h"
 
-void	count_mapsize_x(int i, t_info *info, int act_row_file)
+void	count_mapsize_x(int i, t_info *info, int row_file)
 {
-	while (++i < info->mapsize[Y] && info->map[++act_row_file] != NULL)
+	while (++i < info->mapsize[Y] && info->map[++row_file] != NULL)
 	{
-		if (ft_strlen(info->map[act_row_file]) > info->mapsize[X])
-			info->mapsize[X] = ft_strlen(info->map[act_row_file]) - 1;
+		if (ft_strlen(info->map[row_file]) > info->mapsize[X])
+			info->mapsize[X] = ft_strlen(info->map[row_file]) - 1;
 	}
 }
 
-/*void	convert(int **tmp_map_int, t_info *info, int act_row_file, int j)
+/*void	convert(int **tmp_map_int, t_info *info, int row_file, int j)
 {
-	if (info->map[act_row_file][j] == '0' || \
-		info->map[act_row_file][j] == '1')
- 		tmp_map_int[i][j] = info->map[act_row_file][j] - 48;
- 	else if(info->map[act_row_file][j] == 'N' || info->map[act_row_file][j] \
+	if (info->map[row_file][j] == '0' || \
+		info->map[row_file][j] == '1')
+ 		tmp_map_int[i][j] = info->map[row_file][j] - 48;
+ 	else if(info->map[row_file][j] == 'N' || info->map[row_file][j] \
 		== 'W' ||\
- 		info->map[act_row_file][j] == 'S' || info->map[act_row_file][j] \
+ 		info->map[row_file][j] == 'S' || info->map[row_file][j] \
 			== 'E' ||\
-		info->map[act_row_file][j] == ' ')
+		info->map[row_file][j] == ' ')
  	{
  		tmp_map_int[i][j] = 0;
  	}
@@ -31,45 +31,45 @@ int	dir_emp_zero(char c)
 	return (0);
 }
 
-void	map_converter_init(int *i, int *act_row_file, t_info *info)
+void	map_converter_init(int *i, int *row_file, \
+	t_info *info, int ***tmp_map_int)
 {
 	*i = -1;
-	*act_row_file = *i + info->map_i;
+	*row_file = *i + info->map_i;
 	info->mapsize[Y] = info->row - info->map_i;
 	info->mapsize[X] = 0;
-	count_mapsize_x(*i, info, *act_row_file);
-	*act_row_file = info->mapsize[Y] + info->map_i;
+	count_mapsize_x(*i, info, *row_file);
+	*row_file = info->mapsize[Y] + info->map_i;
+	*tmp_map_int = (int **)malloc(sizeof(int *) * (info->mapsize[Y] + 1));
 }
 
 int	**map_converter(t_info *info)
 {
 	int		i;
-    int		j;
+	int		j;
 	int		**tmp_map_int;
-	int		act_row_file;
+	int		row_file;
 
-	map_converter_init(&i, &act_row_file, info);
-	tmp_map_int = (int **)malloc(sizeof(int *) * (info->mapsize[Y] + 1));
+	map_converter_init(&i, &row_file, info, &tmp_map_int);
 	if (!tmp_map_int)
 		return (NULL);
-	while (++i < info->mapsize[Y] && --act_row_file >= 0)
+	while (++i < info->mapsize[Y] && --row_file >= 0)
 	{
 		tmp_map_int[i] = (int *)malloc(sizeof(int) * info->mapsize[X]);
 		if (!tmp_map_int[i])
 			return (NULL);
 		j = -1;
-		while (info->map[act_row_file][++j] && \
-			info->map[act_row_file][j] != '\n')
+		while (info->map[row_file][++j] && info->map[row_file][j] != '\n')
 		{
-			if (info->map[act_row_file][j] == '1')
+			if (info->map[row_file][j] == '1')
 				tmp_map_int[i][j] = 1;
-			else if (dir_emp_zero(info->map[act_row_file][j]))
+			else if (dir_emp_zero(info->map[row_file][j]))
 				tmp_map_int[i][j] = 0;
 		}
 	}
 	tmp_map_int[i] = NULL;
 	clean_up_char_map(info);
-    return (tmp_map_int);
+	return (tmp_map_int);
 }
 
 /**
@@ -82,7 +82,6 @@ int	**map_converter(t_info *info)
  */
 void	convert_player_pos_dir(t_info *info)
 {
-	// info->p->pos[Y] = (double)info->player_x - info->map_i + 0.5;
 	info->p->pos[Y] = (double)info->mapsize[Y] - \
 		((double)info->player_x - info->map_i + 0.5);
 	info->p->pos[X] = (double)info->player_y + 0.5;

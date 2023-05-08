@@ -2,7 +2,7 @@
 
 void	move_backward(t_info *info)
 {
-	double move_vec[2];
+	double	move_vec[2];
 
 	cpy_vec(move_vec, info->p->cam_vec);
 	mult_vec(move_vec, -1);
@@ -11,7 +11,7 @@ void	move_backward(t_info *info)
 
 void	move_left(t_info *info)
 {
-	double move_vec[2];
+	double	move_vec[2];
 
 	cpy_vec(move_vec, info->p->cam_vec);
 	rot_vec(move_vec, 90);
@@ -20,7 +20,7 @@ void	move_left(t_info *info)
 
 void	move_right(t_info *info)
 {
-	double move_vec[2];
+	double	move_vec[2];
 
 	cpy_vec(move_vec, info->p->cam_vec);
 	rot_vec(move_vec, 270);

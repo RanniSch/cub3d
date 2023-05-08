@@ -5,7 +5,6 @@ int	next_int_value_in_dir(double pos, double dir)
 	int		ret;
 
 	ret = 0;
-
 	if (dir > 0)
 		ret = (int)(pos + 1);
 	else if (dir < 0)
@@ -28,15 +27,15 @@ int	next_int_value_in_dir(double pos, double dir)
  */
 void	next_grid_point(double *dest, double *pos, double *dir, double *func)
 {
-	double y;
-	double x;
-	int dx;
-	int dy;
+	double	y;
+	double	x;
+	int		dx;
+	int		dy;
 	double	start_p[2];
 
 	cpy_vec(start_p, pos);
 	dx = next_int_value_in_dir(pos[X], dir[X]);
-	dy = next_int_value_in_dir(pos[Y], dir[Y]); // was ist mit 0??
+	dy = next_int_value_in_dir(pos[Y], dir[Y]);
 	y = y_from_x(dx, func);
 	x = x_from_y(dy, func);
 	if (len_between_two_points(start_p[X], start_p[Y], dx, y) \
@@ -65,44 +64,14 @@ int	find_correct_box(double pos, double dir)
 
 	ret = 0;
 	if (dir >= 0)
-		ret = (int)pos; // testen!!!
+		ret = (int)pos;
 	else if (dir < 0)
 	{
 		ret = (int)pos;
-		if (!(ret < pos))  // sonderfall 0 ???
+		if (!(ret < pos))
 			ret -= 1;
-		// ret (int)(pos - 1); 
 	}
 	return (ret);
-}
-
-// return_tile(double *dest, double *pos, double *dir)
-
-int	cardinal_direction_of_tile(int col, int row, double *pos)
-{
-	int buf;
-
-	if (pos[X] == col)
-		return (EAST);
-	else if (pos[X] > col)
-	{
-		if (pos[Y] == row)
-			return (NORTH);
-		if(pos[Y] > row)
-		{
-			buf = (int)pos[X];
-			buf -= 1;
-			if (buf == col)
-				return (WEST);
-			buf = (int)pos[Y];
-			buf -= 1;
-			if (buf == row)
-				return (SOUTH);
-		}
-	}
-	else 
-		message(RAYCAST);
-	return (-1);
 }
 
 /**
@@ -121,19 +90,19 @@ int	cardinal_direction_of_tile(int col, int row, double *pos)
  * @return int 1 if hit a wall, 0 if not, 
  * -1 if outside of the map
  */
-int hit(double *pos, double *dir, t_info *info, int *hit_coordinates)
+int	hit(double *pos, double *dir, t_info *info, int *hit_coordinates)
 {
-	int col;
-	int row;
+	int	col;
+	int	row;
 
 	col = find_correct_box(pos[X], dir[X]);
 	row = find_correct_box(pos[Y], dir[Y]);
 	if (col >= info->mapsize[X] || row >= info->mapsize[Y] || \
-		col < 0 || row < 0) // testen !!!!!!!!!!!!!!!!!!!!!!!
+		col < 0 || row < 0)
 		return (-1);
 	if (info->map_int[row][col] == 1)
 	{
-		if(hit_coordinates)
+		if (hit_coordinates)
 		{
 			hit_coordinates[X] = col;
 			hit_coordinates[Y] = row;
@@ -142,29 +111,6 @@ int hit(double *pos, double *dir, t_info *info, int *hit_coordinates)
 		return (1);
 	}
 	return (0);
-}
-
-/**
- * @brief I need the exact coordinates where the tile is hit
- * but easily there is only this int array, so muliply it with 1000
- * and later divide again by 1000
- * 
- * @param hit_coordinates 
- * @param dest 
- */
-void	write_next_grid_pt_to_hit_coordinates(int *hit_coordinates, double *dest)
-{
-	hit_coordinates[EXACT_X] = (int)(dest[X] * 1000);
-	hit_coordinates[EXACT_Y] = (int)(dest[Y] * 1000);
-}
-
-double	calc_len(double *dest, double *position)
-{
-	double	len;
-
-	subtract_vec(dest, position);
-	len = len_vec(dest);
-	return (len);
 }
 
 /**
@@ -183,11 +129,12 @@ double	calc_len(double *dest, double *position)
  * @param dir length of dir is not important
  * @return double: len to next wall, -1 if no wall found
  */
-double	raycast(double *position, double *cast_dir, t_info *info, int *hit_coordinates)
+double	raycast(double *position, double *cast_dir, \
+	t_info *info, int *hit_coordinates)
 {
-	double func[2];
-	double dest[2];
-	double pos[2];
+	double	func[2];
+	double	dest[2];
+	double	pos[2];
 
 	cpy_vec(pos, position);
 	if (cast_dir[X] == 0)
@@ -195,11 +142,11 @@ double	raycast(double *position, double *cast_dir, t_info *info, int *hit_coordi
 	cpy_vec(dest, cast_dir);
 	add_vec(dest, pos);
 	func_from_points(pos, dest, func);
-	while(1)
+	while (1)
 	{
 		next_grid_point(dest, pos, cast_dir, func);
-		if (hit(dest, cast_dir, info, NULL) == -1) // I don't use it, erase
-			return (-1);							// I don't use it, erase
+		if (hit(dest, cast_dir, info, NULL) == -1)
+			return (-1);
 		if (hit_coordinates)
 			write_next_grid_pt_to_hit_coordinates(hit_coordinates, dest);
 		if (hit(dest, cast_dir, info, hit_coordinates))
@@ -208,17 +155,3 @@ double	raycast(double *position, double *cast_dir, t_info *info, int *hit_coordi
 	}
 	return (0);
 }
-
-// int	set_x_dir(t_player *p)
-// {
-// 	if (p->dir[X] > 0)
-// 		p->x_dir = 1;
-// 	else if (p->dir[X] < 0)
-// 		p->x_dir = -1;
-// 	else if (p->dir[X] == 0)
-// 	{
-// 		p->x_dir = 0;
-// 		return (0);
-// 	}
-// 	return (1);
-// }

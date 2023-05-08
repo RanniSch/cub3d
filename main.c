@@ -119,7 +119,7 @@ int	main(int argc, char **argv)
      else
      {
         printf("great\n"); // only for debugging purpuse!
-		info->map_int = map_converter(info);
+		info->map_int = map_converter(info); // what do if malloc fails?
      }
 	// print_2d_arr(info->map_int, info->mapsize[Y], info->mapsize[X]);
 	convert_player_pos_dir(info);

@@ -13,7 +13,7 @@ void	pvec(double *vec)
  */
 void	cpy_vec(double *dest, double *src)
 {
-	dest[X] = src[X]; 
+	dest[X] = src[X];
 	dest[Y] = src[Y];
 }
 

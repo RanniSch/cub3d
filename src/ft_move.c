@@ -4,7 +4,7 @@
 double	betrag(double value)
 {
 	if (value < 0)
-		return (- value);
+		return (-value);
 	return (value);
 }
 
@@ -18,17 +18,17 @@ double	betrag(double value)
  */
 void	move_x(double *move_vec, t_info *info)
 {
-	double dist;
-	int	hit_coordinates[5];
-	double move_x[2];
+	double	dist;
+	int		hit_coordinates[5];
+	double	move_x[2];
 
 	move_x[X] = move_vec[X];
 	move_x[Y] = 0;
 	if (move_x[X] == 0)
-		return;
+		return ;
 	dist = raycast(info->p->pos, move_x, info, hit_coordinates);
 	if (dist >= betrag(move_vec[X]) + DISTANCE_FROM_WALL)
-		return;
+		return ;
 	if (move_vec[X] > 0)
 		move_vec[X] = hit_coordinates[X] - DISTANCE_FROM_WALL \
 			- info->p->pos[X];
@@ -48,22 +48,20 @@ void	move_x(double *move_vec, t_info *info)
  */
 void	move_y(double *move_vec, t_info *info)
 {
-	double dist;
-	int	hit_coordinates[5];
-	double move_y[2];
-	double temp_pos[2];
+	double	dist;
+	int		hit_coordinates[5];
+	double	move_y[2];
+	double	temp_pos[2];
 
 	temp_pos[Y] = info->p->pos[Y];
 	temp_pos[X] = info->p->pos[X] + move_vec[X];
-
 	move_y[Y] = move_vec[Y];
 	move_y[X] = 0;
 	if (move_vec[Y] == 0)
-		return;
-
+		return ;
 	dist = raycast(temp_pos, move_y, info, hit_coordinates);
 	if (dist >= betrag(move_vec[Y]) + DISTANCE_FROM_WALL)
-		return;
+		return ;
 	if (move_vec[Y] > 0)
 		move_vec[Y] = hit_coordinates[Y] - DISTANCE_FROM_WALL \
 			- info->p->pos[Y];
@@ -79,18 +77,11 @@ void	move(double *move_vec, t_info *info)
 	move_x(move_vec, info);
 	move_y(move_vec, info);
 	add_vec(info->p->pos, move_vec);
-	//----------------- testing
-	// printf("pos:\n");
-	// pvec(info->p->pos);
-	// printf("move_vec:\n");
-	// pvec(move_vec);
-	// printf("cam_vec:\n");
-	// pvec(info->p->cam_vec);
 }
 
 void	move_forward(t_info *info)
 {
-	double move_vec[2];
+	double	move_vec[2];
 
 	cpy_vec(move_vec, info->p->cam_vec);
 	move(move_vec, info);
