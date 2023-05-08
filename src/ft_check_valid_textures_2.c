@@ -43,17 +43,17 @@ bool    ft_rgb_int_converter(t_info *info)
     //printf("F %d, %d, %d\n", info->txt.red_int, info->txt.green_int, info->txt.blue_int);
     if (info->txt.red_int < 0 || info->txt.red_int > 255)
     {
-        printf("Error: Invalid value for red!\n");
+        message(CHECK_TEX_3);
         return (false);
     }
     if (info->txt.green_int < 0 || info->txt.green_int > 255)
     {
-        printf("Error: Invalid value for green!\n");
+        message(CHECK_TEX_4);
         return (false);
     }
     if (info->txt.blue_int < 0 || info->txt.blue_int > 255)
     {
-        printf("Error: Invalid value for blue!\n");
+        message(CHECK_TEX_5);
         return (false);
     }
     return (true);
@@ -73,7 +73,7 @@ bool    ft_fc_helper(t_info *info, int i)
         if (!ft_rgb_int_converter(info))
             return (false);
         info->floor = argb(0, info->txt.red_int, info->txt.green_int, info->txt.blue_int);
-        printf("floor %d\n", info->floor);
+        //printf("floor %d\n", info->floor);
         clean_up_txt_colors(info);
     }
     else if (info->map[i][0] == 'C')
@@ -86,7 +86,7 @@ bool    ft_fc_helper(t_info *info, int i)
     }
     else
     { 
-        printf("Invalid map: Only ceiling and floor allowed!\n");
+        message(CHECK_TEX_6);
         return (false);
     }
     return (true);
@@ -113,7 +113,7 @@ bool    check_valid_fc(t_info *info)
     }
     if (fc != 2)
     {
-        printf("Invalid map: There needs to be a ceiling and a floor!\n");
+        message(CHECK_TEX_7);
         return (false);
     }
     return (true);

@@ -17,7 +17,7 @@ MLX			= ./minilibx-linux/libmlx.a
 MLX_MAC	= ./minilibx_opengl_20191021/libmlx.a
 
 SRCS		= main.c \
-			  ./src/rd_map.c \
+			  ./src/ft_rd_map.c \
 			  ./src/ft_check_valid_textures.c \
 			  ./src/ft_check_valid_textures_2.c \
 			  ./src/ft_check_walls_2.c \
@@ -38,7 +38,7 @@ SRCS		= main.c \
 			  ./src/ft_draw_textures.c \
 			  ./src/ft_init.c \
 			  ./src/ft_clean_up.c \
-			  
+			  ./src/ft_message.c \
 			  
 
 OBJS		= ${SRCS:.c=.o}

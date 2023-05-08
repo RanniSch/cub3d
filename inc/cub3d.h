@@ -70,6 +70,42 @@
 # define START_X_WALL 0
 # define END_X_WALL 1
 
+//**				TEXT OUTPUT							**//
+
+# define STR_PROG_NAME "Cub3D:"
+
+# define ERROR_1 "Couldn't open Cub3D file!\n"
+# define ERROR_2 "Invalid Cub3D file: Use .cub file extension!\n"
+
+# define CHECK_TEX_1 "Couldn't open path of texture!\n"
+# define CHECK_TEX_2 "Invalid path of texture: Use .xpm texture extension!\n"
+# define CHECK_TEX_3 "Error: Invalid value for red!\nUse a value between 0 and 255.\n"
+# define CHECK_TEX_4 "Error: Invalid value for green!\nUse a value between 0 and 255.\n"
+# define CHECK_TEX_5 "Error: Invalid value for blue!\nUse a value between 0 and 255.\n"
+# define CHECK_TEX_6 "Invalid map: Only ceiling and floor allowed!\n"
+# define CHECK_TEX_7 "Invalid map: There needs to be a ceiling and a floor!\n"
+
+# define CHECK_MAP_1 "Error: Found empty line in map!\n"
+# define CHECK_MAP_2 "Invalid map!\n"
+# define CHECK_MAP_3 "Invalid character in map!\n"
+# define CHECK_MAP_4 "Map should be surrounded by wall (top)!\n"
+# define CHECK_MAP_5 "Fix wall on the top!\n"
+# define CHECK_MAP_6 "Map should be surrounded by wall (bottom)!\n"
+# define CHECK_MAP_7 "Fix wall on the bottom!\n"
+# define CHECK_MAP_8 "Map should be surrounded by wall (right)!\n"
+# define CHECK_MAP_9 "Fix wall on the right!\n"
+# define CHECK_MAP_10 "Map should be surrounded by wall (left)!\n"
+# define CHECK_MAP_11 "Fix wall on the left!\n"
+# define CHECK_MAP_12 "Too many players!\nOnly one player is allowed in map.\n"
+# define CHECK_MAP_13 "There is no player in map!\n"
+# define CHECK_MAP_14 "Invalid map: Only four cardinal directions allowed!\n"
+
+# define RAYCAST "Error in cardinal direction!\n"
+
+//*********************************************************//
+//**                    STRUCTURES                      **//
+//*******************************************************//
+
 typedef struct s_player
 {
 	double	pos[2];
@@ -125,10 +161,6 @@ typedef struct s_info
 	int			**dist_info;
 	void		*mlx_ptr;
 	void		*mlx_win;
-	//void		*v_no;
-	//void		*v_ea;
-	//void		*v_so;
-	//void		*v_we;
 	t_img		*north;
 	t_img		*east;
 	t_img		*south;
@@ -141,7 +173,7 @@ typedef struct s_info
 //**                FUNCTIONS                           **//
 //*******************************************************//
 
-/* rd_map.c */
+/* ft_rd_map.c */
 int			count_nb_row(char *map_path);
 char		**save_map(t_info *info);
 
@@ -302,5 +334,9 @@ void	mult_vec(double *vec, double factor);
 void	add_vec(double *dest, double *src);
 
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
+
+//**** ft_message.c ****//
+
+void	message(char *str);
 
 #endif

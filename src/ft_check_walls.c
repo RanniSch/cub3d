@@ -15,7 +15,7 @@ bool    no_zero_top(t_info *info, int i, int j)
 				return (true);
 			else
 			{
-				printf("Map should be surrounded by wall (top) 1!\n"); // kann später raus, for debugging purpuse only
+				message(CHECK_MAP_4);
 				return (false);
 			}
 		}
@@ -23,11 +23,11 @@ bool    no_zero_top(t_info *info, int i, int j)
 			return (true);
 		else
 		{
-			printf("Map should be surrounded by wall (top)!\n"); // kann später raus, for debugging purpuse only
+			message(CHECK_MAP_4);
 			return (false);
 		}
 	}
-	printf("Fix wall on the top!\n"); // for last entry "0" before end of file!
+	message(CHECK_MAP_5); // for last entry "0" before end of file!
 	return (false);
 }
 
@@ -45,7 +45,7 @@ bool    no_zero_bottom(t_info *info, int i, int j)
 				return (true);
 			else
 			{
-				printf("Map should be surrounded by wall (bottom) 1\n"); // kann später raus, for debugging purpuse only
+				message(CHECK_MAP_6);
 				return (false);
 			}
 		}
@@ -53,11 +53,11 @@ bool    no_zero_bottom(t_info *info, int i, int j)
 			return (true);
 		else
 		{
-			printf("Map should be surrounded by wall (bottom)\n"); // kann später raus, for debugging purpuse only
+			message(CHECK_MAP_6);
 			return (false);
 		}
 	}
-	printf("Fix wall on the bottom!\n"); // for last entry "0" before end of file!
+	message(CHECK_MAP_7); // for last entry "0" before end of file!
 	return (false);
 }
 
@@ -73,11 +73,11 @@ bool	no_zero_right(t_info *info, int i, int j)
 			return (true);
 		else
 		{
-			printf("Map should be surrounded by wall (right)\n"); // kann später raus, for debugging purpuse only
+			message(CHECK_MAP_8); // kann später raus, for debugging purpuse only
 			return (false);
 		}
 	}
-	printf("Fix wall on the right!\n");
+	message(CHECK_MAP_9);
 	return (false);
 }
 
@@ -93,11 +93,11 @@ bool	no_zero_left(t_info *info, int i, int j)
 			return (true);
 		else
 		{
-			printf("Map should be surrounded by wall (left)\n"); // kann später raus, for debugging purpuse only
+			message(CHECK_MAP_10);
 			return (false);
 		}
 	}
-	printf("Fix wall on the left!\n");
+	message(CHECK_MAP_11);
 	return (false);
 }
 

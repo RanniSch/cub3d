@@ -113,11 +113,12 @@ int	main(int argc, char **argv)
  	init_game(info);
  	if (!parsing(info))
      {
-         printf("parsing false\n");
+         printf("parsing false\n"); // only for debugging purpuse!
+		 return (1);
      }
      else
      {
-        printf("great\n");
+        printf("great\n"); // only for debugging purpuse!
 		info->map_int = map_converter(info);
      }
 	// print_2d_arr(info->map_int, info->mapsize[Y], info->mapsize[X]);

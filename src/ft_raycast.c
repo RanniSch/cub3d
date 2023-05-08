@@ -101,7 +101,7 @@ int	cardinal_direction_of_tile(int col, int row, double *pos)
 		}
 	}
 	else 
-		printf("Fehler in cardinal Direction\n");
+		message(RAYCAST);
 	return (-1);
 }
 

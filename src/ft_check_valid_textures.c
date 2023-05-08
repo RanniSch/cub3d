@@ -74,14 +74,14 @@ bool    ft_texture_extension_helper(char *path_texture)
 	{
 		//free_struct(data);
 		//error_msg("Couldn't open the texture!");
-        printf("Couldn't open path of texture!\n");
+        message(CHECK_TEX_1);
         close(fd);
 		return (false);
 	}
 	p_len = ft_strlen(path_texture);
 	if (ft_strncmp(&path_texture[p_len - 4], ".xpm", 4))
 	{
-		printf("Invalid path of texture: Use .xpm texture extension\n");
+		message(CHECK_TEX_2);
         close(fd);
 		return (false);
 	}

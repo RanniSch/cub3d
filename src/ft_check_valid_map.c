@@ -8,7 +8,7 @@ bool    valid_lines(t_info *info, int i)
 {
 	if (info->map[i][0] == '\n')
 	{
-		printf("Found empty line in map!\n");  // just for debugging purpose!!!
+		message(CHECK_MAP_1);
 		return (false);
 	}
 	return (true);
@@ -43,7 +43,7 @@ bool    filled_line(t_info *info, int i)
 {
 	if (info->map[i][0] == '\0')
 	{
-		printf("Invalid map\n");
+		message(CHECK_MAP_2);
 		return (false);
 	}
 	return (true);
@@ -60,7 +60,7 @@ bool    correct_char(t_info *info, int i, int j)
 		{
 			if (!is_allowed_char(info, info->map[i][j]))
 			{
-				printf("Invalid character in map!\n");
+				message(CHECK_MAP_3);
 				return (false);
 			}
 		}

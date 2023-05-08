@@ -14,14 +14,14 @@ bool	valid_map_extension(t_info *info)
 	{
 		//free_struct(data);
 		//error_msg("Couldn't open the file!");
-        printf("Couldn't open the file!\n");
+        message(ERROR_1);
 		close(fd);
 		return (false);
 	}
 	p_len = ft_strlen(info->map_path);
 	if (ft_strncmp(&info->map_path[p_len - 4], ".cub", 4))
 	{
-		printf("Invalid map: Use .cub file extension\n");
+		message(ERROR_2);
 		close(fd);
 		return (false);
 	}
@@ -79,12 +79,12 @@ bool	amount_player(int	amount_player)
 {
 	if (amount_player > 1)
 	{
-		printf("Too many players! Only one player is allowed in map!\n");
+		message(CHECK_MAP_12);
 		return (false);
 	}
 	else if (amount_player < 1)
 	{
-		printf("There is no player in map!\n");
+		message(CHECK_MAP_13);
 		return (false);
 	}
 	return (true);
@@ -102,7 +102,7 @@ bool	parsing(t_info *info)
     skip_empty_lines(info);
 	if (!check_valid_textures(info))
 	{
-		printf("Invalid map: Only four cardinal directions allowed!\n");
+		message(CHECK_MAP_14);
 		return (false);
 	}
 	if (!valid_texture_extension(info))
