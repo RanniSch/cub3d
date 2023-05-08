@@ -7,7 +7,7 @@ int	next_int_value_in_dir(double pos, double dir)
 	ret = 0;
 	if (dir > 0)
 		ret = (int)(pos + 1);
-	else if (dir < 0)
+	else if (dir <= 0) // vorher war dir < 0
 	{
 		ret = (int)pos;
 		if (!(ret < pos))
