@@ -62,6 +62,8 @@ void	calc_end_wall(double *start_end_wall, int *corners, \
  * at (3.2, 2) (looking north, so x value is important). The coordinate of the
  * tile is important -> (3, 2) -> then you do 3.2 - 3 -> so the texture-
  * projection on the tile should also start at 0.2 of the texture.
+ * Then take that times the texture width of here 64 px -> 0.2 * 64 = 12.8.
+ * -> Start with the 12th pixel (or 13th, I don't know what it does)
  * The whole thing depends on the cardinal direction that you see 
  * from the tile.
  * 
