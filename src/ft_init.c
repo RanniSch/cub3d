@@ -51,7 +51,7 @@ t_info	*init_info_player_images(void)
 {
 	t_info	*info;
 
-	info = malloc(sizeof(t_info));
+	info = init_info();
 	if (!info)
 		return (NULL);
 	info->p = malloc(sizeof(t_player));

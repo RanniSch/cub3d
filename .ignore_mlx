@@ -1,0 +1,9 @@
+
+
+{
+
+	ignore_mlx_init_conditional_jump_errors
+	Memcheck:Leak
+	...
+	obj:*/mlx_init.so.*
+}

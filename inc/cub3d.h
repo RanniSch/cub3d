@@ -11,8 +11,6 @@
 # include <math.h>
 # include "../get_next_line/get_next_line.h"
 # include "../libft/libft.h"
-// # include "../minilibx-linux/mlx.h"
-// # include "../minilibx_opengl_20191021/mlx.h"
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -283,6 +281,10 @@ int		ft_free_destroy(t_info *info);
 # ifdef __APPLE__
 void	mlx_loop_end(void *mlx_ptr);
 # endif
+
+//**** ft_init_info.c ****//
+
+t_info	*init_info(void);
 
 //**** ft_init.c ****//
 

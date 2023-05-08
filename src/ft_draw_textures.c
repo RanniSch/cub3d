@@ -138,7 +138,6 @@ void	draw_wall_textures(t_info *info, int width_pixel)
 	int		act_x;
 	int		corners[8];
 	double	start_end_wall[3];
-	double	dx_for_wall;
 	t_img	*img_ptr[2];
 
 	while (width_pixel < DISPLAY_WIDTH)
