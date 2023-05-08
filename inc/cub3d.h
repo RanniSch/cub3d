@@ -16,6 +16,7 @@
 # include <stdlib.h>
 
 # define PI 3.14159265
+# define THRESHOLD_ZERO 0.01
 # define X 0
 # define Y 1
 # define EXACT_X 3

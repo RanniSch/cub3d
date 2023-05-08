@@ -86,6 +86,7 @@ double	calc_dx_for_wall(double *start_end_wall, int *corners)
  * 				is getting bigger to the right how much do I have to add
  * 				to the height at this x value. Y2 - Y1 is the basic height
  * 				from the most left part of the wall.
+ * @val: has val[START_Y], val[Y], val[COLOR]
  */
 void	draw_one_vertical_line(t_img **img_ptr, double *start_end_wall, \
 	int *corners, int act_x)
