@@ -30,6 +30,13 @@
 # define Y3 5
 # define X4 6
 # define Y4 7
+# define START_X_WALL 0
+# define END_X_WALL 1
+# define DX_FOR_WALL 2
+# define DEST 0
+# define SRC 1
+# define START_Y 0
+# define COLOR 2
 # define NORTH 1
 # define SOUTH 2
 # define EAST 3
@@ -67,8 +74,6 @@
 # define STEPSIZE 0.3
 # define PLAYER_ROTATION_DEG 15
 # define DISTANCE_FROM_WALL 0.3
-# define START_X_WALL 0
-# define END_X_WALL 1
 
 //**				TEXT OUTPUT							**//
 
@@ -231,13 +236,40 @@ void	fill_background(int	ceiling, int floor, t_img *img);
 int		get_color_from_img(t_img *img, double x, double y);
 t_img	*get_wall_ptr(int width_pixel, int **dist_info, t_info *info);
 double	calc_dx_for_wall(double *start_end_wall, int *corners);
-void	draw_one_vertical_line(t_img *dest, t_img *src, \
-	double *start_end_wall, int *corners, int act_x, double dx_for_wall);
+void	draw_one_vertical_line(t_img **img_ptr, double *start_end_wall, \
+	int *corners, int act_x);
 
 //**** ft_draw_textures_3.c ****//
 
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
 int		argb(int alpha, int red, int green, int blue);
+
+//**** ft_draw_textures.c ****//
+
+int		next_tile_on_display_x(int act_x_on_display, t_info *info);
+void	calc_end_wall(double *start_end_wall, int *corners, \
+	int width_pixel, t_info *info);
+void	calc_start_wall(double *start_end_wall, int *corners, \
+	int width_pixel, t_info *info);
+void	calc_corners_of_wall(int *corners, int width_pixel, \
+	double *dist_arr, t_info *info);
+void	draw_wall_textures(t_info *info, int width_pixel);
+
+//**** ft_clean_up_2.c ****//
+
+void	clean_up_map_int(t_info *info);
+void	clean_up_dist_info(t_info *info);
+void	clean_up_dist_arr(t_info *info);
+void	clean_up_char_map(t_info *info);
+void	clean_up_p(t_info *info);
+
+//**** ft_clean_up_3.c ****//
+
+t_info	*clean_up_info(t_info *info);
+void	clean_up_map_path(t_info *info);
+t_img	*clean_up_one_texture(t_img *img, t_info *info);
+void	clean_up_textures(t_info *info);
+void	clean_up_mlx_ptr_win(t_info *info);
 
 //**** ft_clean_up.c ****//
 
@@ -251,17 +283,6 @@ int		ft_free_destroy(t_info *info);
 # ifdef __APPLE__
 void	mlx_loop_end(void *mlx_ptr);
 # endif
-
-//**** ft_draw_textures.c ****//
-
-int		next_tile_on_display_x(int act_x_on_display, t_info *info);
-void	calc_end_wall(double *start_end_wall, int *corners, \
-	int width_pixel, t_info *info);
-void	calc_start_wall(double *start_end_wall, int *corners, \
-	int width_pixel, t_info *info);
-void	calc_corners_of_wall(int *corners, int width_pixel, \
-	double *dist_arr, t_info *info);
-void	draw_wall_textures(t_info *info, int width_pixel);
 
 //**** ft_init.c ****//
 

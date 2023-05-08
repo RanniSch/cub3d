@@ -1,9 +1,9 @@
 #include "../inc/cub3d.h"
 
-void	fill_background(int	ceiling, int floor, t_img *img)
+void	fill_background(int ceiling, int floor, t_img *img)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	y = -1;
 	while (++y < DISPLAY_HEIGHT / 2)
@@ -23,8 +23,8 @@ void	fill_background(int	ceiling, int floor, t_img *img)
 
 int	get_color_from_img(t_img *img, double x, double y)
 {
-	char *addr;
-	int color;
+	char	*addr;
+	int		color;
 
 	addr = img->addr + ((int)(y) % img->height * img->line_length + \
 		(int)(x) % img->width * (img->bits_per_pixel / 8));
@@ -56,9 +56,9 @@ t_img	*get_wall_ptr(int width_pixel, int **dist_info, t_info *info)
  */
 double	calc_dx_for_wall(double *start_end_wall, int *corners)
 {
-	double dx;
-	double visible_wall_px;
-	int	amount_of_px_on_display;
+	double	dx;
+	double	visible_wall_px;
+	int		amount_of_px_on_display;
 
 	visible_wall_px = start_end_wall[END_X_WALL] - \
 		start_end_wall[START_X_WALL];
@@ -87,29 +87,30 @@ double	calc_dx_for_wall(double *start_end_wall, int *corners)
  * 				to the height at this x value. Y2 - Y1 is the basic height
  * 				from the most left part of the wall.
  */
-void	draw_one_vertical_line(t_img *dest, t_img *src, \
-	double *start_end_wall, int *corners, int act_x, double dx_for_wall)
+void	draw_one_vertical_line(t_img **img_ptr, double *start_end_wall, \
+	int *corners, int act_x)
 {
-	double dy_for_wall;
-	double act_height;
-	double sum_dy;
-	double sum_dx;
-	int	start_y;
-	int	y;
-	int	color;
+	double	dy_for_wall;
+	double	act_height;
+	double	sum_dy;
+	double	sum_dx;
+	int		val[3];
 
-	y = -1;
-	
+	val[Y] = -1;
 	sum_dy = (corners[Y4] - corners[Y3]) - (corners[Y2] - corners[Y1]);
-	sum_dx = corners[X3] - corners[X1] + 1; // unlogische bezeichnung
-	act_height = ((sum_dy / sum_dx) * (double)act_x) + (corners[Y2] - corners[Y1]);
-	start_y = (DISPLAY_HEIGHT - act_height) / 2;
+	sum_dx = corners[X3] - corners[X1] + 1;
+	act_height = ((sum_dy / sum_dx) * (double)act_x) + \
+		(corners[Y2] - corners[Y1]);
+	val[START_Y] = (DISPLAY_HEIGHT - act_height) / 2;
 	dy_for_wall = HEIGHT_WALL / act_height;
-	while (++y < act_height)
+	while (++val[Y] < act_height)
 	{
-		color = get_color_from_img(src, (((double)act_x * dx_for_wall) + start_end_wall[START_X_WALL]), (y * dy_for_wall));
-		if ((y + start_y) >= 0 && (y + start_y) < DISPLAY_HEIGHT)
-			my_mlx_pixel_put(dest, (act_x + corners[X1]), (y + start_y), color);
-		
+		val[COLOR] = get_color_from_img(img_ptr[SRC], \
+			(((double)act_x * start_end_wall[DX_FOR_WALL]) + \
+			start_end_wall[START_X_WALL]), (val[Y] * dy_for_wall));
+		if ((val[Y] + val[START_Y]) >= 0 && (val[Y] + val[START_Y]) \
+			< DISPLAY_HEIGHT)
+			my_mlx_pixel_put(img_ptr[DEST], (act_x + corners[X1]), \
+				(val[Y] + val[START_Y]), val[COLOR]);
 	}
 }

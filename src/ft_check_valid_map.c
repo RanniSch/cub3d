@@ -1,10 +1,9 @@
-
 #include "../inc/cub3d.h"
 
 /*
 * Checks that there is no empty line in map.
 */
-bool    valid_lines(t_info *info, int i)
+bool	valid_lines(t_info *info, int i)
 {
 	if (info->map[i][0] == '\n')
 	{
@@ -17,9 +16,8 @@ bool    valid_lines(t_info *info, int i)
 /*
 * Compares the input with all allowed characters.
 */
-bool    is_allowed_char(t_info *info, char c)
+bool	is_allowed_char(t_info *info, char c)
 {
-	//printf("%c\n", c);
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E' || c == '1' || c == '0')
 	{
 		if (c == 'N')
@@ -30,16 +28,15 @@ bool    is_allowed_char(t_info *info, char c)
 			info->player_amount++;
 		if (c == 'E')
 			info->player_amount++;
-		//printf("player: %d\n", info->player_amount);
 		return (true);
 	}
-    return (false);
+	return (false);
 }
 
 /*
 * An empty line where nothing comes after!
 */
-bool    filled_line(t_info *info, int i)
+bool	filled_line(t_info *info, int i)
 {
 	if (info->map[i][0] == '\0')
 	{
@@ -52,9 +49,9 @@ bool    filled_line(t_info *info, int i)
 /*
 * Checks for only correct characters in map.
 */
-bool    correct_char(t_info *info, int i, int j)
+bool	correct_char(t_info *info, int i, int j)
 {
-	if (info->map[i] != NULL && info->map[i][j] != '\0') // if (info->map[i][j] != '\0')
+	if (info->map[i] != NULL && info->map[i][j] != '\0')
 	{
 		if (info->map[i][j] != 32 && info->map[i][j] != '\n')
 		{

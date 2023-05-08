@@ -9,8 +9,8 @@
  */
 double	slope(double *one, double *two)
 {
-	double dy;
-	double dx;
+	double	dy;
+	double	dx;
 
 	dy = two[Y] - one[Y];
 	dx = two[X] - one[X];
@@ -31,8 +31,8 @@ double	slope(double *one, double *two)
  */
 int	func_from_points(double *one, double *two, double *func)
 {
-	double m;
-	double b;
+	double	m;
+	double	b;
 
 	if (one[X] == two[X])
 		return (-1);
@@ -52,7 +52,7 @@ int	func_from_points(double *one, double *two, double *func)
  */
 double	y_from_x(double x, double *func)
 {
-	double y;
+	double	y;
 
 	y = (func[M] * x) + func[B];
 	return (y);
@@ -65,7 +65,7 @@ double	y_from_x(double x, double *func)
  */
 double	x_from_y(double y, double *func)
 {
-	double x;
+	double	x;
 
 	x = (y - func[B]) / func[M];
 	return (x);
