@@ -98,6 +98,11 @@ int	main(int argc, char **argv)
  		printf("Only 1 argument is required for cub3D. Try: ./cub3d [path map]\n");
 		exit(0);
  	}
+	if (DISTANCE_FROM_WALL < 0.3)
+	{
+		printf("DISTANCE_FROM_WALL ist to low\n");
+		exit(0);
+	}
 	info = init_info_player_images();
 	if (!info)
 		printf("Fehler info");   //   ---------  change - clean_up oder so

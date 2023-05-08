@@ -89,16 +89,20 @@ void	init_mlx_and_textures(t_info *info)
 	void	*v_we;
 
 	info->mlx_ptr = mlx_init();
+<<<<<<< HEAD
 	v_no = mlx_xpm_file_to_image(info->mlx_ptr, info->txt.path_no, \
+=======
+	info->north->img = mlx_xpm_file_to_image(info->mlx_ptr, info->txt.path_no, \
+>>>>>>> master
 		&info->north->width, &info->north->height);
-	v_ea = mlx_xpm_file_to_image(info->mlx_ptr, info->txt.path_ea, \
+	info->east->img = mlx_xpm_file_to_image(info->mlx_ptr, info->txt.path_ea, \
 		&info->east->width, &info->east->height);
-	v_so = mlx_xpm_file_to_image(info->mlx_ptr, info->txt.path_so, \
+	info->south->img = mlx_xpm_file_to_image(info->mlx_ptr, info->txt.path_so, \
 		&info->south->width, &info->south->height);
-	v_we = mlx_xpm_file_to_image(info->mlx_ptr, info->txt.path_we, \
+	info->west->img = mlx_xpm_file_to_image(info->mlx_ptr, info->txt.path_we, \
 		&info->west->width, &info->west->height);
-	get_properties_from_mlx_img(v_no, info->north);
-	get_properties_from_mlx_img(v_ea, info->east);
-	get_properties_from_mlx_img(v_so, info->south);
-	get_properties_from_mlx_img(v_we, info->west);
+	get_properties_from_mlx_img(info->north->img, info->north);
+	get_properties_from_mlx_img(info->east->img, info->east);
+	get_properties_from_mlx_img(info->south->img, info->south);
+	get_properties_from_mlx_img(info->west->img, info->west);
 }
