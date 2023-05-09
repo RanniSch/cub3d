@@ -43,21 +43,6 @@ void	map_converter_init(int *i, int *row_file, \
 	*tmp_map_int = (int **)malloc(sizeof(int *) * (info->mapsize[Y] + 1));
 }
 
-/**
- * @brief return value of -1 is only for saving lines 
- * (normitnette purpose)
- * @return -1
- */
-int	map_int_init(int *map, int col)
-{
-	int j;
-
-	j = -1;
-	while (++j < col)
-		map[j] = 0;
-	return (-1);
-}
-
 int	**map_converter(t_info *info)
 {
 	int		i;

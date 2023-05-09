@@ -57,7 +57,7 @@ void	move_y(double *move_vec, t_info *info)
 	temp_pos[X] = info->p->pos[X] + move_vec[X];
 	move_y[Y] = move_vec[Y];
 	move_y[X] = 0;
-	if (move_vec[Y] == 0) // Threshold einführen und testen
+	if (move_y[Y] >= -THRESHOLD_ZERO && move_y[Y] <= THRESHOLD_ZERO) // Threshold einführen und testen
 		return ;
 	dist = raycast(temp_pos, move_y, info, hit_coordinates);
 	if (dist >= betrag(move_vec[Y]) + DISTANCE_FROM_WALL)
