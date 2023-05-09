@@ -43,5 +43,5 @@ int	ft_free_destroy(t_info *info)
 	clean_up_p(info);
 	clean_up_mlx_ptr_win(info);
 	info = clean_up_info(info);
-	exit(EXIT_FAILURE);  // programm wird doch ohne Fehler geschlossen oder? dann können wir 0 zurück geben
+	exit(0);//EXIT_FAILURE);  // programm wird doch ohne Fehler geschlossen oder? dann können wir 0 zurück geben
 }

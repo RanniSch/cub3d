@@ -58,7 +58,8 @@ int	**map_converter(t_info *info)
 		tmp_map_int[i] = (int *)malloc(sizeof(int) * info->mapsize[X]);
 		if (!tmp_map_int[i])
 			return (NULL);
-		j = -1;
+		j = map_int_init(tmp_map_int[i], info->mapsize[X]);
+		// j = -1;
 		while (info->map[row_file][++j] && info->map[row_file][j] != '\n')
 		{
 			if (info->map[row_file][j] == '1')
