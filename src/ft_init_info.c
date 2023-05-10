@@ -23,7 +23,7 @@ t_info	*init_info(void)
 	info->map_path = NULL;
 	info->row = 0;
 	info->map = NULL;
-	info->map_i = 0;
+	info->map_i = 0; // WIRD hier wieder zu 0 gesetzt!
 	info->floor = 0;
 	info->ceiling = 0;
 	info->player_amount = 0;

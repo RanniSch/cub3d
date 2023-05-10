@@ -53,11 +53,14 @@ void	init_game(t_info *info)
 	info->txt.path_so = NULL;
 	info->txt.path_we = NULL;
 
-	// Correct pointers?
-	//info->v_no = NULL; 
-	//info->v_ea = NULL;
-	//info->v_so = NULL;
-	//info->v_we = NULL;
+	info->check_no = 0;
+	info->check_so = 0;
+	info->check_we = 0;
+	info->check_ea = 0;
+	info->check_f = 0;
+	info->check_c = 0;
+	info->str_j = 0;
+	info->len = 0;
 }
 
 /* 
@@ -125,6 +128,7 @@ int	main(int argc, char **argv)
      else
      {
         printf("great\n"); // only for debugging purpuse!
+		printf("%d\n", info->map_i);
 		info->map_int = map_converter(info); // what do if malloc fails?
      }
 	// print_2d_arr(info->map_int, info->mapsize[Y], info->mapsize[X]);

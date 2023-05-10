@@ -78,33 +78,35 @@
 
 # define STR_PROG_NAME "Cub3D:"
 
-# define ERROR_1 "Couldn't open Cub3D file!\n"
-# define ERROR_2 "Invalid Cub3D file: Use .cub file extension!\n"
+# define ERROR_1 "Error:\nCouldn't open Cub3D file!\n"
+# define ERROR_2 "Error:\nInvalid Cub3D file: Use .cub file extension!\n"
 
-# define CHECK_TEX_1 "Couldn't open path of texture!\n"
-# define CHECK_TEX_2 "Invalid path of texture: Use .xpm texture extension!\n"
-# define CHECK_TEX_3 "Error: Invalid value for red!\nUse a value between 0 and 255.\n"
-# define CHECK_TEX_4 "Error: Invalid value for green!\nUse a value between 0 and 255.\n"
-# define CHECK_TEX_5 "Error: Invalid value for blue!\nUse a value between 0 and 255.\n"
-# define CHECK_TEX_6 "Invalid map: Only ceiling and floor allowed!\n"
-# define CHECK_TEX_7 "Invalid map: There needs to be a ceiling and a floor!\n"
+# define CHECK_TEX_1 "Error:\nCouldn't open path of texture!\n"
+# define CHECK_TEX_2 "Error:\nInvalid path of texture: Use .xpm texture extension!\n"
+# define CHECK_TEX_3 "Error:\nInvalid value for red! Use a value between 0 and 255.\n"
+# define CHECK_TEX_4 "Error:\nInvalid value for green! Use a value between 0 and 255.\n"
+# define CHECK_TEX_5 "Error:\nInvalid value for blue! Use a value between 0 and 255.\n"
+# define CHECK_TEX_6 "Error:\nThere needs to be one texture for each cardinal direction!\n"
+# define CHECK_TEX_7 "Error:\nThere needs to be a ceiling and a floor!\n"
+# define CHECK_TEX_8 "Error:\nInvalid signs in front of texture path!\n"
+# define CHECK_TEX_9 "Error:\nInvalid signs in front of colour value!\n"
+# define CHECK_TEX_10 "Error:\nInvalid signs in lines!\n"
 
-# define CHECK_MAP_1 "Error: Found empty line in map!\n"
-# define CHECK_MAP_2 "Invalid map!\n"
-# define CHECK_MAP_3 "Invalid character in map!\n"
-# define CHECK_MAP_4 "Map should be surrounded by wall (top)!\n"
-# define CHECK_MAP_5 "Fix wall on the top!\n"
-# define CHECK_MAP_6 "Map should be surrounded by wall (bottom)!\n"
-# define CHECK_MAP_7 "Fix wall on the bottom!\n"
-# define CHECK_MAP_8 "Map should be surrounded by wall (right)!\n"
-# define CHECK_MAP_9 "Fix wall on the right!\n"
-# define CHECK_MAP_10 "Map should be surrounded by wall (left)!\n"
-# define CHECK_MAP_11 "Fix wall on the left!\n"
-# define CHECK_MAP_12 "Too many players!\nOnly one player is allowed in map.\n"
-# define CHECK_MAP_13 "There is no player in map!\n"
-# define CHECK_MAP_14 "Invalid map: Only four cardinal directions allowed!\n"
+# define CHECK_MAP_1 "Error:\nFound empty line in map!\n"
+# define CHECK_MAP_2 "Error:\nInvalid map!\n"
+# define CHECK_MAP_3 "Error:\nInvalid character in map!\n"
+# define CHECK_MAP_4 "Error:\nMap should be surrounded by wall (top)!\n"
+# define CHECK_MAP_5 "Error:\nFix wall on the top!\n"
+# define CHECK_MAP_6 "Error:\nMap should be surrounded by wall (bottom)!\n"
+# define CHECK_MAP_7 "Error:\nFix wall on the bottom!\n"
+# define CHECK_MAP_8 "Error:\nMap should be surrounded by wall (right)!\n"
+# define CHECK_MAP_9 "Error:\nFix wall on the right!\n"
+# define CHECK_MAP_10 "Error:\nMap should be surrounded by wall (left)!\n"
+# define CHECK_MAP_11 "Error:\nFix wall on the left!\n"
+# define CHECK_MAP_12 "Error:\nToo many players!\nOnly one player is allowed in map.\n"
+# define CHECK_MAP_13 "Error:\nThere is no player in map!\n"
 
-# define RAYCAST "Error in cardinal direction!\n"
+# define RAYCAST "Error:\nIn cardinal direction!\n"
 
 //*********************************************************//
 //**                    STRUCTURES                      **//
@@ -165,6 +167,14 @@ typedef struct s_info
 	int			**dist_info;
 	void		*mlx_ptr;
 	void		*mlx_win;
+	int			check_no;
+	int			check_so;
+	int			check_we;
+	int			check_ea;
+	int			check_f;
+	int			check_c;
+	int			str_j;
+	int			len;
 	t_img		*north;
 	t_img		*east;
 	t_img		*south;
@@ -191,17 +201,18 @@ bool		parsing(t_info *info);
 
 /* ft_check_valid_textures.c */
 
-void    ft_save_path_texture(t_info *info, char *map, char x);
+bool    ft_save_path_texture(t_info *info, char *map, char x);
+bool    ft_texture_values(t_info *info);
 bool    check_valid_textures(t_info *info);
 bool	ft_texture_extension_helper(char *path_texture);
 bool	valid_texture_extension(t_info *info);
 
 /* ft_check_valid_textures_2.c */
 
-void    ft_letter_to_rgb(t_info *info, char *map);
+bool    ft_valid_rgb_code(t_info *info, char *map);
+bool    ft_letter_to_rgb(t_info *info, char *map);
 bool    ft_rgb_int_converter(t_info *info);
-bool    ft_fc_helper(t_info *info, int i);
-bool    check_valid_fc(t_info *info);
+bool    check_valid_fc(t_info *info, char *map, char y);
 
 /* ft_check_valid_map.c */
 

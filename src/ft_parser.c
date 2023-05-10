@@ -101,14 +101,8 @@ bool	parsing(t_info *info)
 		return (false);
     skip_empty_lines(info);
 	if (!check_valid_textures(info))
-	{
-		message(CHECK_MAP_14);
 		return (false);
-	}
 	if (!valid_texture_extension(info))
-		return (false);
-	skip_empty_lines(info);
-	if (!check_valid_fc(info))
 		return (false);
 	skip_empty_lines(info);
 	//printf("line %d\n", info->map_i);

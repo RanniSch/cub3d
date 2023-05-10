@@ -1,34 +1,72 @@
 
 #include "../inc/cub3d.h"
 
+bool    ft_valid_rgb_code(t_info *info, char *map)
+{
+    info->str_j++;
+    //printf("map: %c_%d\n", map[info->str_j], info->str_j);
+    if (map[info->str_j] == ' ')
+    {
+        info->str_j++;
+        while (map[info->str_j] < 48 && map[info->str_j] > 57)
+        {
+            if (map[info->str_j] != ' ')
+            {
+                message(CHECK_TEX_9);
+                return (false);
+            }
+            info->str_j++;
+        }
+        return (true);
+    }
+    message(CHECK_TEX_9);
+    return (false);
+}
+
 /*
 * This function moves the pointer in the string foreward until
 * it reaches the first number of the rgb input in the map.
 */
-void    ft_letter_to_rgb(t_info *info, char *map)
+bool    ft_letter_to_rgb(t_info *info, char *map)
 {
-    int j;
-    int len;
-
-    j = 1;
-    len = 0;
-    while (map[j] == ' ') // Muster wiederholt sich, subfunktion????
-        j++;
-    while (map[++j] != ',')
-        len++;
-    info->txt.red = ft_substr(map, j - len - 1, len + 1);
-    j++;
-    while (map[j] == ' ')
-        j++;
-    while (map[++j] != ',')
-        len++;
-    info->txt.green = ft_substr(map, j - len, len + 1);
-    j++;
-    while (map[j] == ' ')
-        j++;
-    while (map[++j] != ',' && map[j]) // max hat hier (&& map[j]) dazu gefügt, war ein heap buffer overflow, Ranja: ist das ok?
-        len++;
-    info->txt.blue = ft_substr(map, j - len, len + 1);
+    info->str_j = 0;
+    info->len = 1;
+    if (!ft_valid_rgb_code(info, map))
+        return (false);
+    info->str_j++;
+    while (map[info->str_j] != ',')
+    {
+        info->str_j++;
+        info->len++;
+    }
+    //printf("map: %c_%d %d\n", map[info->str_j], info->str_j, info->len);
+    info->txt.red = ft_substr(map, info->str_j - info->len, info->len);
+    //printf("_%s_\n", info->txt.red);
+    if (!ft_valid_rgb_code(info, map))
+        return (false);
+    info->str_j++;
+    info->len = 1;
+    while (map[info->str_j] != ',')
+    {
+        info->str_j++;
+        info->len++;
+    }
+    //printf("map: %c_%d %d\n", map[info->str_j], info->str_j, info->len);
+    info->txt.green = ft_substr(map, info->str_j - info->len, info->len);
+    //printf("_%s_\n", info->txt.green);
+    if (!ft_valid_rgb_code(info, map))
+        return (false);
+    info->len = 0;
+    //printf("map: %c_%d %d\n", map[info->str_j], info->str_j, info->len);
+    while (map[info->str_j] && map[info->str_j] != '\n' && map[info->str_j] != ' ') // max hat hier (&& map[j]) dazu gefügt, war ein heap buffer overflow, Ranja: ist das ok?
+    {
+        info->str_j++;
+        info->len++;
+    }
+    //printf("map: %c_%d %d\n", map[info->str_j], info->str_j, info->len);
+    info->txt.blue = ft_substr(map, info->str_j - info->len, info->len);
+    //printf("_%s_\n", info->txt.blue);
+    return (true);
 }
 
 /*
@@ -37,7 +75,7 @@ void    ft_letter_to_rgb(t_info *info, char *map)
 */
 bool    ft_rgb_int_converter(t_info *info)
 {
-    info->txt.red_int = ft_atoi(info->txt.red);
+    info->txt.red_int = ft_atoi(info->txt.red); // first check that each element of string is between 0-9 + max 3 indexes
     info->txt.green_int = ft_atoi(info->txt.green);
     info->txt.blue_int = ft_atoi(info->txt.blue);
     //printf("F %d, %d, %d\n", info->txt.red_int, info->txt.green_int, info->txt.blue_int);
@@ -60,61 +98,26 @@ bool    ft_rgb_int_converter(t_info *info)
 }
 
 /*
-* This function has the if, else if, else statements to check
-* weither the input from the map is 'F' for floor or 'C' for ceiling.
-* ft_letter_to_rgb and ft_rgb_int_converter are called here.
-*/
-bool    ft_fc_helper(t_info *info, int i)
-{
-    // man könnte auch noch hinzunehmen, dass jede Farbe nur genau einmal vorkommt!
-    if (info->map[i][0] == 'F') // Werte von 0 - 255;
-    {
-        ft_letter_to_rgb(info, info->map[i]);
-        if (!ft_rgb_int_converter(info))
-            return (false);
-        info->floor = argb(0, info->txt.red_int, info->txt.green_int, info->txt.blue_int);
-        //printf("floor %d\n", info->floor);
-        clean_up_txt_colors(info);
-    }
-    else if (info->map[i][0] == 'C')
-    {
-        ft_letter_to_rgb(info, info->map[i]);
-        if (!ft_rgb_int_converter(info))
-            return (false);
-        info->ceiling = argb(0, info->txt.red_int, info->txt.green_int, info->txt.blue_int);
-		clean_up_txt_colors(info);
-    }
-    else
-    { 
-        message(CHECK_TEX_6);
-        return (false);
-    }
-    return (true);
-}
-
-/*
 * This function launches the process of checking for valid floor and ceiling
 * and saving these values and passing them into the argb function!
+* ft_letter_to_rgb and ft_rgb_int_converter are called here.
 */
-bool    check_valid_fc(t_info *info)
+bool    check_valid_fc(t_info *info, char *map, char y) // Werte von 0 - 255;
 {
-    int i;
-    int fc;
-
-    fc = 0;
-    i = info->map_i;
-    while (info->map[i][0] != '\n')
-    {
-        if (!ft_fc_helper(info, i))
-            return (false);
-        fc++;
-        info->map_i++;
-        i = info->map_i;
-    }
-    if (fc != 2)
-    {
-        message(CHECK_TEX_7);
+    if (!ft_letter_to_rgb(info, map))
         return (false);
+    if (!ft_rgb_int_converter(info))
+        return (false);
+    if (y == 'f')
+    {
+        //printf("F %d, %d, %d\n", info->txt.red_int, info->txt.green_int, info->txt.blue_int); // prints floor colours!!!
+        info->floor = argb(0, info->txt.red_int, info->txt.green_int, info->txt.blue_int);
     }
+    if (y == 'c')
+    {
+        //printf("C %d, %d, %d\n", info->txt.red_int, info->txt.green_int, info->txt.blue_int); // prints ceiling colours!!!
+        info->ceiling = argb(0, info->txt.red_int, info->txt.green_int, info->txt.blue_int);
+    }
+    clean_up_txt_colors(info);
     return (true);
 }

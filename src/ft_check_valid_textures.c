@@ -4,15 +4,21 @@
 /*
 * Saves each texture in the belonging pointer.
 */
-void    ft_save_path_texture(t_info *info, char *map, char x)
+bool    ft_save_path_texture(t_info *info, char *map, char x)
 {
     int j;
     int len;
 
-    j = 0;
+    j = 1;
     len = 0;
-    while (map[j] != '.')
-        j++;
+    while (map[++j] != '.')
+    {
+        if (map[j] != ' ')
+        {
+            message(CHECK_TEX_8);
+            return (false);
+        }
+    }
     while (map[++j] != '\n')
         len++;
     //printf("start %d len %d\n", j - len - 1, len);
@@ -25,38 +31,84 @@ void    ft_save_path_texture(t_info *info, char *map, char x)
     if (x == 'w')
         info->txt.path_we = ft_substr(map, j - len - 1, len + 1);
     //printf("path %s\n", info->txt.path_no);
+    return (true);
+}
+
+bool    ft_texture_values(t_info *info)
+{
+    if (info->check_no != 1 || info->check_ea != 1 || info->check_so != 1 || info->check_we != 1)
+    {
+        message(CHECK_TEX_6);
+        return (false);
+    }
+    if (info->check_c != 1 || info->check_f != 1)
+    {
+        message(CHECK_TEX_7);
+        return (false);
+    }
+    return (true);
 }
 
 /*
-* Checks for four textures that start either with NO, EA, SO
-* or WE.
+* Checks for four textures that start either with NO, EA, SO or WE
+* and for the two colours floor and ceiling.
 */
 bool    check_valid_textures(t_info *info)
 {
-    int i;
-    int wall_orientations;
-
-    wall_orientations = 0;
-    i = info->map_i;
-    while (info->map[i][0] != '\n')
+    //printf("1: %d\n", info->map_i);
+    while (info->map[info->map_i])
     {
-        // man könnte auch noch hinzunehmen, dass jede Himmelsrichtung nur genau einmal vorkommt
-        if (info->map[i][0] == 'N' && info->map[i][1] == 'O')
-            ft_save_path_texture(info, info->map[i], 'n');
-        else if (info->map[i][0] == 'E' && info->map[i][1] == 'A')
-            ft_save_path_texture(info, info->map[i], 'e');
-        else if (info->map[i][0] == 'S' && info->map[i][1] == 'O')
-            ft_save_path_texture(info, info->map[i], 's');
-        else if (info->map[i][0] == 'W' && info->map[i][1] == 'E')
-            ft_save_path_texture(info, info->map[i], 'w');
+        skip_empty_lines(info);
+        if (info->map[info->map_i][0] == 'N' && info->map[info->map_i][1] == 'O')
+        {
+            ft_save_path_texture(info, info->map[info->map_i], 'n');
+            info->check_no++;
+            //printf("NO %s\n", info->txt.path_no); // prints north texture!!!
+        }
+        else if (info->map[info->map_i][0] == 'E' && info->map[info->map_i][1] == 'A')
+        {
+            ft_save_path_texture(info, info->map[info->map_i], 'e');
+            info->check_ea++;
+            //printf("EA %s\n", info->txt.path_ea); // prints east texture!!!
+        }
+        else if (info->map[info->map_i][0] == 'S' && info->map[info->map_i][1] == 'O')
+        {
+            ft_save_path_texture(info, info->map[info->map_i], 's');
+            info->check_so++;
+            //printf("SO %s\n", info->txt.path_so); // prints south texture!!!
+        }
+        else if (info->map[info->map_i][0] == 'W' && info->map[info->map_i][1] == 'E')
+        {
+            ft_save_path_texture(info, info->map[info->map_i], 'w');
+            info->check_we++;
+            //printf("WE %s\n", info->txt.path_we); // prints west texture!!!
+        }
+        else if (info->map[info->map_i][0] == 'F')
+        {
+            check_valid_fc(info, info->map[info->map_i], 'f');
+            info->check_f++;
+        }
+        else if (info->map[info->map_i][0] == 'C')
+        {
+            check_valid_fc(info, info->map[info->map_i], 'c');
+            info->check_c++;
+        }
+        else if (info->map[info->map_i][0] == '1' || info->map[info->map_i][0] == ' ')
+            break;
         else
+        {
+            message(CHECK_TEX_10);
             return (false);
-        wall_orientations++;
+        }
         info->map_i++;
-        i = info->map_i;
+        //printf("2: %d\n", info->map_i);
     }
-    if (wall_orientations != 4)
+    if (!ft_texture_values(info))
         return (false);
+    //printf("NO %s\n", info->txt.path_no); // prints north texture!!!
+    //printf("SO %s\n", info->txt.path_so); // prints south texture!!!
+    //printf("WE %s\n", info->txt.path_we); // prints west texture!!!
+    //printf("EA %s\n", info->txt.path_ea); // prints east texture!!!
     return (true);
 }
 
@@ -92,6 +144,7 @@ bool    ft_texture_extension_helper(char *path_texture)
 
 /*
 * checks if the texture exists and for the correct extension.
+* Calls the function ft_texture_extension_helper.
 */
 bool	valid_texture_extension(t_info *info)
 {
