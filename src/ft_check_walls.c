@@ -93,7 +93,6 @@ bool	no_zero_left(t_info *info, int i, int j)
 */
 bool    zero_middle(t_info *info, int i, int j)
 {
-	//printf("drin\n");
 	//printf("map %c\n", info->map[9][1]);
 	if (!no_zero_static(info, i , j))
 		return (false);

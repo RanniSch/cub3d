@@ -59,8 +59,10 @@ void	init_game(t_info *info)
 	info->check_ea = 0;
 	info->check_f = 0;
 	info->check_c = 0;
+	info->check_txt = 0;
+	info->check_colour = 0;
 	info->str_j = 0;
-	info->len = 0;
+	info->substr = 0;
 }
 
 /* 

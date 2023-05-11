@@ -12,8 +12,6 @@ bool	valid_map_extension(t_info *info)
     fd = open(info->map_path, O_RDONLY);
     if (fd == -1)
 	{
-		//free_struct(data);
-		//error_msg("Couldn't open the file!");
         message(ERROR_1);
 		close(fd);
 		return (false);
@@ -25,7 +23,6 @@ bool	valid_map_extension(t_info *info)
 		close(fd);
 		return (false);
 	}
-	//printf("Could open file\n");
 	close(fd);
 	return (true);
 }
@@ -54,8 +51,6 @@ bool    check_valid_map(t_info *info)
 	i = info->map_i;
 	while (i < info->row && info->map[i] != NULL)
 	{
-		//if (!valid_lines(info, i)) // Problem bei empty line nach map?
-		//	return (false);
 		j = -1;
 		while (info->map[i][++j])
 		{
@@ -102,10 +97,11 @@ bool	parsing(t_info *info)
     skip_empty_lines(info);
 	if (!check_valid_textures(info))
 		return (false);
+	if (!ft_texture_values(info))
+        return (false);
 	if (!valid_texture_extension(info))
 		return (false);
 	skip_empty_lines(info);
-	//printf("line %d\n", info->map_i);
 	if (!check_valid_map(info))
 		return (false);
 	if (!amount_player(info->player_amount))

@@ -90,7 +90,7 @@
 # define CHECK_TEX_7 "Error:\nThere needs to be a ceiling and a floor!\n"
 # define CHECK_TEX_8 "Error:\nInvalid character in front of texture path!\n"
 # define CHECK_TEX_9 "Error:\nInvalid character in front of colour value!\n"
-# define CHECK_TEX_10 "Error:\nInvalid character in lines!\n"
+# define CHECK_TEX_10 "Error:\nInvalid character in file!\n"
 # define CHECK_TEX_11 "Error:\nInvalid character for colour value!\n"
 # define CHECK_TEX_12 "Error:\nInvalid rgb code. Three entries needed!\n"
 
@@ -176,8 +176,10 @@ typedef struct s_info
 	int			check_ea;
 	int			check_f;
 	int			check_c;
+	int			check_txt;
+	int			check_colour;
 	int			str_j;
-	int			len;
+	int			substr;
 	t_img		*north;
 	t_img		*east;
 	t_img		*south;
@@ -191,6 +193,7 @@ typedef struct s_info
 //*******************************************************//
 
 /* ft_rd_map.c */
+
 int			count_nb_row(char *map_path);
 char		**save_map(t_info *info);
 
@@ -204,19 +207,30 @@ bool		parsing(t_info *info);
 
 /* ft_check_valid_textures.c */
 
+bool    ft_check_path_texture(t_info *info, char *map);
 bool    ft_save_path_texture(t_info *info, char *map, char x);
-bool    ft_texture_values(t_info *info);
+bool    start_of_map(t_info *info);
 bool    check_valid_textures(t_info *info);
-bool	ft_texture_extension_helper(char *path_texture);
-bool	valid_texture_extension(t_info *info);
 
-/* ft_check_valid_textures_2.c */
+/* ft_check_valid_fc.c */
 
-bool    ft_valid_rgb_code(t_info *info, char *map);
-bool    ft_valid_rgb_code_2(t_info *info, char *map);
 bool    ft_letter_to_rgb(t_info *info, char *map);
 bool    ft_rgb_int_converter(t_info *info);
 bool    check_valid_fc(t_info *info, char *map, char y);
+
+/* ft_check_valid_fc_2.c */
+
+bool    ft_valid_rgb_code(t_info *info, char *map);
+bool    ft_valid_rgb_code_2(t_info *info, char *map);
+
+/* ft_check_valid_textures_extension.c */
+
+bool	ft_texture_extension_helper(char *path_texture);
+bool	valid_texture_extension(t_info *info);
+
+/* ft_check_num_textures.c */
+
+bool    ft_texture_values(t_info *info);
 
 /* ft_check_valid_map.c */
 

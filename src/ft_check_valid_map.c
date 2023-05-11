@@ -61,7 +61,7 @@ bool	correct_char(t_info *info, int i, int j)
 				return (false);
 			}
 		}
-		if (!filled_line(info, i))	// brauchen wir das wirklich an der Stelle??? Wird dies nicht schon durch das erste if statement ausgeschlossen
+		if (!filled_line(info, i)) // brauchen wir das wirklich an der Stelle??? Wird dies nicht schon durch das erste if statement ausgeschlossen
 			return (false);
 	}
 	return (true);
