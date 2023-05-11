@@ -1,6 +1,10 @@
 
 #include "../inc/cub3d.h"
 
+/*
+* Checks that there are only spaces between the capital letter
+* "F" or "C" and the first entry of the colour code.
+*/
 bool    ft_valid_rgb_code(t_info *info, char *map)
 {
     info->str_j++;
@@ -23,6 +27,21 @@ bool    ft_valid_rgb_code(t_info *info, char *map)
     return (false);
 }
 
+bool    ft_valid_rgb_code_2(t_info *info, char *map)
+{
+    while (map[info->str_j] != ',')
+    {
+        if (map[info->str_j] == '\n')
+        {
+            message(CHECK_TEX_12);
+            return (false);
+        }
+        info->str_j++;
+        info->len++;
+    }
+    return (true);
+}
+
 /*
 * This function moves the pointer in the string foreward until
 * it reaches the first number of the rgb input in the map.
@@ -34,11 +53,8 @@ bool    ft_letter_to_rgb(t_info *info, char *map)
     if (!ft_valid_rgb_code(info, map))
         return (false);
     info->str_j++;
-    while (map[info->str_j] != ',')
-    {
-        info->str_j++;
-        info->len++;
-    }
+    if (!ft_valid_rgb_code_2(info, map))
+        return (false);
     //printf("map: %c_%d %d\n", map[info->str_j], info->str_j, info->len);
     info->txt.red = ft_substr(map, info->str_j - info->len, info->len);
     //printf("_%s_\n", info->txt.red);
@@ -46,11 +62,8 @@ bool    ft_letter_to_rgb(t_info *info, char *map)
         return (false);
     info->str_j++;
     info->len = 1;
-    while (map[info->str_j] != ',')
-    {
-        info->str_j++;
-        info->len++;
-    }
+    if (!ft_valid_rgb_code_2(info, map))
+        return (false);
     //printf("map: %c_%d %d\n", map[info->str_j], info->str_j, info->len);
     info->txt.green = ft_substr(map, info->str_j - info->len, info->len);
     //printf("_%s_\n", info->txt.green);
@@ -58,7 +71,7 @@ bool    ft_letter_to_rgb(t_info *info, char *map)
         return (false);
     info->len = 0;
     //printf("map: %c_%d %d\n", map[info->str_j], info->str_j, info->len);
-    while (map[info->str_j] && map[info->str_j] != '\n' && map[info->str_j] != ' ') // max hat hier (&& map[j]) dazu gefügt, war ein heap buffer overflow, Ranja: ist das ok?
+    while (map[info->str_j] && map[info->str_j] != '\n')
     {
         info->str_j++;
         info->len++;
@@ -69,12 +82,34 @@ bool    ft_letter_to_rgb(t_info *info, char *map)
     return (true);
 }
 
+bool    ft_valid_rgb_char(char *colour_str)
+{
+    int i;
+
+    i = -1;
+    while (colour_str[++i] != '\0')
+    {
+        if (colour_str[i] < 48 || colour_str[i] > 57)
+        {
+            message(CHECK_TEX_11);
+            return (false);
+        }
+    }
+    return (true);
+}
+
 /*
 * This function converts the rgb numbers string into ints and
 * checks that the numbers are between 0 and 255.
 */
 bool    ft_rgb_int_converter(t_info *info)
 {
+    if (!ft_valid_rgb_char(info->txt.red))
+        return(false);
+    if (!ft_valid_rgb_char(info->txt.green))
+        return(false);
+    if (!ft_valid_rgb_char(info->txt.blue))
+        return(false);
     info->txt.red_int = ft_atoi(info->txt.red); // first check that each element of string is between 0-9 + max 3 indexes
     info->txt.green_int = ft_atoi(info->txt.green);
     info->txt.blue_int = ft_atoi(info->txt.blue);
@@ -110,7 +145,7 @@ bool    check_valid_fc(t_info *info, char *map, char y) // Werte von 0 - 255;
         return (false);
     if (y == 'f')
     {
-        //printf("F %d, %d, %d\n", info->txt.red_int, info->txt.green_int, info->txt.blue_int); // prints floor colours!!!
+        //printf("F _%d_, _%d_, _%d_\n", info->txt.red_int, info->txt.green_int, info->txt.blue_int); // prints floor colours!!!
         info->floor = argb(0, info->txt.red_int, info->txt.green_int, info->txt.blue_int);
     }
     if (y == 'c')

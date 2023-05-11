@@ -88,9 +88,11 @@
 # define CHECK_TEX_5 "Error:\nInvalid value for blue! Use a value between 0 and 255.\n"
 # define CHECK_TEX_6 "Error:\nThere needs to be one texture for each cardinal direction!\n"
 # define CHECK_TEX_7 "Error:\nThere needs to be a ceiling and a floor!\n"
-# define CHECK_TEX_8 "Error:\nInvalid signs in front of texture path!\n"
-# define CHECK_TEX_9 "Error:\nInvalid signs in front of colour value!\n"
-# define CHECK_TEX_10 "Error:\nInvalid signs in lines!\n"
+# define CHECK_TEX_8 "Error:\nInvalid character in front of texture path!\n"
+# define CHECK_TEX_9 "Error:\nInvalid character in front of colour value!\n"
+# define CHECK_TEX_10 "Error:\nInvalid character in lines!\n"
+# define CHECK_TEX_11 "Error:\nInvalid character for colour value!\n"
+# define CHECK_TEX_12 "Error:\nInvalid rgb code. Three entries needed!\n"
 
 # define CHECK_MAP_1 "Error:\nFound empty line in map!\n"
 # define CHECK_MAP_2 "Error:\nInvalid map!\n"
@@ -105,6 +107,7 @@
 # define CHECK_MAP_11 "Error:\nFix wall on the left!\n"
 # define CHECK_MAP_12 "Error:\nToo many players!\nOnly one player is allowed in map.\n"
 # define CHECK_MAP_13 "Error:\nThere is no player in map!\n"
+# define CHECK_MAP_14 "Error:\nInvalid space in map!\n"
 
 # define RAYCAST "Error:\nIn cardinal direction!\n"
 
@@ -210,6 +213,7 @@ bool	valid_texture_extension(t_info *info);
 /* ft_check_valid_textures_2.c */
 
 bool    ft_valid_rgb_code(t_info *info, char *map);
+bool    ft_valid_rgb_code_2(t_info *info, char *map);
 bool    ft_letter_to_rgb(t_info *info, char *map);
 bool    ft_rgb_int_converter(t_info *info);
 bool    check_valid_fc(t_info *info, char *map, char y);
@@ -232,6 +236,7 @@ bool		zero_middle(t_info *info, int i, int j);
 
 /* ft_check_walls_2.c */
 
+bool		no_zero_static(t_info *info, int i, int j);
 bool		horizontal_correct(t_info *info, int i, int j, int var);
 bool		vertical_correct(t_info *info, int i, int j, int var);
 

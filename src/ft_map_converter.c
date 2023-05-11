@@ -71,6 +71,7 @@ int	**map_converter(t_info *info)
 		}
 	}
 	tmp_map_int[i] = NULL;
+	//printf("%ls", tmp_map_int[i]); // prints map_int!!!!!!!!!!!!!!!
 	clean_up_char_map(info);
 	return (tmp_map_int);
 }

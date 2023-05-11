@@ -123,12 +123,13 @@ int	main(int argc, char **argv)
  	if (!parsing(info))
      {
          printf("parsing false\n"); // only for debugging purpuse!
+		 // clean up implementieren!!!!
 		 return (1);
      }
      else
      {
         printf("great\n"); // only for debugging purpuse!
-		printf("%d\n", info->map_i);
+		printf("map_i:_%d_\n", info->map_i);
 		info->map_int = map_converter(info); // what do if malloc fails?
      }
 	// print_2d_arr(info->map_int, info->mapsize[Y], info->mapsize[X]);

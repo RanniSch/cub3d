@@ -54,8 +54,8 @@ bool    check_valid_map(t_info *info)
 	i = info->map_i;
 	while (i < info->row && info->map[i] != NULL)
 	{
-		if (!valid_lines(info, i))
-			return (false);
+		//if (!valid_lines(info, i)) // Problem bei empty line nach map?
+		//	return (false);
 		j = -1;
 		while (info->map[i][++j])
 		{

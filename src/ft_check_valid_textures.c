@@ -61,36 +61,42 @@ bool    check_valid_textures(t_info *info)
         skip_empty_lines(info);
         if (info->map[info->map_i][0] == 'N' && info->map[info->map_i][1] == 'O')
         {
-            ft_save_path_texture(info, info->map[info->map_i], 'n');
+            if (!ft_save_path_texture(info, info->map[info->map_i], 'n'))
+                return (false);
             info->check_no++;
             //printf("NO %s\n", info->txt.path_no); // prints north texture!!!
         }
         else if (info->map[info->map_i][0] == 'E' && info->map[info->map_i][1] == 'A')
         {
-            ft_save_path_texture(info, info->map[info->map_i], 'e');
+            if (!ft_save_path_texture(info, info->map[info->map_i], 'e'))
+                return (false);
             info->check_ea++;
             //printf("EA %s\n", info->txt.path_ea); // prints east texture!!!
         }
         else if (info->map[info->map_i][0] == 'S' && info->map[info->map_i][1] == 'O')
         {
-            ft_save_path_texture(info, info->map[info->map_i], 's');
+            if (!ft_save_path_texture(info, info->map[info->map_i], 's'))
+                return (false);
             info->check_so++;
             //printf("SO %s\n", info->txt.path_so); // prints south texture!!!
         }
         else if (info->map[info->map_i][0] == 'W' && info->map[info->map_i][1] == 'E')
         {
-            ft_save_path_texture(info, info->map[info->map_i], 'w');
+            if (!ft_save_path_texture(info, info->map[info->map_i], 'w'))
+                return (false);
             info->check_we++;
             //printf("WE %s\n", info->txt.path_we); // prints west texture!!!
         }
         else if (info->map[info->map_i][0] == 'F')
         {
-            check_valid_fc(info, info->map[info->map_i], 'f');
+            if (!check_valid_fc(info, info->map[info->map_i], 'f'))
+                return (false);
             info->check_f++;
         }
         else if (info->map[info->map_i][0] == 'C')
         {
-            check_valid_fc(info, info->map[info->map_i], 'c');
+            if (!check_valid_fc(info, info->map[info->map_i], 'c'))
+                return (false);
             info->check_c++;
         }
         else if (info->map[info->map_i][0] == '1' || info->map[info->map_i][0] == ' ')
