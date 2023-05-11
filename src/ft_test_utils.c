@@ -32,7 +32,14 @@ void	print_2d_arr(int **array, int row, int col)
 	{
 		j = -1;
 		while (++j < col)
-			printf("%d ", array[row][j]);
+		{
+			if (array[row][j] == 1)
+				printf("1");
+			else if (array[row][j] == 0)
+				printf(" ");
+			else
+				printf("ERROR");
+		}
 		printf("\n");
 	}
 }

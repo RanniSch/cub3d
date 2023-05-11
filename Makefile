@@ -2,7 +2,7 @@ NAME		= cub3D
 
 CC			= gcc
 
-CFLAGS		= -Wextra -Wall -g -fsanitize=address -Werror #-fsanitize=leak
+CFLAGS		= -Wextra -Wall -g -fsanitize=address #-Werror #-fsanitize=leak
 
 RM			= rm -f
 
@@ -104,12 +104,14 @@ $(NAME):	$(LIBFT) $(GNL) $(MLX) $(OBJS)
 			$(CC) $(OBJS) $(LIBFT) $(GNL) $(MLX) -L/usr/X11/lib -lXext -lX11 -lm -o $(NAME)
 endif
 
+MAP = "maps/test02_invalid_not_closed.cub"
+
 e:	all
-			./$(NAME) "maps/test13_valid_small_map.cub"
+			./$(NAME) $(MAP)
 #ASAN_OPTIONS=detect_leaks=1
 
 l:	all
-			leaks --atExit -- ./$(NAME) "maps/test13_valid_small_map.cub"
+			leaks --atExit -- ./$(NAME) $(MAP)
 
 re:			fclean all
 
