@@ -134,7 +134,11 @@ int	main(int argc, char **argv)
 		printf("map_i:_%d_\n", info->map_i);
 		info->map_int = map_converter(info); // what do if malloc fails?
      }
-	// print_2d_arr(info->map_int, info->mapsize[Y], info->mapsize[X]);
+	printf("jetzt kommt map_int\n");
+	
+	print_2d_arr(info->map_int, info->mapsize[Y], info->mapsize[X]);
+
+
 	convert_player_pos_dir(info);
 	init_mlx_and_textures(info); // nach parsing damit die Pfade zu den Texturen bekannt sind
 	init_mlx_window_first_screen(info);
