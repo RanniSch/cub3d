@@ -116,9 +116,9 @@ bool	check_valid_textures(t_info *info)
 			return (false);
 		info->map_i++;
 	}
-	printf("NO _%s_\n", info->txt.path_no); // prints north texture!!!
-	printf("SO _%s_\n", info->txt.path_so); // prints south texture!!!
-	printf("WE _%s_\n", info->txt.path_we); // prints west texture!!!
-	printf("EA _%s_\n", info->txt.path_ea); // prints east texture!!!
+	//printf("NO _%s_\n", info->txt.path_no); // prints north texture!!!
+	//printf("SO _%s_\n", info->txt.path_so); // prints south texture!!!
+	//printf("WE _%s_\n", info->txt.path_we); // prints west texture!!!
+	//printf("EA _%s_\n", info->txt.path_ea); // prints east texture!!!
 	return (true);
 }

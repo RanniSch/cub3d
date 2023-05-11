@@ -103,14 +103,14 @@ bool	check_valid_fc(t_info *info, char *map, char y) // Werte von 0 - 255;
 	if (y == 'f')
 	{
 		info->check_f++;
-		printf("F _%d_, _%d_, _%d_\n", info->txt.red_int, info->txt.green_int, info->txt.blue_int); // prints floor colours!!!
+		//printf("F _%d_, _%d_, _%d_\n", info->txt.red_int, info->txt.green_int, info->txt.blue_int); // prints floor colours!!!
 		info->floor = argb(0, info->txt.red_int, info->txt.green_int,
 				info->txt.blue_int);
 	}
 	if (y == 'c')
 	{
 		info->check_c++;
-		printf("C %d, %d, %d\n", info->txt.red_int, info->txt.green_int, info->txt.blue_int); // prints ceiling colours!!!
+		//printf("C %d, %d, %d\n", info->txt.red_int, info->txt.green_int, info->txt.blue_int); // prints ceiling colours!!!
 		info->ceiling = argb(0, info->txt.red_int, info->txt.green_int,
 				info->txt.blue_int);
 	}
