@@ -104,7 +104,7 @@ $(NAME):	$(LIBFT) $(GNL) $(MLX) $(OBJS)
 			$(CC) $(OBJS) $(LIBFT) $(GNL) $(MLX) -L/usr/X11/lib -lXext -lX11 -lm -o $(NAME)
 endif
 
-MAP = "maps/test02_invalid_not_closed.cub"
+MAP = "maps/test36.cub"
 
 e:	all
 			./$(NAME) $(MAP)
