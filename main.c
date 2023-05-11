@@ -109,6 +109,7 @@ int	main(int argc, char **argv)
 		printf("DISTANCE_FROM_WALL ist to low\n");
 		exit(0);
 	}
+	// info = malloc(sizeof(t_info) * 1);
 	info = init_info_player_images();
 	if (!info)
 		printf("Fehler info");   //   ---------  change - clean_up oder so
