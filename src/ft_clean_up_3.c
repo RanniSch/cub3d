@@ -61,6 +61,7 @@ void	clean_up_mlx_ptr_win(t_info *info)
 	if (LINUX)
 		mlx_loop_end(info->mlx_ptr);
 	mlx_destroy_window(info->mlx_ptr, info->mlx_win);
+	mlx_destroy_display(info->mlx_ptr);
 	info->mlx_win = NULL;
 	// if (info->mlx_win)
 	// {
