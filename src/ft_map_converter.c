@@ -56,7 +56,7 @@ int	**map_converter(t_info *info)
 	while (++i < info->mapsize[Y] && --row_file >= 0)
 	{
 		tmp_map_int[i] = (int *)malloc(sizeof(int) * info->mapsize[X]);
-		printf("drin\n");
+		//printf("drin\n");
 		if (!tmp_map_int[i])
 			return (NULL);
 		j = map_int_init(tmp_map_int[i], info->mapsize[X]);
@@ -67,7 +67,7 @@ int	**map_converter(t_info *info)
 				tmp_map_int[i][j] = 1;
 			else if (dir_emp_zero(info->map[row_file][j]))
 				tmp_map_int[i][j] = 0;
-			printf("%d", tmp_map_int[i][j]); // prints map_int!!!!!!!!!!!!!!!
+			//printf("%d", tmp_map_int[i][j]); // prints map_int!!!!!!!!!!!!!!!
 		}
 	}
 	tmp_map_int[i] = NULL;

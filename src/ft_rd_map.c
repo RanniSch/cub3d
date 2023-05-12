@@ -38,12 +38,12 @@ char	**save_map(t_info *info)
 	while (i < info->row)
 	{
 		tmp_map[i] = get_next_line(fd);
-        printf("%s", tmp_map[i]);
+        //printf("%s", tmp_map[i]);
 		i++;
 	}
 	tmp_map[i] = NULL;
-	printf("%s", tmp_map[i]);
-	printf("\n");
+	//printf("%s", tmp_map[i]);
+	//printf("\n");
 	close(fd);
 	return (tmp_map);
 }

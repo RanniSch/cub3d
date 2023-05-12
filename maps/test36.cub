@@ -2,7 +2,7 @@ NO ./textures/redbrick.xpm
 
 
 EA ./textures/wood.xpm
-F 225, 30, 0
+F 90, 100, 90
 
 SO ./textures/greystone.xpm
 

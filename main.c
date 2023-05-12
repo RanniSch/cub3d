@@ -132,12 +132,12 @@ int	main(int argc, char **argv)
      else
      {
         printf("great\n"); // only for debugging purpuse!
-		printf("map_i:_%d_\n", info->map_i);
+		//printf("map_i:_%d_\n", info->map_i);
 		info->map_int = map_converter(info); // what do if malloc fails?
      }
-	printf("jetzt kommt map_int\n");
+	//printf("jetzt kommt map_int\n");
 	
-	print_2d_arr(info->map_int, info->mapsize[Y], info->mapsize[X]);
+	//print_2d_arr(info->map_int, info->mapsize[Y], info->mapsize[X]);
 
 
 	convert_player_pos_dir(info);

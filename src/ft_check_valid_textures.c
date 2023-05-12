@@ -104,9 +104,9 @@ bool	check_valid_textures(t_info *info)
 			ft_save_path_texture(info, info->map[info->map_i], 's');
 		else if (info->map[info->map_i][0] == 'W' && info->map[info->map_i][1] == 'E')
 			ft_save_path_texture(info, info->map[info->map_i], 'w');
-		else if (info->map[info->map_i][0] == 'F')
+		else if (info->map[info->map_i][0] == 'F' && info->map[info->map_i][1] == 32)
 			check_valid_fc(info, info->map[info->map_i], 'f');
-		else if (info->map[info->map_i][0] == 'C')
+		else if (info->map[info->map_i][0] == 'C' && info->map[info->map_i][1] == 32)
 			check_valid_fc(info, info->map[info->map_i], 'c');
 		else if (!start_of_map(info))
 			return (false);
