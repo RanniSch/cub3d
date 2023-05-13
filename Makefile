@@ -2,7 +2,7 @@ NAME		= cub3D
 
 CC			= gcc
 
-CFLAGS		= -Wextra -Wall -g -fsanitize=address #-Werror #-fsanitize=leak
+CFLAGS		= -Wextra -Wall -g #-fsanitize=address #-Werror #-fsanitize=leak
 
 RM			= rm -f
 
