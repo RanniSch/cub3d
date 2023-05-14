@@ -18,11 +18,11 @@ MLX_MAC	= ./minilibx_opengl_20191021/libmlx.a
 
 SRCS		= main.c \
 			  ./src/ft_rd_map.c \
+			  ./src/ft_map_extension.c \
 			  ./src/ft_check_valid_textures.c \
 			  ./src/ft_check_valid_textures_extension.c \
 			  ./src/ft_check_valid_fc.c \
 			  ./src/ft_check_valid_fc_2.c \
-			  ./src/ft_check_num_textures.c \
 			  ./src/ft_check_walls_2.c \
 			  ./src/ft_check_walls.c \
 			  ./src/ft_check_valid_map.c \
@@ -43,6 +43,7 @@ SRCS		= main.c \
 			  ./src/ft_draw_textures.c \
 			  ./src/ft_init.c \
 			  ./src/ft_init_info.c \
+			  ./src/ft_clean_up_parser_fail.c \
 			  ./src/ft_clean_up.c \
 			  ./src/ft_clean_up_2.c \
 			  ./src/ft_clean_up_3.c \

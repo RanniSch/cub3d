@@ -1,5 +1,33 @@
 #include "../inc/cub3d.h"
 
+void	clean_up_info_player_images(t_info *info)
+{
+	if (!info->p)
+		return ;
+	free (info->p);
+	info->p = NULL;
+	if (!info->img)
+		return ;
+	free (info->img);
+	info->img = NULL;
+	if (!info->north)
+		return ;
+	free (info->north);
+	info->north = NULL;
+	if (!info->south)
+		return ;
+	free (info->south);
+	info->south = NULL;
+	if (!info->east)
+		return ;
+	free (info->east);
+	info->east = NULL;
+	if (!info->west)
+		return ;
+	free (info->west);
+	info->west = NULL;
+}
+
 char	*clean_up_one_txt_path(char *ptr)
 {
 	if (ptr)

@@ -50,7 +50,7 @@ int	**map_converter(t_info *info)
 	int		**tmp_map_int;
 	int		row_file;
 
-	map_converter_init(&i, &row_file, info, &tmp_map_int);
+	map_converter_init(&i, &row_file, info, &tmp_map_int); // @MAX and if malloc fails???
 	if (!tmp_map_int)
 		return (NULL);
 	while (++i < info->mapsize[Y] && --row_file >= 0)

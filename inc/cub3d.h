@@ -80,6 +80,8 @@
 
 # define ERROR_1 "Error:\nCouldn't open Cub3D file!\n"
 # define ERROR_2 "Error:\nInvalid Cub3D file: Use .cub file extension!\n"
+# define ERROR_3 "Error:\nOnly two arguments are required for cub3D. Try: ./cub3d [path map]\n"
+# define ERROR_4 "Error:\nAllocation with malloc failed!\n"
 
 # define CHECK_TEX_1 "Error:\nCouldn't open path of texture!\n"
 # define CHECK_TEX_2 "Error:\nInvalid path of texture: Use .xpm texture extension!\n"
@@ -105,7 +107,7 @@
 # define CHECK_MAP_9 "Error:\nFix wall on the right!\n"
 # define CHECK_MAP_10 "Error:\nMap should be surrounded by wall (left)!\n"
 # define CHECK_MAP_11 "Error:\nFix wall on the left!\n"
-# define CHECK_MAP_12 "Error:\nToo many players!\nOnly one player is allowed in map.\n"
+# define CHECK_MAP_12 "Error:\nToo many players! Only one player is allowed in map.\n"
 # define CHECK_MAP_13 "Error:\nThere is no player in map!\n"
 # define CHECK_MAP_14 "Error:\nInvalid space in map!\n"
 
@@ -197,9 +199,13 @@ typedef struct s_info
 int			count_nb_row(char *map_path);
 char		**save_map(t_info *info);
 
-/* ft_parser.c */
+/* ft_map_extension.c */
 
 bool		valid_map_extension(t_info *info);
+
+/* ft_parser.c */
+
+bool		ft_texture_values(t_info *info);
 void		skip_empty_lines(t_info *info);
 bool		check_valid_map(t_info *info);
 bool		amount_player(int	amount_player);
@@ -227,10 +233,6 @@ bool    ft_valid_rgb_code_2(t_info *info, char *map);
 
 bool	ft_texture_extension_helper(char *path_texture);
 bool	valid_texture_extension(t_info *info);
-
-/* ft_check_num_textures.c */
-
-bool    ft_texture_values(t_info *info);
 
 /* ft_check_valid_map.c */
 
@@ -288,6 +290,11 @@ void	calc_corners_of_wall(int *corners, int width_pixel, \
 	double *dist_arr, t_info *info);
 void	draw_wall_textures(t_info *info, int width_pixel);
 
+//**** ft_clean_up_parser_fail.c ****//
+
+void	clean_up_extension(t_info *info);
+void    clean_up_parser(t_info *info);
+
 //**** ft_clean_up_2.c ****//
 
 void	clean_up_map_int(t_info *info);
@@ -306,11 +313,10 @@ void	clean_up_mlx_ptr_win(t_info *info);
 
 //**** ft_clean_up.c ****//
 
-void	clean_up_map_int(t_info *info);
-void	clean_up_dist_info(t_info *info);
-void	clean_up_char_map(t_info *info);
-void	clean_up_textures(t_info *info);
+void	clean_up_info_player_images(t_info *info);
+char	*clean_up_one_txt_path(char *ptr);
 void	clean_up_txt_colors(t_info *info);
+void	clean_up_txt_paths(t_info *info);
 int		ft_free_destroy(t_info *info);
 
 # ifdef __APPLE__
@@ -320,13 +326,16 @@ int		mlx_destroy_display(void *mlx_ptr);
 
 //**** ft_init_info.c ****//
 
-t_info	*init_info(void);
+void	init_info_sub(t_info *info);
+void	init_info(t_info *info);
+void	init_info_2(t_info *info);
+t_info *init_process_game(void);
 
 //**** ft_init.c ****//
 
 int		**init_dist_arr(t_info *info);
 void	init_mlx_window_first_screen(t_info *info);
-t_info	*init_info_player_images();
+t_info	*init_info_player_images(t_info *info);
 void	get_properties_from_mlx_img(void *img_ptr, t_img *img);
 void	init_mlx_and_textures(t_info *info);
 

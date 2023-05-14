@@ -37,34 +37,6 @@ int	key_event(int key, t_info *info)
 	return (0);
 }
 
-void	init_game(t_info *info)
-{
-	info->row = count_nb_row(info->map_path);
-    //printf("num rows: %d\n", info->row);
-	info->map = save_map(info);
-	info->map_i = 0;
-	info->player_amount = 0;
-	info->player_x = -1;
-	info->player_y = -1;
-	info->player_orientation = '0';
-
-	info->txt.path_no = NULL;
-	info->txt.path_ea = NULL;
-	info->txt.path_so = NULL;
-	info->txt.path_we = NULL;
-
-	info->check_no = 0;
-	info->check_so = 0;
-	info->check_we = 0;
-	info->check_ea = 0;
-	info->check_f = 0;
-	info->check_c = 0;
-	info->check_txt = 0;
-	info->check_colour = 0;
-	info->str_j = 0;
-	info->substr = 0;
-}
-
 /* 
 * Frees each entry of the map and map_int if it exists.
 */
@@ -93,53 +65,74 @@ void	init_game(t_info *info)
 	free(info);
 }*/
 
+bool	success_malloc_game(t_info *info)
+{
+	if (!init_process_game())
+	{
+		message(ERROR_4);
+		return (false);
+	}
+	if(!init_dist_arr(info)) // wichtig
+	{
+		message(ERROR_4);
+		return (false);
+	}
+	if(!init_info_player_images(info))
+	{
+		message(ERROR_4);
+		return (false);
+	}
+	return (true);
+}
+
+bool	success_malloc_converter(t_info *info)
+{
+	if(!map_converter(info)) // wichtig
+	{
+		message(ERROR_4);
+		return (false);
+	}
+	return (true);
+}
 
 int	main(int argc, char **argv)
 {
 	t_info  *info;
 
-	
 	if (argc != 2)
  	{
- 		printf("Only 1 argument is required for cub3D. Try: ./cub3d [path map]\n");
+ 		message(ERROR_3);
 		exit(0);
  	}
-	if (DISTANCE_FROM_WALL < 0.3)
+	info = init_process_game();
+ 	info->map_path = ft_strdup(argv[1]);
+	if (!valid_map_extension(info))
+	{
+		clean_up_extension(info);
+		exit (0);
+	}
+	info->row = count_nb_row(info->map_path);
+	info->map = save_map(info);
+	//if (!success_malloc_game(info)) // provides leaks
+	//{
+	//	clean_up_parser(info);
+	//	exit(0);
+	//}
+ 	if (!parsing(info))
+    {
+        printf("parsing false\n"); // only for debugging purpuse!
+		clean_up_parser(info);
+		exit (0);
+    }
+	printf("great\n"); // only for debugging purpuse!
+	info->map_int = map_converter(info); // if malloc fails?
+	//if (!success_malloc_converter(info)) // provides leaks
+	//	exit(0);
+	if (DISTANCE_FROM_WALL < 0.3) // An Max: Soll das hier bleiben?
 	{
 		printf("DISTANCE_FROM_WALL ist to low\n");
 		exit(0);
 	}
-	// info = malloc(sizeof(t_info) * 1);
-	info = init_info_player_images();
-	if (!info)
-		printf("Fehler info");   //   ---------  change - clean_up oder so
-	if(!init_dist_arr(info)) // wichtig
-		return (1); // malloc not possible - change - clean_up oder so
-	
-
-
-
- 	// info = malloc(sizeof(t_info) * 1);
- 	info->map_path = ft_strdup(argv[1]);
-     //printf("string path %s\n", info->map_path);
- 	init_game(info);
- 	if (!parsing(info))
-     {
-         printf("parsing false\n"); // only for debugging purpuse!
-		 // clean up implementieren!!!!
-		 return (1);
-     }
-     else
-     {
-        printf("great\n"); // only for debugging purpuse!
-		//printf("map_i:_%d_\n", info->map_i);
-		info->map_int = map_converter(info); // what do if malloc fails?
-     }
-	//printf("jetzt kommt map_int\n");
-	
-	//print_2d_arr(info->map_int, info->mapsize[Y], info->mapsize[X]);
-
-
 	convert_player_pos_dir(info);
 	init_mlx_and_textures(info); // nach parsing damit die Pfade zu den Texturen bekannt sind
 	init_mlx_window_first_screen(info);

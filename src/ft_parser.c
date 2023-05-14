@@ -2,32 +2,6 @@
 #include "../inc/cub3d.h"
 
 /*
-* checks if the file exists and for the correct extension.
-*/
-bool	valid_map_extension(t_info *info)
-{
-	int p_len;
-    int fd;
-
-    fd = open(info->map_path, O_RDONLY);
-    if (fd == -1)
-	{
-        message(ERROR_1);
-		close(fd);
-		return (false);
-	}
-	p_len = ft_strlen(info->map_path);
-	if (ft_strncmp(&info->map_path[p_len - 4], ".cub", 4))
-	{
-		message(ERROR_2);
-		close(fd);
-		return (false);
-	}
-	close(fd);
-	return (true);
-}
-
-/*
 * Empty line which is followed by something. It cannot be the last line!
 */
 void	skip_empty_lines(t_info *info)
@@ -36,6 +10,26 @@ void	skip_empty_lines(t_info *info)
 	while (info->map[info->map_i] && info->map[info->map_i][0] == '\n')
 		info->map_i++;
 	//printf("map_i1: %d\n", info->map_i);
+}
+
+/*
+* Checks the correct amount of textures and rgb colours.
+* Only one NO, EA, SO, WE, F and C allowed.
+*/
+bool	ft_texture_values(t_info *info)
+{
+	if (info->check_no != 1 || info->check_ea != 1 || info->check_so != 1
+		|| info->check_we != 1)
+	{
+		message(CHECK_TEX_6);
+		return (false);
+	}
+	if (info->check_c != 1 || info->check_f != 1)
+	{
+		message(CHECK_TEX_7);
+		return (false);
+	}
+	return (true);
 }
 
 /*
@@ -91,9 +85,6 @@ bool	amount_player(int	amount_player)
 */
 bool	parsing(t_info *info)
 {
-
-	if (!valid_map_extension(info))
-		return (false);
     skip_empty_lines(info);
 	if (!check_valid_textures(info))
 		return (false);

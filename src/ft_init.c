@@ -47,13 +47,8 @@ void	init_mlx_window_first_screen(t_info *info)
 		info->img->img, 0, 0);
 }
 
-t_info	*init_info_player_images(void)
+t_info	*init_info_player_images(t_info *info)
 {
-	t_info	*info;
-
-	info = init_info();
-	if (!info)
-		return (NULL);
 	info->p = malloc(sizeof(t_player));
 	if (!info->p)
 		return (NULL);
