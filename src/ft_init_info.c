@@ -63,10 +63,10 @@ void	init_info_2(t_info *info)
 /*
 * Calls all initialisation functions before parsing process.
 */
-t_info *init_process_game(void)
+t_info	*init_process_game(void)
 {
-	t_info  *info;
-	
+	t_info	*info;
+
 	info = malloc(sizeof(t_info));
 	if (!info)
 		return (NULL);

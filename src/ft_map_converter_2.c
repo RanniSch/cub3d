@@ -7,7 +7,7 @@
  */
 int	map_int_init(int *map, int col)
 {
-	int j;
+	int	j;
 
 	j = -1;
 	while (++j < col)
