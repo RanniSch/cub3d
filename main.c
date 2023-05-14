@@ -127,6 +127,7 @@ int	main(int argc, char **argv)
 
 
 	info = init_process_game();  //max: ok
+	
  	info->map_path = ft_strdup(argv[1]); //max: ok
 	// if (!valid_map_extension(info)) // kann eine Zeile sein
 	// {
