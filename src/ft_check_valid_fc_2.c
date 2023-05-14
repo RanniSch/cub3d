@@ -12,7 +12,7 @@ bool	ft_valid_rgb_code(t_info *info, char *map)
 	if (map[info->str_j] == ' ' || (map[info->str_j] > 47 && map[info->str_j] < 58))
 	{
 		info->str_j++;
-		while (map[info->str_j] < 48 && map[info->str_j] > 57)
+		while (map[info->str_j] < 48 || map[info->str_j] > 57)
 		{
 			if (map[info->str_j] != ' ')
 			{
