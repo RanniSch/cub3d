@@ -321,7 +321,6 @@ int		ft_free_destroy(t_info *info);
 
 # ifdef __APPLE__
 void	mlx_loop_end(void *mlx_ptr);
-// int		mlx_destroy_display(void *mlx_ptr);
 # endif
 
 //**** ft_init_info.c ****//
