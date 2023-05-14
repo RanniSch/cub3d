@@ -1,5 +1,11 @@
 #include "../inc/cub3d.h"
 
+/**
+ * @brief 
+ * vorher war dir < 0, aber gab Problem bei dir minimal unter 0
+ * evtl besser auch hier THRESHHOLD_ZERO einzuführen
+ * else if (dir < 0)
+ */
 int	next_int_value_in_dir(double pos, double dir)
 {
 	int		ret;
@@ -7,7 +13,7 @@ int	next_int_value_in_dir(double pos, double dir)
 	ret = 0;
 	if (dir > 0)
 		ret = (int)(pos + 1);
-	else if (dir <= 0) // vorher war dir < 0
+	else if (dir <= 0)
 	{
 		ret = (int)pos;
 		if (!(ret < pos))
