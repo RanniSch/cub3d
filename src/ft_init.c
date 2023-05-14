@@ -25,7 +25,9 @@ int	**init_dist_arr(t_info *info)
 	{
 		info->dist_info[i] = malloc(sizeof(int) * DISPLAY_WIDTH);
 		if (!info->dist_info[i])
+		{
 			return (NULL);
+		}
 	}
 	return (info->dist_info);
 }

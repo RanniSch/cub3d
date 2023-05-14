@@ -84,7 +84,7 @@ t_info *init_process_game(void)
 		exit (1);
 	}
 	if (!init_dist_arr(info))
-	{
+	{									// max hat geändert
 		clean_up_dist_arr(info);
 		clean_up_dist_info(info);
 		message(ERROR_4);
