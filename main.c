@@ -95,22 +95,47 @@ bool	success_malloc_converter(t_info *info)
 	return (true);
 }
 
-int	main(int argc, char **argv)
+void	check_argc_and_dist_from_wall(int argc)
 {
-	t_info  *info;
-
 	if (argc != 2)
  	{
  		message(ERROR_3);
 		exit(0);
  	}
-	info = init_process_game();
- 	info->map_path = ft_strdup(argv[1]);
-	if (!valid_map_extension(info))
+	if (DISTANCE_FROM_WALL < 0.3) // An Max: Soll das hier bleiben?
 	{
-		clean_up_extension(info);
-		exit (0);
+		printf("DISTANCE_FROM_WALL ist to low\n");
+		exit(0);
 	}
+}
+
+int	main(int argc, char **argv)
+{
+	t_info  *info;
+
+	check_argc_and_dist_from_wall(argc);
+	// if (argc != 2)
+ 	// {
+ 	// 	message(ERROR_3);
+	// 	exit(0);
+ 	// }
+	// if (DISTANCE_FROM_WALL < 0.3) // An Max: Soll das hier bleiben?
+	// {
+	// 	printf("DISTANCE_FROM_WALL ist to low\n");
+	// 	exit(0);
+	// }
+
+
+	info = init_process_game();  //max: ok
+ 	info->map_path = ft_strdup(argv[1]); //max: ok
+	// if (!valid_map_extension(info)) // kann eine Zeile sein
+	// {
+	// 	clean_up_extension(info);
+	// 	exit (0);
+	// }
+	valid_map_extension(info); // max: ok (6te Zeile)
+
+
 	info->row = count_nb_row(info->map_path);
 	info->map = save_map(info);
 	//if (!success_malloc_game(info)) // provides leaks
@@ -128,11 +153,7 @@ int	main(int argc, char **argv)
 	info->map_int = map_converter(info); // if malloc fails?
 	//if (!success_malloc_converter(info)) // provides leaks
 	//	exit(0);
-	if (DISTANCE_FROM_WALL < 0.3) // An Max: Soll das hier bleiben?
-	{
-		printf("DISTANCE_FROM_WALL ist to low\n");
-		exit(0);
-	}
+	
 	convert_player_pos_dir(info);
 	init_mlx_and_textures(info); // nach parsing damit die Pfade zu den Texturen bekannt sind
 	init_mlx_window_first_screen(info);

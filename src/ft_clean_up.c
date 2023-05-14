@@ -1,6 +1,6 @@
 #include "../inc/cub3d.h"
 
-void	clean_up_info_player_images(t_info *info)
+void	clean_up_info_player_images(t_info *info) //@Ranja, wofür ist diese Funktion? clean_up_p und clean_up_textures: Redundanz
 {
 	if (!info->p)
 		return ;

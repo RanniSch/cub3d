@@ -69,10 +69,26 @@ t_info *init_process_game(void)
 	
 	info = malloc(sizeof(t_info));
 	if (!info)
-		return (NULL);
+	{						// max geändert -> müssen nix aufräumen, ist erster malloc
+		message(ERROR_4);
+		exit (1);
+	}
+		// return (NULL);
 	init_info(info);
 	init_info_2(info);
-	init_info_player_images(info);
-	init_dist_arr(info);
+	if (!init_info_player_images(info))
+	{									// max hat geändert
+		clean_up_p(info);
+		clean_up_textures(info);
+		message(ERROR_4);
+		exit (1);
+	}
+	if (!init_dist_arr(info))
+	{
+		clean_up_dist_arr(info);
+		clean_up_dist_info(info);
+		message(ERROR_4);
+		exit (1);
+	}
 	return (info);
 }
