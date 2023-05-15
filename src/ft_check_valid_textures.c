@@ -32,6 +32,36 @@ bool	ft_check_path_texture(t_info *info, char *map)
 */
 bool	ft_save_path_texture(t_info *info, char *map, char x)
 {
+	unsigned int	start;
+
+	ft_check_path_texture(info, map);
+	start = info->str_j - info->substr - 1;
+	if (x == 'n')
+	{
+		info->txt.path_no = ft_substr(map, start, info->substr + 1);
+		info->check_no++;
+	}
+	if (x == 'e')
+	{
+		info->txt.path_ea = ft_substr(map, start, info->substr + 1);
+		info->check_ea++;
+	}
+	if (x == 's')
+	{
+		info->txt.path_so = ft_substr(map, start, info->substr + 1);
+		info->check_so++;
+	}
+	if (x == 'w')
+	{
+		info->txt.path_we = ft_substr(map, start, info->substr + 1);
+		info->check_we++;
+	}
+	return (true);
+}
+
+/*
+bool	ft_save_path_texture(t_info *info, char *map, char x)
+{
 	ft_check_path_texture(info, map);
 	if (x == 'n')
 	{
@@ -59,6 +89,7 @@ bool	ft_save_path_texture(t_info *info, char *map, char x)
 	}
 	return (true);
 }
+*/
 
 /*
 * Figures out, when the map starts, which finishes the job of texture functions.
