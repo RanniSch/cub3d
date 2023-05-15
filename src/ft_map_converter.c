@@ -28,12 +28,32 @@ void	map_converter_init(int *i, int *row_file, \
 	*row_file = info->mapsize[Y] + info->map_i;
 	*tmp_map_int = (int **)malloc(sizeof(int *) * (info->mapsize[Y] + 1));
 	if (!*tmp_map_int)
+	{
+		clean_up_all_expt_mlx(info);
+		message(ERROR_4);
+		exit (1);
+	}
+}
+
+/*
+void	map_converter_init(int *i, int *row_file, \
+	t_info *info, int ***tmp_map_int)
+{
+	*i = -1;
+	*row_file = *i + info->map_i;
+	info->mapsize[Y] = info->row - info->map_i;
+	info->mapsize[X] = 0;
+	count_mapsize_x(*i, info, *row_file);
+	*row_file = info->mapsize[Y] + info->map_i;
+	*tmp_map_int = (int **)malloc(sizeof(int *) * (info->mapsize[Y] + 1));
+	if (!*tmp_map_int)
 	{										// max neu eingefügt
 		clean_up_all_expt_mlx(info);
 		message(ERROR_4);
 		exit (1);
 	}										// bis hier
 }
+*/
 
 int	**map_converter(t_info *info)
 {
@@ -42,7 +62,36 @@ int	**map_converter(t_info *info)
 	int		**tmp_map_int;
 	int		row_file;
 
-	map_converter_init(&i, &row_file, info, &tmp_map_int); // @MAX and if malloc fails??? - gehändelt
+	map_converter_init(&i, &row_file, info, &tmp_map_int);
+	while (++i < info->mapsize[Y] && --row_file >= 0)
+	{
+		tmp_map_int[i] = (int *)malloc(sizeof(int) * info->mapsize[X]);
+		if (!tmp_map_int[i])
+			return (NULL);
+		j = map_int_init(tmp_map_int[i], info->mapsize[X]);
+		while (info->map[row_file][++j] && info->map[row_file][j] != '\n')
+		{
+			if (info->map[row_file][j] == '1')
+				tmp_map_int[i][j] = 1;
+			else if (dir_emp_zero(info->map[row_file][j]))
+				tmp_map_int[i][j] = 0;
+		}
+	}
+	tmp_map_int[i] = NULL;
+	clean_up_char_map(info);
+	return (tmp_map_int);
+}
+
+/*
+int	**map_converter(t_info *info)
+{
+	int		i;
+	int		j;
+	int		**tmp_map_int;
+	int		row_file;
+
+	map_converter_init(&i, &row_file, info, &tmp_map_int); 
+	// @MAX and if malloc fails??? - gehändelt
 	// if (!tmp_map_int)
 	// 	return (NULL);
 	while (++i < info->mapsize[Y] && --row_file >= 0)
@@ -59,7 +108,7 @@ int	**map_converter(t_info *info)
 				tmp_map_int[i][j] = 1;
 			else if (dir_emp_zero(info->map[row_file][j]))
 				tmp_map_int[i][j] = 0;
-			//printf("%d", tmp_map_int[i][j]); // prints map_int!!!!!!!!!!!!!!!
+			//printf("%d", tmp_map_int[i][j]); // prints map_int!!!!!!!!!!
 		}
 	}
 	tmp_map_int[i] = NULL;
@@ -67,6 +116,7 @@ int	**map_converter(t_info *info)
 	clean_up_char_map(info);
 	return (tmp_map_int);
 }
+*/
 
 /**
  * @brief player_y means the column

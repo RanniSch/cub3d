@@ -1,4 +1,3 @@
-
 #include "../inc/cub3d.h"
 
 /*
@@ -6,11 +5,19 @@
 */
 void	skip_empty_lines(t_info *info)
 {
+	while (info->map[info->map_i] && info->map[info->map_i][0] == '\n')
+		info->map_i++;
+}
+
+/*
+void	skip_empty_lines(t_info *info)
+{
 	//printf("map_i0: %d\n", info->map_i);
 	while (info->map[info->map_i] && info->map[info->map_i][0] == '\n')
 		info->map_i++;
 	//printf("map_i1: %d\n", info->map_i);
 }
+*/
 
 /*
 * Checks the correct amount of textures and rgb colours.
@@ -37,7 +44,7 @@ bool	ft_texture_values(t_info *info)
 * and there are no spaces next to a '0'/player and each '0'/player is
 * surrounded by a '1'.
 */
-bool    check_valid_map(t_info *info)
+bool	check_valid_map(t_info *info)
 {
 	int	i;
 	int	j;
@@ -50,7 +57,8 @@ bool    check_valid_map(t_info *info)
 		{
 			if (!correct_char(info, i, j))
 				return (false);
-			if (info->map[i][j] == '0' || init_player_pos(info, info->map[i][j], i , j))
+			if (info->map[i][j] == '0' \
+				|| init_player_pos(info, info->map[i][j], i, j))
 			{
 				if (!zero_middle(info, i, j))
 					return (false);
@@ -64,7 +72,7 @@ bool    check_valid_map(t_info *info)
 /*
 * Checks that there is exsactly one player in the map!
 */
-bool	amount_player(int	amount_player)
+bool	amount_player(int amount_player)
 {
 	if (amount_player > 1)
 	{
@@ -85,11 +93,11 @@ bool	amount_player(int	amount_player)
 */
 bool	parsing(t_info *info)
 {
-    skip_empty_lines(info);
-	if (!check_valid_textures(info))
+	skip_empty_lines(info);
+	if (!check_valid_textures(info, info->map))
 		return (false);
 	if (!ft_texture_values(info))
-        return (false);
+		return (false);
 	if (!valid_texture_extension(info))
 		return (false);
 	skip_empty_lines(info);
@@ -97,5 +105,5 @@ bool	parsing(t_info *info)
 		return (false);
 	if (!amount_player(info->player_amount))
 		return (false);
-    return (true);
+	return (true);
 }
