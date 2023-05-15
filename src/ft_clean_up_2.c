@@ -20,8 +20,10 @@ void	clean_up_dist_info(t_info *info)
 	i = -1;
 	if (info->dist_info == NULL)
 		return ;
-	while (++i < 5)
+	while (++i < 5 && info->dist_info[i])
+	{
 		free (info->dist_info[i]);
+	}
 	free (info->dist_info);
 	info->dist_info = NULL;
 }

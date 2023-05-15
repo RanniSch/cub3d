@@ -27,6 +27,12 @@ void	map_converter_init(int *i, int *row_file, \
 	count_mapsize_x(*i, info, *row_file);
 	*row_file = info->mapsize[Y] + info->map_i;
 	*tmp_map_int = (int **)malloc(sizeof(int *) * (info->mapsize[Y] + 1));
+	if (!*tmp_map_int)
+	{										// max neu eingefügt
+		clean_up_all_expt_mlx(info);
+		message(ERROR_4);
+		exit (1);
+	}										// bis hier
 }
 
 int	**map_converter(t_info *info)
@@ -36,9 +42,9 @@ int	**map_converter(t_info *info)
 	int		**tmp_map_int;
 	int		row_file;
 
-	map_converter_init(&i, &row_file, info, &tmp_map_int); // @MAX and if malloc fails???
-	if (!tmp_map_int)
-		return (NULL);
+	map_converter_init(&i, &row_file, info, &tmp_map_int); // @MAX and if malloc fails??? - gehändelt
+	// if (!tmp_map_int)
+	// 	return (NULL);
 	while (++i < info->mapsize[Y] && --row_file >= 0)
 	{
 		tmp_map_int[i] = (int *)malloc(sizeof(int) * info->mapsize[X]);

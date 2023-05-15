@@ -25,45 +25,11 @@ int	key_event(int key, t_info *info)
 	else if (key == ESC)
 	{
 		ft_free_destroy(info);
-		exit(0);					// ----------------- exit and clean_up !!!
+		exit(0);
 	}
-	// print_dist_arr_info(info);
 	raycast_and_picturework(info);
-	// printf("pos:\n");
-	// pvec(info->p->pos);
-	// printf("cam:\n");
-	// pvec(info->p->cam_vec);
-	// printf("\n");
 	return (0);
 }
-
-/* 
-* Frees each entry of the map and map_int if it exists.
-*/
-/*void	ft_free_struct(t_info *info)
-{
-	int	i;
-
-	i = map_i - 1;
-	if (info->map_int)
-	{
-		while (++i < info->row)
-		{
-			free(info->map_i[i])
-		}
-		free(info->map_int)
-	}
-	i = -1
-	if (info->map)
-	{
-		while (++i < info->row)
-		{
-			free(info->map[i]);
-		}
-		free(info->map);
-	}
-	free(info);
-}*/
 
 bool	success_malloc_game(t_info *info)
 {
@@ -95,44 +61,48 @@ bool	success_malloc_converter(t_info *info)
 	return (true);
 }
 
-int	main(int argc, char **argv)
+void	check_argc_and_dist_from_wall(int argc)
 {
-	t_info  *info;
-
 	if (argc != 2)
  	{
  		message(ERROR_3);
 		exit(0);
  	}
-	info = init_process_game();
- 	info->map_path = ft_strdup(argv[1]);
-	if (!valid_map_extension(info))
+	if (DISTANCE_FROM_WALL < 0.3)
 	{
-		clean_up_extension(info);
-		exit (0);
+		printf("DISTANCE_FROM_WALL ist to low\n");
+		exit(0);
 	}
-	info->row = count_nb_row(info->map_path);
-	info->map = save_map(info);
-	//if (!success_malloc_game(info)) // provides leaks
-	//{
-	//	clean_up_parser(info);
-	//	exit(0);
-	//}
- 	if (!parsing(info))
+}
+
+void	parsing_(t_info *info)
+{
+	if (!parsing(info)) // unsaved malloc in: check_valid_textures -> ft_save_path_texture -> ft_substr
     {
         printf("parsing false\n"); // only for debugging purpuse!
 		clean_up_parser(info);
 		exit (0);
     }
-	printf("great\n"); // only for debugging purpuse!
-	info->map_int = map_converter(info); // if malloc fails?
-	//if (!success_malloc_converter(info)) // provides leaks
-	//	exit(0);
-	if (DISTANCE_FROM_WALL < 0.3) // An Max: Soll das hier bleiben?
+}
+
+int	main(int argc, char **argv)
+{
+	t_info  *info;
+
+	check_argc_and_dist_from_wall(argc);
+	info = init_process_game(); // init info, p, images, dist info, dist arr mit saved malloc
+ 	info->map_path = ft_strdup(argv[1]);
+	if (!info->map_path)
 	{
-		printf("DISTANCE_FROM_WALL ist to low\n");
-		exit(0);
+		clean_up_all_expt_mlx(info);
+		message(ERROR_4);
+		exit(1);
 	}
+	valid_map_extension(info); // max: ok (6te Zeile) (habe cleanup mit rein gepackt)
+	info->row = count_nb_row(info->map_path); //unsave malloc inside?? (get_next_line)
+	info->map = save_map(info); // returns 0 when malloc fails -> not save
+	parsing_(info); // -> parsing ist in unterfunktion
+	info->map_int = map_converter(info); // if malloc fails? - Max: ist gehändelt
 	convert_player_pos_dir(info);
 	init_mlx_and_textures(info); // nach parsing damit die Pfade zu den Texturen bekannt sind
 	init_mlx_window_first_screen(info);
@@ -141,3 +111,56 @@ int	main(int argc, char **argv)
 	mlx_loop(info->mlx_ptr);
  	return (0);
 }
+
+/*
+int	main(int argc, char **argv)
+{
+	t_info  *info;
+
+	check_argc_and_dist_from_wall(argc);
+	// if (argc != 2)
+ 	// {
+ 	// 	message(ERROR_3);
+	// 	exit(0);
+ 	// }
+	// if (DISTANCE_FROM_WALL < 0.3) // An Max: Soll das hier bleiben?
+	// {
+	// 	printf("DISTANCE_FROM_WALL ist to low\n");
+	// 	exit(0);
+	// }
+
+
+	info = init_process_game();  //max: ok
+	
+ 	info->map_path = ft_strdup(argv[1]); //max: ok
+	// if (!valid_map_extension(info)) // kann eine Zeile sein
+	// {
+	// 	clean_up_extension(info);
+	// 	exit (0);
+	// }
+	valid_map_extension(info); // max: ok (6te Zeile) (habe cleanup mit rein gepackt)
+
+
+	info->row = count_nb_row(info->map_path); //max says: unsave malloc in here
+	info->map = save_map(info); // returns 0 when malloc fails -> not save
+	//if (!success_malloc_game(info)) // provides leaks -> alles schon halb gut abgesichert in init_process_game
+	//{
+	//	clean_up_parser(info);
+	//	exit(0);
+	//}
+ 	
+	parsing_(info);
+	printf("great\n"); // only for debugging purpuse!
+	info->map_int = map_converter(info); // if malloc fails? - Max: keine Ahnung - so viele unsichere mallocs
+	// if (!success_malloc_converter(info)) // provides leaks
+	//	exit(0);
+	
+	convert_player_pos_dir(info);
+	init_mlx_and_textures(info); // nach parsing damit die Pfade zu den Texturen bekannt sind
+	init_mlx_window_first_screen(info);
+	mlx_key_hook(info->mlx_win, key_event, info);
+	mlx_hook(info->mlx_win, 17, 1L << 2, ft_free_destroy, info);
+	mlx_loop(info->mlx_ptr);
+ 	return (0);
+}
+*/

@@ -196,7 +196,7 @@ typedef struct s_info
 
 /* ft_rd_map.c */
 
-int			count_nb_row(char *map_path);
+int	count_nb_row(char *map_path);
 char		**save_map(t_info *info);
 
 /* ft_map_extension.c */
@@ -310,6 +310,10 @@ void	clean_up_map_path(t_info *info);
 t_img	*clean_up_one_texture(t_img *img, t_info *info);
 void	clean_up_textures(t_info *info);
 void	clean_up_mlx_ptr_win(t_info *info);
+
+//**** ft_clean_up_4.c ****//
+
+void	clean_up_all_expt_mlx(t_info *info);
 
 //**** ft_clean_up.c ****//
 

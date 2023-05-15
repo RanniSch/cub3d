@@ -7,7 +7,7 @@ int	count_nb_row(char *map_path)
 	char	*line;
 
 	fd = open(map_path, O_RDONLY);
-	line = get_next_line(fd);
+	line = get_next_line(fd);	//unsave malloc?? was machen wir hiermit? wenn nichts mehr zum lesen auch NULL
     //printf("line string %s\n", line);
 	nb_row = 0;
 	while (line != NULL)
