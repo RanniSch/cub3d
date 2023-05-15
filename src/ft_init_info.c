@@ -69,7 +69,36 @@ t_info	*init_process_game(void)
 
 	info = malloc(sizeof(t_info));
 	if (!info)
-	{						// max geändert -> müssen nix aufräumen, ist erster malloc
+	{
+		message(ERROR_4);
+		exit (1);
+	}
+	init_info(info);
+	init_info_2(info);
+	if (!init_info_player_images(info))
+	{
+		clean_up_all_expt_mlx(info);
+		message(ERROR_4);
+		exit (1);
+	}
+	if (!init_dist_arr(info))
+	{
+		clean_up_all_expt_mlx(info);
+		message(ERROR_4);
+		exit (1);
+	}
+	return (info);
+}
+
+/*
+t_info	*init_process_game(void)
+{
+	t_info	*info;
+
+	info = malloc(sizeof(t_info));
+	if (!info)
+	{			
+	// max geändert -> müssen nix aufräumen, ist erster malloc
 		message(ERROR_4);
 		exit (1);
 			// return (NULL);
@@ -90,3 +119,4 @@ t_info	*init_process_game(void)
 	}
 	return (info);
 }
+*/
