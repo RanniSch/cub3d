@@ -61,11 +61,32 @@ bool	correct_char(t_info *info, int i, int j)
 				return (false);
 			}
 		}
-		if (!filled_line(info, i)) // brauchen wir das wirklich an der Stelle??? Wird dies nicht schon durch das erste if statement ausgeschlossen
+		if (!filled_line(info, i))
 			return (false);
 	}
 	return (true);
 }
+
+/*
+bool	correct_char(t_info *info, int i, int j)
+{
+	if (info->map[i] != NULL && info->map[i][j] != '\0')
+	{
+		if (info->map[i][j] != 32 && info->map[i][j] != '\n')
+		{
+			if (!is_allowed_char(info, info->map[i][j]))
+			{
+				message(CHECK_MAP_3);
+				return (false);
+			}
+		}
+		if (!filled_line(info, i)) // brauchen wir das wirklich an der Stelle??? 
+			//Wird dies nicht schon durch das erste if statement ausgeschlossen
+			return (false);
+	}
+	return (true);
+}
+*/
 
 /*
 * Identifies the player, its position by indexes and its orientation.

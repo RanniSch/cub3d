@@ -1,11 +1,10 @@
-
 #ifndef CUB3D_H
 # define CUB3D_H
 
 # ifdef __APPLE__
-# include "../minilibx_opengl_20191021/mlx.h"
+#  include "../minilibx_opengl_20191021/mlx.h"
 # else
-	# include "../minilibx-linux/mlx.h"
+#  include "../minilibx-linux/mlx.h"
 # endif
 
 # include <math.h>
@@ -46,29 +45,30 @@
 # define HEIGHT_WALL 64
 
 # ifdef __APPLE__
-# define W 13
-# define A 0
-# define S 1
-# define D 2
-# define ESC 53
-# define ARROW_LEFT 123
-# define ARROW_RIGHT 124
-# define LINUX 0
+#  define W 13
+#  define A 0
+#  define S 1
+#  define D 2
+#  define ESC 53
+#  define ARROW_LEFT 123
+#  define ARROW_RIGHT 124
+#  define LINUX 0
 # else
-	# define W 119
-	# define A 97
-	# define S 115
-	# define D 100
-	# define ESC 65307
-	# define ARROW_LEFT 65361
-	# define ARROW_RIGHT 65363
-	# define LINUX 1
+#  define W 119
+#  define A 97
+#  define S 115
+#  define D 100
+#  define ESC 65307
+#  define ARROW_LEFT 65361
+#  define ARROW_RIGHT 65363
+#  define LINUX 1
 # endif
 
 # define DISPLAY_WIDTH 1000
 # define DISPLAY_HEIGHT 600
 # define LEN_CAM_VEC 1
-# define LEN_LEFT_FOV 0.65 // 0,65 und 1 sind 33° -> fov von zusammen 66° gut für first person
+// 0,65 und 1 sind 33° -> fov von zusammen 66° gut für first person
+# define LEN_LEFT_FOV 0.65
 # define FACTOR_WALL_HEIGHT 1
 # define STEPSIZE 0.3
 # define PLAYER_ROTATION_DEG 15
@@ -80,15 +80,22 @@
 
 # define ERROR_1 "Error:\nCouldn't open Cub3D file!\n"
 # define ERROR_2 "Error:\nInvalid Cub3D file: Use .cub file extension!\n"
-# define ERROR_3 "Error:\nOnly two arguments are required for cub3D. Try: ./cub3d [path map]\n"
+# define ERROR_3 "Error:\nOnly two arguments are required for cub3D. Try: \
+./cub3d [path map]\n"
 # define ERROR_4 "Error:\nAllocation with malloc failed!\n"
+# define ERROR_5 "Error:\nDISTANCE_FROM_WALL is to low\n"
 
 # define CHECK_TEX_1 "Error:\nCouldn't open path of texture!\n"
-# define CHECK_TEX_2 "Error:\nInvalid path of texture: Use .xpm texture extension!\n"
-# define CHECK_TEX_3 "Error:\nInvalid value for red! Use a value between 0 and 255.\n"
-# define CHECK_TEX_4 "Error:\nInvalid value for green! Use a value between 0 and 255.\n"
-# define CHECK_TEX_5 "Error:\nInvalid value for blue! Use a value between 0 and 255.\n"
-# define CHECK_TEX_6 "Error:\nThere needs to be one texture for each cardinal direction!\n"
+# define CHECK_TEX_2 "Error:\nInvalid path of texture: Use .xpm \
+texture extension!\n"
+# define CHECK_TEX_3 "Error:\nInvalid value for red! Use a value between \
+0 and 255.\n"
+# define CHECK_TEX_4 "Error:\nInvalid value for green! Use a value between \
+0 and 255.\n"
+# define CHECK_TEX_5 "Error:\nInvalid value for blue! Use a value between \
+0 and 255.\n"
+# define CHECK_TEX_6 "Error:\nThere needs to be one texture for each cardinal \
+direction!\n"
 # define CHECK_TEX_7 "Error:\nThere needs to be a ceiling and a floor!\n"
 # define CHECK_TEX_8 "Error:\nInvalid character in front of texture path!\n"
 # define CHECK_TEX_9 "Error:\nInvalid character in front of colour value!\n"
@@ -107,7 +114,8 @@
 # define CHECK_MAP_9 "Error:\nFix wall on the right!\n"
 # define CHECK_MAP_10 "Error:\nMap should be surrounded by wall (left)!\n"
 # define CHECK_MAP_11 "Error:\nFix wall on the left!\n"
-# define CHECK_MAP_12 "Error:\nToo many players! Only one player is allowed in map.\n"
+# define CHECK_MAP_12 "Error:\nToo many players! Only one player is allowed \
+in map.\n"
 # define CHECK_MAP_13 "Error:\nThere is no player in map!\n"
 # define CHECK_MAP_14 "Error:\nInvalid space in map!\n"
 
@@ -125,7 +133,7 @@ typedef struct s_player
 	double	left_fov[2];
 }	t_player;
 
-typedef struct	s_img
+typedef struct s_img
 {
 	void	*img;
 	char	*addr;
@@ -148,24 +156,21 @@ typedef struct s_textures
 	int			red_int;
 	int			green_int;
 	int			blue_int;
-	//int			ceiling_color;
-	//int			floor_color;
 }				t_textures;
 
 typedef struct s_info
 {
-	char	*map_path;
-	int		row;
-	char	**map;
-	int		map_i;
+	char		*map_path;
+	int			row;
+	char		**map;
+	int			map_i;
 	t_textures	txt;
-	int		floor;
-	int		ceiling;
-	int		player_amount;
-	int		player_x;
-	int		player_y;
-	char	player_orientation;
-
+	int			floor;
+	int			ceiling;
+	int			player_amount;
+	int			player_x;
+	int			player_y;
+	char		player_orientation;
 	int			mapsize[2];
 	int			**map_int;
 	double		*dist_arr;
@@ -196,38 +201,38 @@ typedef struct s_info
 
 /* ft_rd_map.c */
 
-int	count_nb_row(char *map_path);
-char		**save_map(t_info *info);
+int		count_nb_row(char *map_path);
+char	**save_map(t_info *info);
 
 /* ft_map_extension.c */
 
-bool		valid_map_extension(t_info *info);
+bool	valid_map_extension(t_info *info);
 
 /* ft_parser.c */
 
-bool		ft_texture_values(t_info *info);
-void		skip_empty_lines(t_info *info);
-bool		check_valid_map(t_info *info);
-bool		amount_player(int	amount_player);
-bool		parsing(t_info *info);
+bool	ft_texture_values(t_info *info);
+void	skip_empty_lines(t_info *info);
+bool	check_valid_map(t_info *info);
+bool	amount_player(int amount_player);
+bool	parsing(t_info *info);
 
 /* ft_check_valid_textures.c */
 
-bool    ft_check_path_texture(t_info *info, char *map);
-bool    ft_save_path_texture(t_info *info, char *map, char x);
-bool    start_of_map(t_info *info);
-bool    check_valid_textures(t_info *info);
+bool	ft_check_path_texture(t_info *info, char *map);
+bool	ft_save_path_texture(t_info *info, char *map, char x);
+bool	start_of_map(t_info *info);
+bool	check_valid_textures(t_info *info, char **map);
 
 /* ft_check_valid_fc.c */
 
-bool    ft_letter_to_rgb(t_info *info, char *map);
-bool    ft_rgb_int_converter(t_info *info);
-bool    check_valid_fc(t_info *info, char *map, char y);
+bool	ft_letter_to_rgb(t_info *info, char *map);
+bool	ft_rgb_int_converter(t_info *info);
+bool	check_valid_fc(t_info *info, char *map, char y);
 
 /* ft_check_valid_fc_2.c */
 
-bool    ft_valid_rgb_code(t_info *info, char *map);
-bool    ft_valid_rgb_code_2(t_info *info, char *map);
+bool	ft_valid_rgb_code(t_info *info, char *map);
+bool	ft_valid_rgb_code_2(t_info *info, char *map);
 
 /* ft_check_valid_textures_extension.c */
 
@@ -236,38 +241,38 @@ bool	valid_texture_extension(t_info *info);
 
 /* ft_check_valid_map.c */
 
-bool    valid_lines(t_info *info, int i);
-bool    is_allowed_char(t_info *info, char c);
-bool    filled_line(t_info *info, int i);
-bool    correct_char(t_info *info, int i, int j);
+bool	valid_lines(t_info *info, int i);
+bool	is_allowed_char(t_info *info, char c);
+bool	filled_line(t_info *info, int i);
+bool	correct_char(t_info *info, int i, int j);
 bool	init_player_pos(t_info *info, char c, int i, int j);
 
 /* ft_check_walls.c */
 
-bool		no_zero_top(t_info *info, int i, int j);
-bool		no_zero_bottom(t_info *info, int i, int j);
-bool		no_zero_right(t_info *info, int i, int j);
-bool		no_zero_left(t_info *info, int i, int j);
-bool		zero_middle(t_info *info, int i, int j);
+bool	no_zero_top(t_info *info, int i, int j);
+bool	no_zero_bottom(t_info *info, int i, int j);
+bool	no_zero_right(t_info *info, int i, int j);
+bool	no_zero_left(t_info *info, int i, int j);
+bool	zero_middle(t_info *info, int i, int j);
 
 /* ft_check_walls_2.c */
 
-bool		no_zero_static(t_info *info, int i, int j);
-bool		horizontal_correct(t_info *info, int i, int j, int var);
-bool		vertical_correct(t_info *info, int i, int j, int var);
+bool	no_zero_static(t_info *info, int i, int j);
+bool	horizontal_correct(t_info *info, int i, int j, int var);
+bool	vertical_correct(t_info *info, int i, int j, int var);
 
 /* ft_map_converter_2.c */
 
-int			map_int_init(int *map, int col);
+int		map_int_init(int *map, int col);
 
 /* ft_map_converter.c */
 
-int 	**map_converter(t_info *info);
+int		**map_converter(t_info *info);
 void	convert_player_pos_dir(t_info *info);
 
 //**** ft_draw_textures_2.c ****//
 
-void	fill_background(int	ceiling, int floor, t_img *img);
+void	fill_background(int ceiling, int floor, t_img *img);
 int		get_color_from_img(t_img *img, double x, double y);
 t_img	*get_wall_ptr(int width_pixel, int **dist_info, t_info *info);
 double	calc_dx_for_wall(double *start_end_wall, int *corners);
@@ -293,7 +298,7 @@ void	draw_wall_textures(t_info *info, int width_pixel);
 //**** ft_clean_up_parser_fail.c ****//
 
 void	clean_up_extension(t_info *info);
-void    clean_up_parser(t_info *info);
+void	clean_up_parser(t_info *info);
 
 //**** ft_clean_up_2.c ****//
 
@@ -324,6 +329,7 @@ void	clean_up_txt_paths(t_info *info);
 int		ft_free_destroy(t_info *info);
 
 # ifdef __APPLE__
+
 void	mlx_loop_end(void *mlx_ptr);
 # endif
 
@@ -332,7 +338,7 @@ void	mlx_loop_end(void *mlx_ptr);
 void	init_info_sub(t_info *info);
 void	init_info(t_info *info);
 void	init_info_2(t_info *info);
-t_info *init_process_game(void);
+t_info	*init_process_game(void);
 
 //**** ft_init.c ****//
 
@@ -376,7 +382,7 @@ void	raycast_scan_in_fov(t_info *info, t_player *p);
 
 //**** raycast_scan.c ****//
 
-int	cardinal_direction_of_tile(int col, int row, double *pos);
+int		cardinal_direction_of_tile(int col, int row, double *pos);
 void	write_next_grid_pt_to_hit_coordinates(int *hit_coordinates, \
 	double *dest);
 double	calc_len(double *dest, double *position);

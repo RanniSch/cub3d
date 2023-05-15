@@ -121,6 +121,35 @@ bool	start_of_map(t_info *info)
 * Checks for four textures that start either with NO, EA, SO or WE
 * and for the two colours floor and ceiling.
 */
+bool	check_valid_textures(t_info *info, char **map)
+{
+	while (map[info->map_i])
+	{
+		skip_empty_lines(info);
+		if (map[info->map_i][0] == 'N' && map[info->map_i][1] == 'O')
+			ft_save_path_texture(info, map[info->map_i], 'n');
+		else if (map[info->map_i][0] == 'E' && map[info->map_i][1] == 'A')
+			ft_save_path_texture(info, map[info->map_i], 'e');
+		else if (map[info->map_i][0] == 'S' && map[info->map_i][1] == 'O')
+			ft_save_path_texture(info, map[info->map_i], 's');
+		else if (map[info->map_i][0] == 'W' && map[info->map_i][1] == 'E')
+			ft_save_path_texture(info, map[info->map_i], 'w');
+		else if (map[info->map_i][0] == 'F' && map[info->map_i][1] == 32)
+			check_valid_fc(info, map[info->map_i], 'f');
+		else if (map[info->map_i][0] == 'C' && map[info->map_i][1] == 32)
+			check_valid_fc(info, map[info->map_i], 'c');
+		else if (!start_of_map(info))
+			return (false);
+		else if (start_of_map(info))
+			break ;
+		if (info->check_txt != 0 || info->check_colour != 0)
+			return (false);
+		info->map_i++;
+	}
+	return (true);
+}
+
+/*
 bool	check_valid_textures(t_info *info)
 {
 	while (info->map[info->map_i])
@@ -152,3 +181,4 @@ bool	check_valid_textures(t_info *info)
 	//printf("EA _%s_\n", info->txt.path_ea); // prints east texture!!!
 	return (true);
 }
+*/

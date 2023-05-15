@@ -70,7 +70,7 @@ void	check_argc_and_dist_from_wall(int argc)
 	}
 	if (DISTANCE_FROM_WALL < 0.3)
 	{
-		printf("DISTANCE_FROM_WALL ist to low\n");
+		message(ERROR_5);
 		exit(0);
 	}
 }

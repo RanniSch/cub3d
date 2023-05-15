@@ -1,6 +1,6 @@
 #include "../inc/cub3d.h"
 
-void	clean_up_info_player_images(t_info *info) //@Ranja, wofür ist diese Funktion? clean_up_p und clean_up_textures: Redundanz
+void	clean_up_info_player_images(t_info *info)
 {
 	if (!info->p)
 		return ;
@@ -71,5 +71,5 @@ int	ft_free_destroy(t_info *info)
 	clean_up_p(info);
 	clean_up_mlx_ptr_win(info);
 	info = clean_up_info(info);
-	exit(0);//EXIT_FAILURE);  // programm wird doch ohne Fehler geschlossen oder? dann können wir 0 zurück geben
+	exit(0);
 }
