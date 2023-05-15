@@ -47,6 +47,7 @@ SRCS		= main.c \
 			  ./src/ft_clean_up.c \
 			  ./src/ft_clean_up_2.c \
 			  ./src/ft_clean_up_3.c \
+			  ./src/ft_clean_up_4.c \
 			  ./src/ft_message.c \
 			  
 

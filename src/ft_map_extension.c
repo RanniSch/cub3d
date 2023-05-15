@@ -13,8 +13,9 @@ bool	valid_map_extension(t_info *info)
 	{
         message(ERROR_1);
 		close(fd);
-		clean_up_extension(info);	// max neu eingefügt
-		exit (0);					// max neu eingefügt
+		// clean_up_extension(info);	// max neu eingefügt
+		clean_up_all_expt_mlx(info);	// max neu eingefügt
+		exit (1);					// max neu eingefügt
 		return (false);
 	}
 	p_len = ft_strlen(info->map_path);
@@ -22,8 +23,9 @@ bool	valid_map_extension(t_info *info)
 	{
 		message(ERROR_2);
 		close(fd);
-		clean_up_extension(info);	// max neu eingefügt
-		exit (0);					// max neu eingefügt
+		// clean_up_extension(info);	// max neu eingefügt
+		clean_up_all_expt_mlx(info);	// max neu eingefügt
+		exit (1);					// max neu eingefügt
 		return (false);
 	}
 	close(fd);

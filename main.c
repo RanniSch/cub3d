@@ -31,34 +31,6 @@ int	key_event(int key, t_info *info)
 	return (0);
 }
 
-/* 
-* Frees each entry of the map and map_int if it exists.
-*/
-/*void	ft_free_struct(t_info *info)
-{
-	int	i;
-
-	i = map_i - 1;
-	if (info->map_int)
-	{
-		while (++i < info->row)
-		{
-			free(info->map_i[i])
-		}
-		free(info->map_int)
-	}
-	i = -1
-	if (info->map)
-	{
-		while (++i < info->row)
-		{
-			free(info->map[i]);
-		}
-		free(info->map);
-	}
-	free(info);
-}*/
-
 bool	success_malloc_game(t_info *info)
 {
 	if (!init_process_game())
@@ -103,7 +75,7 @@ void	check_argc_and_dist_from_wall(int argc)
 	}
 }
 
-void	parsing_(t_info info)
+void	parsing_(t_info *info)
 {
 	if (!parsing(info)) // unsaved malloc in: check_valid_textures -> ft_save_path_texture -> ft_substr
     {
@@ -120,11 +92,17 @@ int	main(int argc, char **argv)
 	check_argc_and_dist_from_wall(argc);
 	info = init_process_game(); // init info, p, images, dist info, dist arr mit saved malloc
  	info->map_path = ft_strdup(argv[1]);
+	if (!info->map_path)
+	{
+		clean_up_all_expt_mlx(info);
+		message(ERROR_4);
+		exit(1);
+	}
 	valid_map_extension(info); // max: ok (6te Zeile) (habe cleanup mit rein gepackt)
-	info->row = count_nb_row(info->map_path); //max says: unsave malloc in here
+	info->row = count_nb_row(info->map_path); //unsave malloc inside?? (get_next_line)
 	info->map = save_map(info); // returns 0 when malloc fails -> not save
-	parsing_(info); // -> parsing in unterfunktion
-	info->map_int = map_converter(info); // if malloc fails? - Max: keine Ahnung - so viele unsichere mallocs
+	parsing_(info); // -> parsing ist in unterfunktion
+	info->map_int = map_converter(info); // if malloc fails? - Max: ist gehändelt
 	convert_player_pos_dir(info);
 	init_mlx_and_textures(info); // nach parsing damit die Pfade zu den Texturen bekannt sind
 	init_mlx_window_first_screen(info);
