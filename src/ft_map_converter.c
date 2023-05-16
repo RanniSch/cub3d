@@ -82,42 +82,6 @@ int	**map_converter(t_info *info)
 	return (tmp_map_int);
 }
 
-/*
-int	**map_converter(t_info *info)
-{
-	int		i;
-	int		j;
-	int		**tmp_map_int;
-	int		row_file;
-
-	map_converter_init(&i, &row_file, info, &tmp_map_int); 
-	// @MAX and if malloc fails??? - gehändelt
-	// if (!tmp_map_int)
-	// 	return (NULL);
-	while (++i < info->mapsize[Y] && --row_file >= 0)
-	{
-		tmp_map_int[i] = (int *)malloc(sizeof(int) * info->mapsize[X]);
-		//printf("drin\n");
-		if (!tmp_map_int[i])
-			return (NULL);
-		j = map_int_init(tmp_map_int[i], info->mapsize[X]);
-		// j = -1;
-		while (info->map[row_file][++j] && info->map[row_file][j] != '\n')
-		{
-			if (info->map[row_file][j] == '1')
-				tmp_map_int[i][j] = 1;
-			else if (dir_emp_zero(info->map[row_file][j]))
-				tmp_map_int[i][j] = 0;
-			//printf("%d", tmp_map_int[i][j]); // prints map_int!!!!!!!!!!
-		}
-	}
-	tmp_map_int[i] = NULL;
-	//printf("%ls", tmp_map_int[i]); // prints map_int!!!!!!!!!!!!!!!
-	clean_up_char_map(info);
-	return (tmp_map_int);
-}
-*/
-
 /**
  * @brief player_y means the column
  * and player_x is the row (in the whole file),

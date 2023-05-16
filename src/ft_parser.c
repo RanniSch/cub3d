@@ -10,16 +10,6 @@ void	skip_empty_lines(t_info *info)
 }
 
 /*
-void	skip_empty_lines(t_info *info)
-{
-	//printf("map_i0: %d\n", info->map_i);
-	while (info->map[info->map_i] && info->map[info->map_i][0] == '\n')
-		info->map_i++;
-	//printf("map_i1: %d\n", info->map_i);
-}
-*/
-
-/*
 * Checks the correct amount of textures and rgb colours.
 * Only one NO, EA, SO, WE, F and C allowed.
 */

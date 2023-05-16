@@ -60,38 +60,6 @@ bool	ft_save_path_texture(t_info *info, char *map, char x)
 }
 
 /*
-bool	ft_save_path_texture(t_info *info, char *map, char x)
-{
-	ft_check_path_texture(info, map);
-	if (x == 'n')
-	{
-		info->txt.path_no = ft_substr(map, info->str_j - info->substr - 1,
-				info->substr + 1);
-		info->check_no++;
-	}
-	if (x == 'e')
-	{
-		info->txt.path_ea = ft_substr(map, info->str_j - info->substr - 1,
-				info->substr + 1);
-		info->check_ea++;
-	}
-	if (x == 's')
-	{
-		info->txt.path_so = ft_substr(map, info->str_j - info->substr - 1,
-				info->substr + 1);
-		info->check_so++;
-	}
-	if (x == 'w')
-	{
-		info->txt.path_we = ft_substr(map, info->str_j - info->substr - 1,
-				info->substr + 1);
-		info->check_we++;
-	}
-	return (true);
-}
-*/
-
-/*
 * Figures out, when the map starts, which finishes the job of texture functions.
 */
 bool	start_of_map(t_info *info)
@@ -148,37 +116,3 @@ bool	check_valid_textures(t_info *info, char **map)
 	}
 	return (true);
 }
-
-/*
-bool	check_valid_textures(t_info *info)
-{
-	while (info->map[info->map_i])
-	{
-		skip_empty_lines(info);
-		if (info->map[info->map_i][0] == 'N' && info->map[info->map_i][1] == 'O')
-			ft_save_path_texture(info, info->map[info->map_i], 'n');
-		else if (info->map[info->map_i][0] == 'E' && info->map[info->map_i][1] == 'A')
-			ft_save_path_texture(info, info->map[info->map_i], 'e');
-		else if (info->map[info->map_i][0] == 'S' && info->map[info->map_i][1] == 'O')
-			ft_save_path_texture(info, info->map[info->map_i], 's');
-		else if (info->map[info->map_i][0] == 'W' && info->map[info->map_i][1] == 'E')
-			ft_save_path_texture(info, info->map[info->map_i], 'w');
-		else if (info->map[info->map_i][0] == 'F' && info->map[info->map_i][1] == 32)
-			check_valid_fc(info, info->map[info->map_i], 'f');
-		else if (info->map[info->map_i][0] == 'C' && info->map[info->map_i][1] == 32)
-			check_valid_fc(info, info->map[info->map_i], 'c');
-		else if (!start_of_map(info))
-			return (false);
-		else if (start_of_map(info))
-			break ;
-		if (info->check_txt != 0 || info->check_colour != 0)
-			return (false);
-		info->map_i++;
-	}
-	//printf("NO _%s_\n", info->txt.path_no); // prints north texture!!!
-	//printf("SO _%s_\n", info->txt.path_so); // prints south texture!!!
-	//printf("WE _%s_\n", info->txt.path_we); // prints west texture!!!
-	//printf("EA _%s_\n", info->txt.path_ea); // prints east texture!!!
-	return (true);
-}
-*/
