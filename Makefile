@@ -2,28 +2,19 @@ NAME		= cub3D
 
 CC			= gcc
 
-CFLAGS		= -Wextra -Wall -Werror #-g #-fsanitize=address #-fsanitize=leak
+CFLAGS		= -Wextra -Wall -g #-fsanitize=address #-Werror #-fsanitize=leak
 
 RM			= rm -f
 
 HEADER		= inc/cub3d.h
 
-# Max
-ifeq ($(shell uname), Darwin)
-MLX_DIR		= ./minilibx_opengl_20191021/
-
-MLX			= ./minilibx_opengl_20191021/libmlx.a
-
-FRAMEWORK	= -framework OpenGL -framework AppKit -lz
-else
-# Ranja
 MLX_DIR		= ./minilibx-linux/
+
+MLX_DIR_MAC	= ./minilibx_opengl_20191021
 
 MLX			= ./minilibx-linux/libmlx.a
 
-FRAMEWORK	= -L/usr/X11/lib -lXext -lX11 -lm
-endif
-
+MLX_MAC	= ./minilibx_opengl_20191021/libmlx.a
 
 SRCS		= main.c \
 			  ./src/ft_rd_map.c \
@@ -70,15 +61,16 @@ GNL_DIR		= ./get_next_line/
 
 GNL			= ./get_next_line/gnl.a
 
-.PHONY:		all clean fclean re e l
+.PHONY:		all clean fclean re
 
 all:		${NAME}
+
 
 
 ifeq ($(shell uname), Darwin)
 # Max
 %.o: %.c	$(LIBFT) $(GNL)
-			$(CC) $(CFLAGS) -c $< -o $@
+			$(CC) -Wall -Wextra -g -c $< -o $@ 
 #-Werror
 else
 # Ranja
@@ -86,19 +78,35 @@ else
 			$(CC) -Wall -Wextra -Werror -I/usr/include -Imlx_linux -c $< -o $@
 endif
 
+
+
 $(LIBFT):
 			make all -C $(LIBFT_DIR)
 
 $(GNL):
 			make all -C $(GNL_DIR)
 
+ifeq ($(shell uname), Darwin)
+# Max
+$(MLX):
+			make -C $(MLX_DIR_MAC)
+else
+# Ranja
 $(MLX):
 			make -C $(MLX_DIR)
+endif
 
+# Max
+ifeq ($(shell uname), Darwin)
 $(NAME):	$(LIBFT) $(MLX) $(GNL) $(OBJS)
-			$(CC) $(LIBFT) $(GNL) $(OBJS) $(MLX) $(FRAMEWORK) -o $(NAME)
+			$(CC) $(CFLAGS) $(LIBFT) $(GNL) $(SRCS) $(MLX_MAC)  -framework OpenGL -framework AppKit -lz -o $(NAME)
+else
+# Ranja
+$(NAME):	$(LIBFT) $(GNL) $(MLX) $(OBJS)
+			$(CC) $(OBJS) $(LIBFT) $(GNL) $(MLX) -L/usr/X11/lib -lXext -lX11 -lm -o $(NAME)
+endif
 
-MAP = "maps/test36.cub"
+MAP = "maps/test29.cub"
 
 e:	all
 			./$(NAME) $(MAP)
@@ -107,16 +115,12 @@ e:	all
 l:	all
 			leaks --atExit -- ./$(NAME) $(MAP)
 
-bonus:
-			@echo There is no bonus
-
 re:			fclean all
 
 clean:
 			$(RM) $(OBJS)
 			make clean -C $(LIBFT_DIR)
 			make clean -C $(GNL_DIR)
-			make clean -C $(MLX_DIR)
 
 fclean:		clean
 			$(RM) $(NAME)
