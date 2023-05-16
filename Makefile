@@ -2,7 +2,7 @@ NAME		= cub3D
 
 CC			= gcc
 
-CFLAGS		= -Wextra -Wall -g #-fsanitize=address #-Werror #-fsanitize=leak
+CFLAGS		= -Wextra -Wall -Werror -g #-fsanitize=address #-fsanitize=leak
 
 RM			= rm -f
 
@@ -70,7 +70,7 @@ all:		${NAME}
 ifeq ($(shell uname), Darwin)
 # Max
 %.o: %.c	$(LIBFT) $(GNL)
-			$(CC) -Wall -Wextra -g -c $< -o $@ 
+			$(CC) $(CFLAGS) -g -c $< -o $@ 
 #-Werror
 else
 # Ranja
@@ -99,7 +99,7 @@ endif
 # Max
 ifeq ($(shell uname), Darwin)
 $(NAME):	$(LIBFT) $(MLX) $(GNL) $(OBJS)
-			$(CC) $(CFLAGS) $(LIBFT) $(GNL) $(SRCS) $(MLX_MAC)  -framework OpenGL -framework AppKit -lz -o $(NAME)
+			$(CC) $(OBJS) $(LIBFT) $(GNL) $(MLX_MAC)  -framework OpenGL -framework AppKit -lz -o $(NAME)
 else
 # Ranja
 $(NAME):	$(LIBFT) $(GNL) $(MLX) $(OBJS)
