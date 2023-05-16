@@ -115,6 +115,9 @@ e:	all
 l:	all
 			leaks --atExit -- ./$(NAME) $(MAP)
 
+norm:
+			norminette get_next_line/ inc/ libft/ maps/ src/ textures/ main.c
+
 re:			fclean all
 
 clean:
