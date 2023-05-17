@@ -119,6 +119,9 @@ l:	all
 norm:
 			norminette get_next_line/ inc/ libft/ maps/ src/ textures/ main.c
 
+bonus:
+			@echo There is no bonus
+
 re:			fclean all
 
 clean:
