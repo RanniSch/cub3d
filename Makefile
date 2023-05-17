@@ -98,7 +98,8 @@ endif
 
 # Max
 ifeq ($(shell uname), Darwin)
-$(NAME):	$(LIBFT) $(MLX) $(GNL) $(OBJS)
+$(NAME):	$(LIBFT) $(GNL) $(OBJS)
+			make -C $(MLX_DIR_MAC)
 			$(CC) $(OBJS) $(LIBFT) $(GNL) $(MLX_MAC)  -framework OpenGL -framework AppKit -lz -o $(NAME)
 else
 # Ranja
