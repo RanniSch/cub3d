@@ -6,7 +6,7 @@
 /*   By: mrehberg <maxrehberg@posteo.de>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 15:04:55 by mrehberg          #+#    #+#             */
-/*   Updated: 2023/05/19 00:05:36 by mrehberg         ###   ########.fr       */
+/*   Updated: 2023/05/19 00:22:04 by mrehberg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,17 @@ void	init_info_2(t_info *info)
 	info->check_colour = 0;
 	info->str_j = 0;
 	info->substr = 0;
+}
+
+void	init_img(t_img *img)
+{
+	img->img = NULL;
+	img->addr = NULL;
+	img->bits_per_pixel = 0;
+	img->line_length = 0;
+	img->endian = 0;
+	img->width = 0;
+	img->height = 0;
 }
 
 /*
