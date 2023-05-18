@@ -6,7 +6,7 @@
 /*   By: mrehberg <maxrehberg@posteo.de>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 15:04:55 by mrehberg          #+#    #+#             */
-/*   Updated: 2023/05/16 15:04:57 by mrehberg         ###   ########.fr       */
+/*   Updated: 2023/05/19 00:05:36 by mrehberg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ void	init_info_2(t_info *info)
 	info->txt.path_ea = NULL;
 	info->txt.path_so = NULL;
 	info->txt.path_we = NULL;
+	info->txt.red = NULL;
+	info->txt.green = NULL;
+	info->txt.blue = NULL;
 	info->check_no = 0;
 	info->check_so = 0;
 	info->check_we = 0;
