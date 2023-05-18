@@ -6,7 +6,7 @@
 /*   By: mrehberg <maxrehberg@posteo.de>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 15:04:48 by mrehberg          #+#    #+#             */
-/*   Updated: 2023/05/16 15:04:50 by mrehberg         ###   ########.fr       */
+/*   Updated: 2023/05/19 00:24:53 by mrehberg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,23 @@ t_info	*init_info_player_images(t_info *info)
 	info->img = malloc(sizeof(t_img));
 	if (!info->img)
 		return (NULL);
+	init_img(info->img);
 	info->north = malloc(sizeof(t_img));
 	if (!info->north)
 		return (NULL);
+	init_img(info->north);
 	info->south = malloc(sizeof(t_img));
 	if (!info->south)
 		return (NULL);
+	init_img(info->south);
 	info->east = malloc(sizeof(t_img));
 	if (!info->east)
 		return (NULL);
+	init_img(info->east);
 	info->west = malloc(sizeof(t_img));
 	if (!info->west)
 		return (NULL);
+	init_img(info->west);
 	return (info);
 }
 

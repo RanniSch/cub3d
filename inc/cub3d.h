@@ -6,7 +6,7 @@
 /*   By: mrehberg <maxrehberg@posteo.de>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:52:17 by mrehberg          #+#    #+#             */
-/*   Updated: 2023/05/16 14:52:35 by mrehberg         ###   ########.fr       */
+/*   Updated: 2023/05/19 00:22:55 by mrehberg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -350,6 +350,7 @@ void	mlx_loop_end(void *mlx_ptr);
 void	init_info_sub(t_info *info);
 void	init_info(t_info *info);
 void	init_info_2(t_info *info);
+void	init_img(t_img *img);
 t_info	*init_process_game(void);
 
 //**** ft_init.c ****//
