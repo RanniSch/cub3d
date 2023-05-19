@@ -2,7 +2,7 @@ NAME		= cub3D
 
 CC			= gcc
 
-CFLAGS		= -Wextra -Wall -Werror -g #-fsanitize=address #-fsanitize=leak
+CFLAGS		= -Wextra -Wall -Werror
 
 RM			= rm -f
 
@@ -70,7 +70,7 @@ all:		${NAME}
 ifeq ($(shell uname), Darwin)
 # Max
 %.o: %.c	$(LIBFT) $(GNL)
-			$(CC) $(CFLAGS) -g -c $< -o $@ 
+			$(CC) $(CFLAGS) -c $< -o $@ 
 #-Werror
 else
 # Ranja
@@ -111,7 +111,6 @@ MAP = "maps/test00_vaild.cub"
 
 e:	all
 			./$(NAME) $(MAP)
-#ASAN_OPTIONS=detect_leaks=1
 
 l:	all
 			leaks --atExit -- ./$(NAME) $(MAP)
