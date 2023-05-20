@@ -2,7 +2,7 @@ NAME		= cub3D
 
 CC			= gcc
 
-CFLAGS		= -Wextra -Wall -Werror
+CFLAGS		= -Wextra -Wall -Werror -g -fsanitize=address
 
 RM			= rm -f
 
@@ -100,14 +100,14 @@ endif
 ifeq ($(shell uname), Darwin)
 $(NAME):	$(LIBFT) $(GNL) $(OBJS)
 			make -C $(MLX_DIR_MAC)
-			$(CC) $(OBJS) $(LIBFT) $(GNL) $(MLX_MAC)  -framework OpenGL -framework AppKit -lz -o $(NAME)
+			$(CC) $(OBJS) $(LIBFT) $(GNL) $(MLX_MAC)  -framework OpenGL -framework AppKit -lz -g -fsanitize=address -o $(NAME)
 else
 # Ranja
 $(NAME):	$(LIBFT) $(GNL) $(MLX) $(OBJS)
 			$(CC) $(OBJS) $(LIBFT) $(GNL) $(MLX) -L/usr/X11/lib -lXext -lX11 -lm -o $(NAME)
 endif
 
-MAP = "maps/test00_valid.cub"
+MAP = "maps/test13_invalid_small_map.cub"
 
 e:	all
 			./$(NAME) $(MAP)
