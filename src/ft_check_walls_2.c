@@ -6,7 +6,7 @@
 /*   By: mrehberg <maxrehberg@posteo.de>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 15:06:03 by mrehberg          #+#    #+#             */
-/*   Updated: 2023/05/20 12:28:31 by mrehberg         ###   ########.fr       */
+/*   Updated: 2023/05/20 13:52:32 by mrehberg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ bool	vertical_correct(t_info *info, int i, int j, int var)
 {
 	while (i >= info->map_i && i < info->row && info->map[i] != NULL)
 	{
-		if (!valid_lines(info, i))
+		if (!valid_lines(info, i)) // checked ob leerzeile ist
 			return (false);
-		if (info->map[i][j] == 32)
+		if (info->map[i][j] == 32) //space
 		{
 			message(CHECK_MAP_14);
 			return (false);
