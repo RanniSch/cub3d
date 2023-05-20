@@ -6,7 +6,7 @@
 /*   By: mrehberg <maxrehberg@posteo.de>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 15:06:03 by mrehberg          #+#    #+#             */
-/*   Updated: 2023/05/20 12:17:18 by mrehberg         ###   ########.fr       */
+/*   Updated: 2023/05/20 12:28:31 by mrehberg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 */
 bool	no_zero_static(t_info *info, int i, int j)
 {
-	int len = ft_strlen(info->map[info->map_i]);
+	int len;
+	
+	len = ft_strlen(info->map[info->map_i]);
 	if (len > j)
 	{
 		if (info->map[info->map_i][j] == '0')
