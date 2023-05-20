@@ -6,7 +6,7 @@
 /*   By: mrehberg <maxrehberg@posteo.de>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 15:05:58 by mrehberg          #+#    #+#             */
-/*   Updated: 2023/05/20 13:05:51 by mrehberg         ###   ########.fr       */
+/*   Updated: 2023/05/20 15:06:35 by mrehberg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ bool	no_zero_top(t_info *info, int i, int j)
 	int len;
 
 	len = ft_strlen(info->map[i - 1]);
-	if (len <= j)
-		printf("!!!!!!!!!!");
+	if (j >= len)			// von Max geändert
+		return (true);		// von Max geändert
 	if (i > info->map_i && i < info->row)
 	{
 		if (info->map[i - 1][j] != '1')
