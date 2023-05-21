@@ -6,7 +6,7 @@
 /*   By: rschlott <rschlott@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 15:05:58 by mrehberg          #+#    #+#             */
-/*   Updated: 2023/05/21 07:34:54 by rschlott         ###   ########.fr       */
+/*   Updated: 2023/05/21 18:55:24 by rschlott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ bool	no_zero_top(t_info *info, int i, int j)
 				return (true);
 		}
 		else
-		{
-			message(CHECK_MAP_5);
 			return (false);
-		}
 	}
 	else
 	{
@@ -61,10 +58,7 @@ bool	no_zero_bottom(t_info *info, int i, int j)
 				return (true);
 		}
 		else
-		{
-			message(CHECK_MAP_5);
 			return (false);
-		}
 	}
 	else
 	{

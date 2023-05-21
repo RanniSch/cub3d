@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_valid_fc.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrehberg <maxrehberg@posteo.de>            +#+  +:+       +#+        */
+/*   By: rschlott <rschlott@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 15:06:24 by mrehberg          #+#    #+#             */
-/*   Updated: 2023/05/16 15:06:25 by mrehberg         ###   ########.fr       */
+/*   Updated: 2023/05/21 18:15:11 by rschlott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,20 @@
 bool	ft_letter_to_rgb(t_info *info, char *map)
 {
 	info->str_j = 0;
-	info->substr = 1;
+	info->substr = 0;
 	if (!ft_valid_rgb_code(info, map))
 		return (false);
 	info->str_j++;
-	if (!ft_valid_rgb_code_2(info, map))
+	if (!ft_valid_rgb_code_3(info, map))
 		return (false);
 	info->txt.red = ft_substr(map, info->str_j - info->substr, info->substr);
-	if (!ft_valid_rgb_code(info, map))
-		return (false);
-	info->str_j++;
-	info->substr = 1;
 	if (!ft_valid_rgb_code_2(info, map))
 		return (false);
+	info->substr = 0;
+	if (!ft_valid_rgb_code_3(info, map))
+		return (false);
 	info->txt.green = ft_substr(map, info->str_j - info->substr, info->substr);
-	if (!ft_valid_rgb_code(info, map))
+	if (!ft_valid_rgb_code_2(info, map))
 		return (false);
 	info->substr = 0;
 	while (map[info->str_j] && map[info->str_j] != '\n')
@@ -45,6 +44,9 @@ bool	ft_letter_to_rgb(t_info *info, char *map)
 	return (true);
 }
 
+/*
+* Checks that there are only numbers from 0 to 9 in the colour string.
+*/
 bool	ft_valid_rgb_char(char *colour_str)
 {
 	int	i;

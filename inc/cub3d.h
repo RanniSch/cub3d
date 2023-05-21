@@ -6,7 +6,7 @@
 /*   By: rschlott <rschlott@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:52:17 by mrehberg          #+#    #+#             */
-/*   Updated: 2023/05/21 07:33:29 by rschlott         ###   ########.fr       */
+/*   Updated: 2023/05/21 18:45:44 by rschlott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,6 +245,7 @@ bool	check_valid_fc(t_info *info, char *map, char y);
 
 bool	ft_valid_rgb_code(t_info *info, char *map);
 bool	ft_valid_rgb_code_2(t_info *info, char *map);
+bool	ft_valid_rgb_code_3(t_info *info, char *map);
 
 /* ft_check_valid_textures_extension.c */
 
@@ -271,8 +272,9 @@ bool	zero_middle(t_info *info, int i, int j);
 
 bool	no_zero_static(t_info *info);
 bool	line_length_correct(t_info *info, int i, int j, int x);
-bool	horizontal_correct(t_info *info, int i, int j, int var);
+bool	no_spaces(t_info *info, int i, int j);
 bool	vertical_correct(t_info *info, int i, int j, int var);
+bool	horizontal_correct(t_info *info, int i, int j, int var);
 
 /* ft_map_converter_2.c */
 
