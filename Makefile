@@ -2,7 +2,7 @@ NAME		= cub3D
 
 CC			= gcc
 
-CFLAGS		= -Wextra -Wall -Werror
+CFLAGS		= -Wextra -Wall -Werror -g -fsanitize=address
 
 RM			= rm -f
 
@@ -100,7 +100,7 @@ endif
 ifeq ($(shell uname), Darwin)
 $(NAME):	$(LIBFT) $(GNL) $(OBJS)
 			make -C $(MLX_DIR_MAC)
-			$(CC) $(OBJS) $(LIBFT) $(GNL) $(MLX_MAC)  -framework OpenGL -framework AppKit -lz -o $(NAME)
+			$(CC) $(OBJS) $(LIBFT) $(GNL) $(MLX_MAC)  -framework OpenGL -framework AppKit -lz -fsanitize=address -o $(NAME)
 else
 # Ranja
 $(NAME):	$(LIBFT) $(GNL) $(MLX) $(OBJS)
@@ -116,8 +116,8 @@ l:	all
 			leaks --atExit -- ./$(NAME) $(MAP)
 
 t:	all ./maps/*
-			@for map in $^ ; do echo $$map; ./$(NAME) $$map; sleep 1; done;\
-			
+			@for map in $^ ; do echo $$map; ./$(NAME) $$map; sleep 1; echo " "; done;\
+
 norm:
 			norminette get_next_line/ inc/ libft/ maps/ src/ textures/ main.c
 
