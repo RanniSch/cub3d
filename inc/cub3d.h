@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrehberg <maxrehberg@posteo.de>            +#+  +:+       +#+        */
+/*   By: rschlott <rschlott@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:52:17 by mrehberg          #+#    #+#             */
-/*   Updated: 2023/05/19 00:22:55 by mrehberg         ###   ########.fr       */
+/*   Updated: 2023/05/21 07:33:29 by rschlott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,7 +269,8 @@ bool	zero_middle(t_info *info, int i, int j);
 
 /* ft_check_walls_2.c */
 
-bool	no_zero_static(t_info *info, int i, int j);
+bool	no_zero_static(t_info *info);
+bool	line_length_correct(t_info *info, int i, int j, int x);
 bool	horizontal_correct(t_info *info, int i, int j, int var);
 bool	vertical_correct(t_info *info, int i, int j, int var);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_walls.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrehberg <maxrehberg@posteo.de>            +#+  +:+       +#+        */
+/*   By: rschlott <rschlott@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 15:05:58 by mrehberg          #+#    #+#             */
-/*   Updated: 2023/05/16 15:05:59 by mrehberg         ###   ########.fr       */
+/*   Updated: 2023/05/21 07:34:54 by rschlott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,21 @@ bool	no_zero_top(t_info *info, int i, int j)
 {
 	if (i > info->map_i && i < info->row)
 	{
-		if (info->map[i - 1][j] != '1')
+		if (line_length_correct(info, i, j, -1))
 		{
-			if (!vertical_correct(info, i, j, 0))
-				return (false);
+			if (info->map[i - 1][j] != '1')
+			{
+				if (!vertical_correct(info, i, j, 0))
+					return (false);
+			}
+			else if (info->map[i - 1][j] == '1')
+				return (true);
 		}
-		else if (info->map[i - 1][j] == '1')
-			return (true);
+		else
+		{
+			message(CHECK_MAP_5);
+			return (false);
+		}
 	}
 	else
 	{
@@ -42,13 +50,21 @@ bool	no_zero_bottom(t_info *info, int i, int j)
 {
 	if (i + 1 <= info->row && info->map[i + 1] != NULL)
 	{
-		if (info->map[i + 1][j] != '1')
+		if (line_length_correct(info, i, j, 1))
 		{
-			if (!vertical_correct(info, i, j, 1))
-				return (false);
+			if (info->map[i + 1][j] != '1')
+			{
+				if (!vertical_correct(info, i, j, 1))
+					return (false);
+			}
+			else if (info->map[i + 1][j] == '1')
+				return (true);
 		}
-		else if (info->map[i + 1][j] == '1')
-			return (true);
+		else
+		{
+			message(CHECK_MAP_5);
+			return (false);
+		}
 	}
 	else
 	{
@@ -102,8 +118,6 @@ bool	no_zero_left(t_info *info, int i, int j)
 */
 bool	zero_middle(t_info *info, int i, int j)
 {
-	if (!no_zero_static(info, i, j))
-		return (false);
 	if (!no_zero_top(info, i, j))
 		return (false);
 	if (!no_zero_bottom(info, i, j))

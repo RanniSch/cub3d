@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrehberg <maxrehberg@posteo.de>            +#+  +:+       +#+        */
+/*   By: rschlott <rschlott@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 15:03:37 by mrehberg          #+#    #+#             */
-/*   Updated: 2023/05/16 15:03:40 by mrehberg         ###   ########.fr       */
+/*   Updated: 2023/05/21 07:31:54 by rschlott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ bool	parsing(t_info *info)
 	if (!valid_texture_extension(info))
 		return (false);
 	skip_empty_lines(info);
+	if (!no_zero_static(info))
+		return (false);
 	if (!check_valid_map(info))
 		return (false);
 	if (!amount_player(info->player_amount))

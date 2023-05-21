@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_walls_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrehberg <maxrehberg@posteo.de>            +#+  +:+       +#+        */
+/*   By: rschlott <rschlott@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 15:06:03 by mrehberg          #+#    #+#             */
-/*   Updated: 2023/05/16 15:06:04 by mrehberg         ###   ########.fr       */
+/*   Updated: 2023/05/21 07:52:17 by rschlott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,47 @@
 /*
 * A static check if there are "0" in the threshold.
 */
-bool	no_zero_static(t_info *info, int i, int j)
+bool	no_zero_static(t_info *info)
 {
-	if (info->map[info->map_i][j] == '0')
+	int j;
+	int i;
+	
+	j = -1;
+	i = info->map_i;
+	while (info->map[info->map_i][++j])
 	{
-		message(CHECK_MAP_5);
-		return (false);
+		if (info->map[info->map_i][j] == '0')
+		{
+			message(CHECK_MAP_5);
+			return (false);
+		}
 	}
-	if (info->map[i][0] == '0')
+	while (i < info->row && info->map[i] != NULL)
 	{
-		message(CHECK_MAP_11);
-		return (false);
+		if (info->map[i][0] == '0')
+		{
+			message(CHECK_MAP_11);
+			return (false);
+		}
+		i++;
 	}
+	return (true);
+}
+
+/*
+* A line length giver and checking with that if the previous line
+* has the same length than the line after. Otherwise return false.
+*/
+bool	line_length_correct(t_info *info, int i, int j, int x)
+{
+	int	len;
+
+	if (x == -1)
+		len = ft_strlen(info->map[i - 1]) - 1;
+	if (x == 1)
+		len = ft_strlen(info->map[i + 1]) - 1;
+	if (j + 1 > len)
+		return (false);
 	return (true);
 }
 
@@ -48,9 +77,23 @@ bool	vertical_correct(t_info *info, int i, int j, int var)
 		if (info->map[i][j] == '1')
 			return (true);
 		if (var == 1)
+		{
+			if (!line_length_correct(info, i, j, 1))
+			{
+				message(CHECK_MAP_7);
+				return (false);
+			}
 			i++;
+		}
 		else
+		{
+			if (!line_length_correct(info, i, j, -1))
+			{
+				message(CHECK_MAP_5);
+				return (false);
+			}
 			i--;
+		}
 	}
 	if (var == 1)
 		message(CHECK_MAP_6);
