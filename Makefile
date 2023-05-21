@@ -115,6 +115,9 @@ e:	all
 l:	all
 			leaks --atExit -- ./$(NAME) $(MAP)
 
+t: ./maps/*
+			@for map in $^ ; do echo $$map; ./$(NAME) $$map; sleep 1; echo " "; done;\
+
 norm:
 			norminette get_next_line/ inc/ libft/ maps/ src/ textures/ main.c
 
