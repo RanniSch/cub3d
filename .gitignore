@@ -2,6 +2,4 @@
 .DS_Store
 .vscode/
 *.dSYM/
-libft.a
-gnl.a
-cub3D
+webserve
